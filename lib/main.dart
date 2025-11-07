@@ -372,5 +372,12 @@ class NavButton extends StatelessWidget {
   final String pageName;
   final String url;
 
-  const NavButton ({super.key, required this.pageName, required this.url})
+  const NavButton({super.key, required this.pageName, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(onPressed: onPressed, child: Text(pageName));
+  }
+
+  void onPressed() {}
 }
