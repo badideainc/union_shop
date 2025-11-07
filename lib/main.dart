@@ -94,7 +94,12 @@ class HomeScreen extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                  const NavButton(pageName: "Home", url: "/")
+                                  const NavButton(pageName: "Home", url: "/"),
+                                  const NavButton(pageName: "Shop", url: "/"),
+                                  const NavButton(
+                                      pageName: "The Print Shack", url: "/"),
+                                  const NavButton(pageName: "SALE!", url: "/"),
+                                  const NavButton(pageName: "About", url: "/")
                                 ],
                               )),
                           const Spacer(),
