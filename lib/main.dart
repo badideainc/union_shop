@@ -254,9 +254,8 @@ class HomeScreen extends StatelessWidget {
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: MediaQuery.of(context).size.width > 600
-                          ? 2
-                          : 1,
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: const [
@@ -367,4 +366,11 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class NavButton extends StatelessWidget {
+  final String pageName;
+  final String url;
+
+  const NavButton ({super.key, required this.pageName, required this.url})
 }
