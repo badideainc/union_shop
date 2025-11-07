@@ -398,5 +398,11 @@ class NavDropdown extends StatelessWidget {
 
   @override
   Widget build {
+    return DropdownButton(
+      items: pages, 
+      onChanged: (String? targetPage) {
+        //Go to that page
+      }
+    );
   }
 }
