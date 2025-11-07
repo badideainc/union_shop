@@ -390,3 +390,13 @@ class NavButton extends StatelessWidget {
 
   void onPressed() {}
 }
+
+class NavDropdown extends StatelessWidget {
+  final List<String> pages;
+
+  const NavDropdown({super.key, required this.pages});
+
+  @override
+  Widget build {
+  }
+}
