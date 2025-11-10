@@ -7,13 +7,13 @@ class ProductModel {
   final int price;
 
   //Broad array for the different types of the item
-  final List<String> options;
+  final List<String>? options;
 
   const ProductModel({
     required this.id,
     required this.name,
     required this.description,
-    required this.options,
+    this.options,
     this.quantity = 1,
     required this.price,
   });
