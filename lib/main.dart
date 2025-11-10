@@ -95,7 +95,15 @@ class HomeScreen extends StatelessWidget {
                                     },
                                   ),
                                   const NavButton(pageName: "Home", url: "/"),
-                                  const NavButton(pageName: "Shop", url: "/"),
+                                  const NavDropdown(pages: [
+                                    "Clothing",
+                                    "Merchandise",
+                                    "Halloween 🎃",
+                                    "Signature & Essentials Range",
+                                    "Portsmouth City Collection",
+                                    "Pride Collection 🏳️‍🌈",
+                                    "Graduation 🎓",
+                                  ]),
                                   const NavButton(
                                       pageName: "The Print Shack", url: "/"),
                                   const NavButton(pageName: "SALE!", url: "/"),
@@ -397,12 +405,14 @@ class NavDropdown extends StatelessWidget {
   const NavDropdown({super.key, required this.pages});
 
   @override
-  Widget build {
+  Widget build(BuildContext context) {
     return DropdownButton(
-      items: pages, 
-      onChanged: (String? targetPage) {
-        //Go to that page
-      }
-    );
+        items: pages
+            .map((String page) =>
+                DropdownMenuItem<String>(value: page, child: Text(page)))
+            .toList(),
+        onChanged: (String? targetPage) {
+          //Go to that page
+        });
   }
 }
