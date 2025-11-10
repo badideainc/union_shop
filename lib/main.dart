@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
+import 'package:union_shop/models/product_model.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -21,7 +22,16 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
-      routes: {'/product': (context) => const ProductPage()},
+      routes: {
+        '/product': (context) => const ProductPage(
+            product: ProductModel(
+                id: "0",
+                name: "Graduation Bear",
+                description:
+                    "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
+                options: ["Cinnamon (Benny the Bear)"],
+                price: 15))
+      },
     );
   }
 }
