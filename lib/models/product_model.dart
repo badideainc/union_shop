@@ -3,13 +3,18 @@ class ProductModel {
   final String name;
   final String description;
 
+  final int quantity;
+  final int price;
+
   //Broad array for the different types of the item
   final List<String> options;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.name,
     required this.description,
     required this.options,
+    this.quantity = 1,
+    required this.price,
   });
 }
