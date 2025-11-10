@@ -95,17 +95,21 @@ class HomeScreen extends StatelessWidget {
                                     },
                                   ),
                                   const NavButton(pageName: "Home", url: "/"),
-                                  const NavDropdown(pages: [
-                                    "Clothing",
-                                    "Merchandise",
-                                    "Halloween 🎃",
-                                    "Signature & Essentials Range",
-                                    "Portsmouth City Collection",
-                                    "Pride Collection 🏳️‍🌈",
-                                    "Graduation 🎓",
-                                  ]),
-                                  const NavButton(
-                                      pageName: "The Print Shack", url: "/"),
+                                  const NavDropdown(pageName: "Shop", pages: {
+                                    "Clothing": "/",
+                                    "Merchandise": "/",
+                                    "Halloween 🎃": "/",
+                                    "Signature & Essentials Range": "/",
+                                    "Portsmouth City Collection": "/",
+                                    "Pride Collection 🏳️‍🌈": "/",
+                                    "Graduation 🎓": "/",
+                                  }),
+                                  const NavDropdown(
+                                      pageName: "The Print Shack",
+                                      pages: {
+                                        "About": "/",
+                                        "Personalisation": "/"
+                                      }),
                                   const NavButton(pageName: "SALE!", url: "/"),
                                   const NavButton(pageName: "About", url: "/")
                                 ],
@@ -400,14 +404,16 @@ class NavButton extends StatelessWidget {
 }
 
 class NavDropdown extends StatelessWidget {
-  final List<String> pages;
+  final Map<String, String> pages;
+  final String pageName;
 
-  const NavDropdown({super.key, required this.pages});
+  const NavDropdown({super.key, required this.pageName, required this.pages});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-        items: pages
+        hint: Text(pageName),
+        items: pages.keys
             .map((String page) =>
                 DropdownMenuItem<String>(value: page, child: Text(page)))
             .toList(),
