@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key});
+  const ProductPage({super.key, required this.product});
 
-  final ProductModel placeholderProduct = const ProductModel(
-      id: "0",
-      name: "Graduation Bear",
-      description:
-          "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
-      options: ["Cinnamon (Benny the Bear)"],
-      price: 15);
+  final ProductModel product;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
