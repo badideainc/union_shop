@@ -211,15 +211,6 @@ class ProductPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       // Product description
-                      const Text(
-                        'Description',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
                       Text(
                         product.description,
                         style: const TextStyle(
