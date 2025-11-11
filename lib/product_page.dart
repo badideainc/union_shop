@@ -218,6 +218,16 @@ class ProductPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
 
+                      ElevatedButton(
+                          onPressed: () {}, child: const Text("ADD TO CART")),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            foregroundColor: Colors.white),
+                        child: const Text("Buy with shop"),
+                      ),
+
                       // Product description
                       Text(
                         product.description,
