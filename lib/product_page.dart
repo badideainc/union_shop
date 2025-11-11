@@ -220,6 +220,7 @@ class ProductPage extends StatelessWidget {
 
                       ElevatedButton(
                           onPressed: () {}, child: const Text("ADD TO CART")),
+                      const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
@@ -228,6 +229,7 @@ class ProductPage extends StatelessWidget {
                         child: const Text("Buy with shop"),
                       ),
 
+                      const SizedBox(height: 24),
                       // Product description
                       Text(
                         product.description,
