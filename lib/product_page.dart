@@ -208,6 +208,14 @@ class ProductPage extends StatelessWidget {
                         ),
                       ),
 
+                      const Text(
+                        "Tax included.",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          height: 1.5,
+                        ),
+                      ),
                       const SizedBox(height: 24),
 
                       // Product description
