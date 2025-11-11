@@ -134,7 +134,7 @@ class ProductPage extends StatelessWidget {
             ),
 
             // Product details
-            Column(
+            Row(
               children: [
                 Container(
                     color: Colors.white,
@@ -142,7 +142,6 @@ class ProductPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          height: 300,
                           width: 450,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
@@ -185,6 +184,7 @@ class ProductPage extends StatelessWidget {
                 Container(
                   color: Colors.white,
                   padding: const EdgeInsets.all(24),
+                  width: MediaQuery.sizeOf(context).width - 500,
                   child: Column(
                     children: [
                       Text(
