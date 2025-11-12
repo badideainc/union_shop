@@ -29,7 +29,9 @@ class UnionShopApp extends StatelessWidget {
                 name: "Graduation Bear",
                 description:
                     "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
-                options: ["Cinnamon (Benny the Bear)"],
+                options: {
+                  "Colour": ["Cinnamon (Benny the Bear)"]
+                },
                 price: 15))
       },
     );
