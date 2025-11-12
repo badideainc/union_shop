@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/models/product_model.dart';
+import 'package:union_shop/product_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -105,21 +106,27 @@ class HomeScreen extends StatelessWidget {
                                     },
                                   ),
                                   const NavButton(pageName: "Home", url: "/"),
-                                  const NavDropdown(pageName: "Shop", pages: {
-                                    "Clothing": "/",
-                                    "Merchandise": "/",
-                                    "Halloween 🎃": "/",
-                                    "Signature & Essentials Range": "/",
-                                    "Portsmouth City Collection": "/",
-                                    "Pride Collection 🏳️‍🌈": "/",
-                                    "Graduation 🎓": "/",
-                                  }),
                                   const NavDropdown(
-                                      pageName: "The Print Shack",
-                                      pages: {
-                                        "About": "/",
-                                        "Personalisation": "/"
-                                      }),
+                                    pageName: "Shop",
+                                    pages: {
+                                      "Clothing": "/",
+                                      "Merchandise": "/",
+                                      "Halloween 🎃": "/",
+                                      "Signature & Essentials Range": "/",
+                                      "Portsmouth City Collection": "/",
+                                      "Pride Collection 🏳️‍🌈": "/",
+                                      "Graduation 🎓": "/",
+                                    },
+                                    options: [],
+                                  ),
+                                  const NavDropdown(
+                                    pageName: "The Print Shack",
+                                    pages: {
+                                      "About": "/",
+                                      "Personalisation": "/"
+                                    },
+                                    options: [],
+                                  ),
                                   const NavButton(pageName: "SALE!", url: "/"),
                                   const NavButton(pageName: "About", url: "/")
                                 ],
@@ -413,20 +420,21 @@ class NavButton extends StatelessWidget {
   void onPressed() {}
 }
 
-class NavDropdown extends StatelessWidget {
+class NavDropdown extends ProductDropdown {
   final Map<String, String> pages;
   final String pageName;
 
-  const NavDropdown({super.key, required this.pageName, required this.pages});
+  const NavDropdown(
+      {super.key,
+      required this.pageName,
+      required this.pages,
+      required super.options});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
         hint: Text(pageName),
-        items: pages.keys
-            .map((String page) =>
-                DropdownMenuItem<String>(value: page, child: Text(page)))
-            .toList(),
+        items: getDropdownOptions(pages.keys),
         onChanged: (String? targetPage) {
           //Go to that page
         });
