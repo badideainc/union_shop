@@ -357,3 +357,24 @@ class ProductPage extends StatelessWidget {
     );
   }
 }
+
+class ProductDropdown extends StatelessWidget {
+  final List<String> options;
+
+  const ProductDropdown({super.key, required this.options});
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+        items: getDropdownOptions(options), onChanged: (String? newValue) {});
+  }
+
+  List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
+    return options
+        .map((String page) =>
+            DropdownMenuItem<String>(value: page, child: Text(page)))
+        .toList();
+  }
+
+  void changeCategory(String newValue) {}
+}
