@@ -7,7 +7,7 @@ class ProductModel {
   final int price;
 
   //Broad array for the different types of the item
-  final List<String>? options;
+  final Map<String, List<String>>? options;
 
   const ProductModel({
     required this.id,
