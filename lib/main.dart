@@ -24,7 +24,7 @@ class UnionShopApp extends StatelessWidget {
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
         '/product': (context) => const ProductPage(
-            product: const ProductModel(
+            product: ProductModel(
                 id: "0",
                 name: "Graduation Bear",
                 description:
