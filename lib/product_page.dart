@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class ProductPage extends StatelessWidget {
@@ -218,6 +219,19 @@ class ProductPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
 
+                      Row(
+                        children: [
+                          ProductDropdown(
+                              options: product.options.values.toList()[0])
+                        ],
+                      ),
+
+                      // product.options.forEach((key, value) {
+                      //   ProductDropdown(
+                      //     options: value,
+                      //   );
+                      // }),
+
                       ElevatedButton(
                           onPressed: () {}, child: const Text("ADD TO CART")),
                       const SizedBox(height: 24),
@@ -359,14 +373,21 @@ class ProductPage extends StatelessWidget {
 }
 
 class ProductDropdown extends StatelessWidget {
-  final List<String> options;
+  final List<String>? options;
 
   const ProductDropdown({super.key, required this.options});
 
   @override
   Widget build(BuildContext context) {
+    if (options == null) {
+      return const SizedBox(
+        width: double.infinity,
+        height: 25,
+      );
+    }
+
     return DropdownButton(
-        items: getDropdownOptions(options), onChanged: (String? newValue) {});
+        items: getDropdownOptions(options!), onChanged: (String? newValue) {});
   }
 
   List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
