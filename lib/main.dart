@@ -106,9 +106,9 @@ class HomeScreen extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                  const NavButton(pageName: "Home", url: "/"),
+                                  const NavButton(optionName: "Home", url: "/"),
                                   const NavDropdown(
-                                    pageName: "Shop",
+                                    optionName: "Shop",
                                     pages: {
                                       "Clothing": "/",
                                       "Merchandise": "/",
@@ -121,15 +121,16 @@ class HomeScreen extends StatelessWidget {
                                     options: [],
                                   ),
                                   const NavDropdown(
-                                    pageName: "The Print Shack",
+                                    optionName: "The Print Shack",
                                     pages: {
                                       "About": "/",
                                       "Personalisation": "/"
                                     },
                                     options: [],
                                   ),
-                                  const NavButton(pageName: "SALE!", url: "/"),
-                                  const NavButton(pageName: "About", url: "/")
+                                  const NavButton(
+                                      optionName: "SALE!", url: "/"),
+                                  const NavButton(optionName: "About", url: "/")
                                 ],
                               )),
                           const Spacer(),
@@ -408,14 +409,14 @@ class ProductCard extends StatelessWidget {
 }
 
 class NavButton extends StatelessWidget {
-  final String pageName;
+  final String optionName;
   final String url;
 
-  const NavButton({super.key, required this.pageName, required this.url});
+  const NavButton({super.key, required this.optionName, required this.url});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: onPressed, child: Text(pageName));
+    return ElevatedButton(onPressed: onPressed, child: Text(optionName));
   }
 
   void onPressed() {}
@@ -423,18 +424,17 @@ class NavButton extends StatelessWidget {
 
 class NavDropdown extends ProductDropdown {
   final Map<String, String> pages;
-  final String pageName;
 
   const NavDropdown(
       {super.key,
-      required this.pageName,
       required this.pages,
-      required super.options});
+      required super.options,
+      required super.optionName});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-        hint: Text(pageName),
+        hint: Text(optionName!),
         items: getDropdownOptions(pages.keys),
         onChanged: (String? targetPage) {
           //Go to that page
