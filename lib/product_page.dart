@@ -221,6 +221,7 @@ class ProductPage extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       Row(
+                        spacing: 20.0,
                         children: [
                           ProductDropdown(
                               optionName: product.options?.keys.toList()[0],
@@ -233,6 +234,7 @@ class ProductPage extends StatelessWidget {
                                   height: 80,
                                   child: TextField(
                                     controller: _quantityController,
+                                    keyboardType: TextInputType.number,
                                   ))
                             ],
                           )
