@@ -222,7 +222,8 @@ class ProductPage extends StatelessWidget {
                       Row(
                         children: [
                           ProductDropdown(
-                              options: product.options.values.toList()[0])
+                              optionName: "Color",
+                              options: product.options?.values.toList()[0])
                         ],
                       ),
 
@@ -373,9 +374,11 @@ class ProductPage extends StatelessWidget {
 }
 
 class ProductDropdown extends StatelessWidget {
+  final String? optionName;
   final List<String>? options;
 
-  const ProductDropdown({super.key, required this.options});
+  const ProductDropdown(
+      {super.key, required this.optionName, required this.options});
 
   @override
   Widget build(BuildContext context) {
@@ -387,7 +390,9 @@ class ProductDropdown extends StatelessWidget {
     }
 
     return DropdownButton(
-        items: getDropdownOptions(options!), onChanged: (String? newValue) {});
+        hint: Text(options![0]),
+        items: getDropdownOptions(options!),
+        onChanged: (String? newValue) {});
   }
 
   List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
