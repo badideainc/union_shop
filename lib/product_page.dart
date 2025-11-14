@@ -259,6 +259,9 @@ class ProductPage extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 24),
+                      const Text("More payment options"),
+
+                      const SizedBox(height: 24),
                       // Product description
                       Text(
                         product.description,
