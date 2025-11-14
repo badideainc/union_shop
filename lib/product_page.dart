@@ -3,9 +3,10 @@ import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key, required this.product});
+  ProductPage({super.key, required this.product});
 
   final ProductModel product;
+  final TextEditingController _quantityController = TextEditingController();
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -223,7 +224,18 @@ class ProductPage extends StatelessWidget {
                         children: [
                           ProductDropdown(
                               optionName: product.options?.keys.toList()[0],
-                              options: product.options?.values.toList()[0])
+                              options: product.options?.values.toList()[0]),
+                          Column(
+                            children: [
+                              const Text("Quantity"),
+                              SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: TextField(
+                                    controller: _quantityController,
+                                  ))
+                            ],
+                          )
                         ],
                       ),
 
