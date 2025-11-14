@@ -222,7 +222,7 @@ class ProductPage extends StatelessWidget {
                       Row(
                         children: [
                           ProductDropdown(
-                              optionName: "Color",
+                              optionName: product.options?.keys.toList()[0],
                               options: product.options?.values.toList()[0])
                         ],
                       ),
@@ -389,10 +389,15 @@ class ProductDropdown extends StatelessWidget {
       );
     }
 
-    return DropdownButton(
-        hint: Text(options![0]),
-        items: getDropdownOptions(options!),
-        onChanged: (String? newValue) {});
+    return Column(
+      children: [
+        Text(optionName!),
+        DropdownButton(
+            hint: Text(textAlign: TextAlign.left, options![0]),
+            items: getDropdownOptions(options!),
+            onChanged: (String? newValue) {})
+      ],
+    );
   }
 
   List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
