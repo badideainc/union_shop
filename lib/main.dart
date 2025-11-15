@@ -206,19 +206,7 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Footer
-            Container(
-              width: double.infinity,
-              color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            const Footer(),
           ],
         ),
       ),
@@ -475,5 +463,39 @@ class TopBanner extends StatelessWidget {
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
+  }
+}
+
+class Footer extends StatelessWidget {
+  const Footer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: double.infinity,
+        color: Colors.grey[50],
+        padding: const EdgeInsets.all(24),
+        child: const Column(children: [
+          Text(
+            """
+Opening Hours
+
+(Term Time)
+
+Monday - Friday 9am - 4pm
+
+(Outside of Term Time / Consolidation Weeks)
+
+Monday - Friday 9am - 3pm
+
+Purchase online 24/7
+""",
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ]));
   }
 }
