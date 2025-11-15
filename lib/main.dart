@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:union_shop/product_page.dart';
+import 'package:union_shop/about_page.dart';
+
 import 'package:union_shop/models/product_model.dart';
 
 void main() {
@@ -32,7 +35,8 @@ class UnionShopApp extends StatelessWidget {
                 options: {
                   "Color": ["Cinnamon (Benny the Bear)"]
                 },
-                price: 15))
+                price: 15)),
+        '/about': (context) => const AboutPage()
       },
     );
   }
@@ -130,7 +134,8 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   const NavButton(
                                       optionName: "SALE!", url: "/"),
-                                  const NavButton(optionName: "About", url: "/")
+                                  const NavButton(
+                                      optionName: "About", url: "/about")
                                 ],
                               )),
                           const Spacer(),
@@ -416,10 +421,20 @@ class NavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: onPressed, child: Text(optionName));
+    //return ElevatedButton(onPressed: onPressed, child: Text(optionName));
+    return GestureDetector(
+      onTap: () {
+        barNavigateTo(context);
+      },
+      child: Text(
+        optionName,
+      ),
+    );
   }
 
-  void onPressed() {}
+  void barNavigateTo(BuildContext context) {
+    Navigator.pushNamed(context, url);
+  }
 }
 
 class NavDropdown extends ProductDropdown {
