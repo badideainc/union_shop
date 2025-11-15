@@ -5,7 +5,8 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return const Scaffold(
+        body: Column(
       children: [
         Text(
           "About Us",
@@ -21,8 +22,9 @@ We hope you enjoy our products as much as we enjoy offering them to you. If you 
 
 Happy shopping!
 
-The Union Shop & Reception Team​​​​​""")
+The Union Shop & Reception Team​​​​​""",
+            style: TextStyle(fontSize: 16, color: Colors.grey)),
       ],
-    );
+    ));
   }
 }
