@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/main.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -8,6 +9,7 @@ class AboutPage extends StatelessWidget {
     return const Scaffold(
         body: Column(
       children: [
+        NavBar(),
         Text(
           "About Us",
           style: TextStyle(fontSize: 36, color: Colors.black),
