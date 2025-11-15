@@ -495,6 +495,23 @@ Purchase online 24/7
 """,
             style: FooterText(16),
           ),
+          SizedBox(height: 16),
+          Text(
+            "Help and Information",
+            style: FooterText(20),
+          ),
+          Text(
+            """
+Search
+Terms & Conditions of Sale Policy
+""",
+            style: FooterText(16),
+          ),
+          SizedBox(height: 16),
+          Text(
+            "Latest Offers",
+            style: FooterText(20),
+          )
         ]));
   }
 }
