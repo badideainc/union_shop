@@ -477,8 +477,11 @@ class Footer extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: const Column(children: [
           Text(
+            "Opening Hours",
+            style: FooterText(20),
+          ),
+          Text(
             """
-Opening Hours
 
 (Term Time)
 
@@ -490,12 +493,17 @@ Monday - Friday 9am - 3pm
 
 Purchase online 24/7
 """,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: FooterText(16),
           ),
         ]));
   }
+}
+
+class FooterText extends TextStyle {
+  const FooterText(double size)
+      : super(
+          color: Colors.grey,
+          fontSize: size,
+          fontWeight: FontWeight.w600,
+        );
 }
