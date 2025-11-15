@@ -469,18 +469,20 @@ class TopBanner extends StatelessWidget {
 class Footer extends StatelessWidget {
   const Footer({super.key});
 
+  void register() {}
+
   @override
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
         color: Colors.grey[50],
         padding: const EdgeInsets.all(24),
-        child: const Column(children: [
-          Text(
+        child: Column(children: [
+          const Text(
             "Opening Hours",
             style: FooterText(20),
           ),
-          Text(
+          const Text(
             """
 
 (Term Time)
@@ -495,23 +497,37 @@ Purchase online 24/7
 """,
             style: FooterText(16),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             "Help and Information",
             style: FooterText(20),
           ),
-          Text(
+          const Text(
             """
 Search
 Terms & Conditions of Sale Policy
 """,
             style: FooterText(16),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             "Latest Offers",
             style: FooterText(20),
-          )
+          ),
+          const TextField(
+            decoration: InputDecoration(
+              hintText: 'Email Address',
+            ),
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: register,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF4d2963),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Subscribe'),
+          ),
         ]));
   }
 }
