@@ -26,21 +26,13 @@ class ProductPage extends StatelessWidget {
             Container(
               height: 100,
               color: Colors.white,
-              child: Column(
+              child: const Column(
                 children: [
                   // Top banner
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    color: const Color(0xFF4d2963),
-                    child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
+                  TopBanner(),
                   // Main header
-                  const NavBar(),
+
+                  NavBar(),
                   // Expanded(
                   //   child: Container(
                   //     padding: const EdgeInsets.symmetric(horizontal: 10),
