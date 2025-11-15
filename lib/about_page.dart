@@ -9,6 +9,7 @@ class AboutPage extends StatelessWidget {
     return const Scaffold(
         body: Column(
       children: [
+        TopBanner(),
         NavBar(),
         Text(
           "About Us",
