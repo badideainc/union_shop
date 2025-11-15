@@ -67,19 +67,10 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: 100,
               color: Colors.white,
-              child: Column(
+              child: const Column(
                 children: [
                   // Top banner
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    color: const Color(0xFF4d2963),
-                    child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
+                  TopBanner(),
                   // Main header
                   const NavBar(),
                 ],
@@ -464,6 +455,24 @@ class NavBar extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TopBanner extends StatelessWidget {
+  const TopBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      color: const Color(0xFF4d2963),
+      child: const Text(
+        'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }
