@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
+import 'package:union_shop/print_shack/print_about_page.dart';
+import 'package:union_shop/print_shack/print_personal_page.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
@@ -36,7 +38,10 @@ class UnionShopApp extends StatelessWidget {
                   "Color": ["Cinnamon (Benny the Bear)"]
                 },
                 price: 15)),
-        '/about': (context) => const AboutPage()
+        '/about': (context) => const AboutPage(),
+        '/print_shack/print_about_page': (context) => const PrintAboutPage(),
+        '/print_shack/print_personalisation_page': (context) =>
+            const PrintPersonalisationPage(),
       },
     );
   }
@@ -377,7 +382,11 @@ class NavBar extends StatelessWidget {
                     ),
                     const NavDropdown(
                       optionName: "The Print Shack",
-                      pages: {"About": "/", "Personalisation": "/"},
+                      pages: {
+                        "About": "/print_shack/print_about_page",
+                        "Personalisation":
+                            "/print_shack/print_personalisation_page",
+                      },
                       options: [],
                     ),
                     const NavButton(optionName: "SALE!", url: "/"),
