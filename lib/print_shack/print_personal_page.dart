@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/main.dart ';
+import 'package:union_shop/product_page.dart';
 
 class PrintPersonalisationPage extends StatelessWidget {
   const PrintPersonalisationPage({super.key});
@@ -51,6 +52,16 @@ class PrintPersonalisationPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          const ProductDropdown(
+              optionName: "Per Line: One Line of Text",
+              options: [
+                "One Line of Text",
+                "Two Lines of Text",
+                "Three Lines of Text",
+                "Four Lines of Text",
+                "Small Logo (Chest)",
+                "Large Logo (Back)"
+              ])
         ],
       ),
     ));
