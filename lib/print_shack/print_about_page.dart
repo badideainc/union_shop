@@ -24,6 +24,23 @@ class PrintAboutPage extends StatelessWidget {
         "The Union Print Shack",
         style: TextStyle(fontSize: 36, color: Colors.black),
       ),
+      const SizedBox(
+        height: 250,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PrintImage(
+                imageUrl:
+                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282"),
+            PrintImage(
+                imageUrl:
+                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282"),
+            PrintImage(
+                imageUrl:
+                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282")
+          ],
+        ),
+      ),
       const Padding(
           padding: EdgeInsets.all(20.0),
           child: Text(
@@ -45,5 +62,27 @@ Pop in or get in touch today - let’s create something uniquely you with our pe
           )),
       const Footer(),
     ])));
+  }
+}
+
+class PrintImage extends StatelessWidget {
+  final String imageUrl;
+
+  const PrintImage({super.key, required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      imageUrl,
+      fit: BoxFit.contain,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          color: Colors.grey[300],
+          child: const Center(
+            child: Icon(Icons.image_not_supported, color: Colors.grey),
+          ),
+        );
+      },
+    );
   }
 }
