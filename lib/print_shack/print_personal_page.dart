@@ -61,7 +61,14 @@ class PrintPersonalisationPage extends StatelessWidget {
                 "Four Lines of Text",
                 "Small Logo (Chest)",
                 "Large Logo (Back)"
-              ])
+              ]),
+          const SizedBox(height: 24),
+          //Will need to iterate to add more lines if user selects more than one line
+          const Text(
+            "Personalisation Line 1:",
+            style: FooterText(16),
+          ),
+          const TextField(),
         ],
       ),
     ));
