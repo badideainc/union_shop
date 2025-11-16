@@ -6,7 +6,6 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
 
   final ProductModel product;
-  final TextEditingController _quantityController = TextEditingController();
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -219,18 +218,7 @@ class ProductPage extends StatelessWidget {
                           ProductDropdown(
                               optionName: product.options?.keys.toList()[0],
                               options: product.options?.values.toList()[0]),
-                          Column(
-                            children: [
-                              const Text("Quantity"),
-                              SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: TextField(
-                                    controller: _quantityController,
-                                    keyboardType: TextInputType.number,
-                                  ))
-                            ],
-                          )
+                          QuantityWidget(),
                         ],
                       ),
 
@@ -406,4 +394,26 @@ class ProductDropdown extends StatelessWidget {
   }
 
   void changeCategory(String newValue) {}
+}
+
+class QuantityWidget extends StatelessWidget {
+  final TextEditingController _quantityController = TextEditingController();
+
+  QuantityWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text("Quantity"),
+        SizedBox(
+            width: 80,
+            height: 80,
+            child: TextField(
+              controller: _quantityController,
+              keyboardType: TextInputType.number,
+            ))
+      ],
+    );
+  }
 }
