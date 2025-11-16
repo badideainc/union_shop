@@ -7,7 +7,8 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
       children: [
         Container(
           height: 100,
@@ -41,6 +42,6 @@ The Union Shop & Reception Team​​​​​""",
         ),
         const Footer(),
       ],
-    ));
+    )));
   }
 }
