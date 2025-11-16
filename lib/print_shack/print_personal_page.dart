@@ -69,6 +69,26 @@ class PrintPersonalisationPage extends StatelessWidget {
             style: FooterText(16),
           ),
           const TextField(),
+          const SizedBox(height: 24),
+          QuantityWidget(),
+          const SizedBox(height: 24),
+          ElevatedButton(onPressed: () {}, child: const Text("ADD TO CART")),
+          const SizedBox(height: 12),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
+              """
+
+£3 for one line of text! £5 for two!
+
+One line of text is 10 characters.
+
+Please ensure all spellings are correct before submitting your purchase as we will print your item with the exact wording you provide. We will not be responsible for any incorrect spellings printed onto your garment. Personalised items do not qualify for refunds.
+""",
+              style: FooterText(16),
+            ),
+          ),
+          const Footer(),
         ],
       ),
     ));
