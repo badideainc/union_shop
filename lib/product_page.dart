@@ -3,7 +3,7 @@ import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class ProductPage extends StatelessWidget {
-  ProductPage({super.key, required this.product});
+  const ProductPage({super.key, required this.product});
 
   final ProductModel product;
 
