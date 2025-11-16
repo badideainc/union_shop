@@ -30,6 +30,27 @@ class PrintPersonalisationPage extends StatelessWidget {
           const SizedBox(height: 20),
           const Text("Personalisation",
               style: TextStyle(fontSize: 36, color: Colors.black)),
+          const SizedBox(height: 12),
+
+          // Product price
+          const Text(
+            "£3.00",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF4d2963),
+            ),
+          ),
+
+          const Text(
+            "Tax included.",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
       ),
     ));
