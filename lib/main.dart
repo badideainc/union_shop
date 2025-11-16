@@ -304,13 +304,17 @@ class NavDropdown extends ProductDropdown {
       required super.options,
       required super.optionName});
 
+  void barNavigateTo(BuildContext context, String url) {
+    Navigator.pushNamed(context, url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
         hint: Text(optionName!),
         items: getDropdownOptions(pages.keys),
         onChanged: (String? targetPage) {
-          //Go to that page
+          barNavigateTo(context, pages[targetPage]!);
         });
   }
 }
