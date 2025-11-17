@@ -1,0 +1,14 @@
+{
+    "products": [
+        {
+            "id": "GB1",
+            "name": "Graduation Bear",
+            "description": "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
+            "imageUrl": "https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561",
+            "options": {
+                "Color": ["Cinnamon (Benny the Bear)"]
+            },
+            "price": 15
+        }
+    ]
+}
