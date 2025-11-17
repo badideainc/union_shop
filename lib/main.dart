@@ -28,18 +28,7 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => const ProductPage(
-            product: ProductModel(
-                id: "0",
-                name: "Graduation Bear",
-                description:
-                    "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
-                imageUrl:
-                    'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                options: {
-                  "Color": ["Cinnamon (Benny the Bear)"]
-                },
-                price: 15)),
+        '/product': (context) => ProductPage(product: ProductModel("GB1")),
         '/about': (context) => const AboutPage(),
         '/print_shack/print_about_page': (context) => const PrintAboutPage(),
         '/print_shack/print_personalisation_page': (context) =>
@@ -180,30 +169,18 @@ class HomeScreen extends StatelessWidget {
                           MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
-                      children: const [
+                      children: [
                         ProductCard(
-                          title: 'Placeholder Product 1',
-                          price: '£10.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          product: ProductModel("GB1"),
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 2',
-                          price: '£15.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          product: ProductModel("GB1"),
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 3',
-                          price: '£20.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          product: ProductModel("GB1"),
                         ),
                         ProductCard(
-                          title: 'Placeholder Product 4',
-                          price: '£25.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          product: ProductModel("GB1"),
                         ),
                       ],
                     ),
