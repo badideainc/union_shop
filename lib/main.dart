@@ -28,7 +28,7 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => ProductPage(product: ProductModel("GB1")),
+        '/product': (context) => ProductPage(product: ProductModel(id: "GB1")),
         '/about': (context) => const AboutPage(),
         '/print_shack/print_about_page': (context) => const PrintAboutPage(),
         '/print_shack/print_personalisation_page': (context) =>
@@ -170,18 +170,10 @@ class HomeScreen extends StatelessWidget {
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: [
-                        ProductCard(
-                          product: ProductModel("GB1"),
-                        ),
-                        ProductCard(
-                          product: ProductModel("GB1"),
-                        ),
-                        ProductCard(
-                          product: ProductModel("GB1"),
-                        ),
-                        ProductCard(
-                          product: ProductModel("GB1"),
-                        ),
+                        ProductCard(product: ProductModel(id: "GB1")),
+                        ProductCard(product: ProductModel(id: "GB1")),
+                        ProductCard(product: ProductModel(id: "GB1")),
+                        ProductCard(product: ProductModel(id: "GB1")),
                       ],
                     ),
                   ],
@@ -203,9 +195,9 @@ class ProductCard extends StatelessWidget {
   // final String price;
   // final String imageUrl;
 
-  final ProductModel product;
+  ProductModel product;
 
-  const ProductCard({
+  ProductCard({
     super.key,
     required this.product,
   });
