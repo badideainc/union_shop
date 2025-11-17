@@ -28,12 +28,14 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => ProductPage(
-            product: const ProductModel(
+        '/product': (context) => const ProductPage(
+            product: ProductModel(
                 id: "0",
                 name: "Graduation Bear",
                 description:
                     "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
+                imageUrl:
+                    'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
                 options: {
                   "Color": ["Cinnamon (Benny the Bear)"]
                 },
@@ -77,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                   // Top banner
                   TopBanner(),
                   // Main header
-                  const NavBar(),
+                  NavBar(),
                 ],
               ),
             ),
@@ -220,15 +222,15 @@ class HomeScreen extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-  final String title;
-  final String price;
-  final String imageUrl;
+  // final String title;
+  // final String price;
+  // final String imageUrl;
+
+  final ProductModel product;
 
   const ProductCard({
     super.key,
-    required this.title,
-    required this.price,
-    required this.imageUrl,
+    required this.product,
   });
 
   @override
@@ -242,7 +244,7 @@ class ProductCard extends StatelessWidget {
         children: [
           Expanded(
             child: Image.network(
-              imageUrl,
+              product.imageUrl,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
@@ -259,13 +261,13 @@ class ProductCard extends StatelessWidget {
             children: [
               const SizedBox(height: 4),
               Text(
-                title,
+                product.name,
                 style: const TextStyle(fontSize: 14, color: Colors.black),
                 maxLines: 2,
               ),
               const SizedBox(height: 4),
               Text(
-                price,
+                '£${product.price}',
                 style: const TextStyle(fontSize: 13, color: Colors.grey),
               ),
             ],
