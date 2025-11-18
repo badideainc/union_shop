@@ -34,7 +34,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _product,
-      builder: (context, snapshot) {
+      builder: (context, AsyncSnapshot<ProductModel> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         }
@@ -273,7 +273,7 @@ class _ProductPageState extends State<ProductPage> {
                           const SizedBox(height: 24),
                           // Product description
                           Text(
-                            _product.description,
+                            snapshot.data!.productDescription,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.grey,

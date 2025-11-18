@@ -30,4 +30,11 @@ class ProductModel {
       return ProductModel(id: id);
     }
   }
+
+  String get productId => id;
+  String get productName => name;
+  String get productDescription => description;
+  String get productImageUrl => imageUrl;
+  int get productPrice => price;
+  int get productQuantity => quantity;
 }
