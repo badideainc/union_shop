@@ -8,13 +8,13 @@ class ProductPage extends StatefulWidget {
   final ProductModel product;
 
   @override
-  State<ProductPage> createState() => _ProductPageState(product: product);
+  State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  _ProductPageState({required this.product});
+  _ProductPageState();
 
-  final ProductModel product;
+  late final Future<ProductModel> _product;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
