@@ -19,6 +19,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    _product = ProductModel.productFromJson("GB1");
   }
 
   void navigateToHome(BuildContext context) {
@@ -32,7 +33,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ProductModel.productFromJson(product.id),
+      future: _product,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
