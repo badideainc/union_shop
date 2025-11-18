@@ -1,7 +1,7 @@
 import 'package:union_shop/json_parser.dart';
 
 class ProductModel {
-  final String id;
+  final String _id;
   String _name = "";
   String _description = "";
   String _imageUrl = "";
@@ -30,11 +30,11 @@ class ProductModel {
     }
   }
 
-  String get productId => id;
-  String get productName => _name;
-  String get productDescription => _description;
-  String get productImageUrl => _imageUrl;
-  int get productPrice => _price;
-  int get productQuantity => _quantity;
-  Map<String, List<String>>? get productOptions => _options;
+  String get id => _id;
+  String get name => _name;
+  String get description => _description;
+  String get imageUrl => _imageUrl;
+  int get price => _price;
+  int get quantity => _quantity;
+  Map<String, List<String>>? get options => _options;
 }
