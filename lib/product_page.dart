@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.product});
+
+  final ProductModel product;
+
+  @override
+  State<ProductPage> createState() => _ProductPageState(product: product);
+}
+
+class _ProductPageState extends State<ProductPage> {
+  _ProductPageState({required this.product});
 
   final ProductModel product;
 
