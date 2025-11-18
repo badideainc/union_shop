@@ -37,4 +37,5 @@ class ProductModel {
   String get productImageUrl => imageUrl;
   int get productPrice => price;
   int get productQuantity => quantity;
+  Map<String, List<String>>? get productOptions => options;
 }
