@@ -1,7 +1,7 @@
 import 'package:union_shop/json_parser.dart';
 
 class ProductModel {
-  final String _id;
+  String _id = "";
   String _name = "";
   String _description = "";
   String _imageUrl = "";
@@ -11,14 +11,14 @@ class ProductModel {
   //Broad array for the different types of the item
   Map<String, List<String>>? _options;
 
-  ProductModel({required this.id});
+  ProductModel();
 
   static Future<ProductModel> productFromJson(String id) async {
     {
       final productList = await loadProductData();
       for (final productData in productList) {
         if (productData['id'] == id) {
-          final model = ProductModel(id: id);
+          final model = ProductModel();
           model._name = productData['name'] ?? model._name;
           model._description = productData['description'] ?? model._description;
           model._imageUrl = productData['imageUrl'] ?? model._imageUrl;
@@ -26,7 +26,7 @@ class ProductModel {
           return model;
         }
       }
-      return ProductModel(id: id);
+      return ProductModel();
     }
   }
 
