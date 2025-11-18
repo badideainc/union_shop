@@ -16,6 +16,11 @@ class _ProductPageState extends State<ProductPage> {
 
   late final Future<ProductModel> _product;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
