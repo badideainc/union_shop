@@ -152,7 +152,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
 
                 // Product details
-                Row(
+                Column(
                   children: [
                     Container(
                         color: Colors.white,
