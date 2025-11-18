@@ -207,7 +207,7 @@ class _ProductPageState extends State<ProductPage> {
                       child: Column(
                         children: [
                           Text(
-                            product.name,
+                            _product.name,
                             style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -219,7 +219,7 @@ class _ProductPageState extends State<ProductPage> {
 
                           // Product price
                           Text(
-                            "£${product.price.toString()}",
+                            "£${_product.price.toString()}",
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -241,8 +241,10 @@ class _ProductPageState extends State<ProductPage> {
                             spacing: 20.0,
                             children: [
                               ProductDropdown(
-                                  optionName: product.options?.keys.toList()[0],
-                                  options: product.options?.values.toList()[0]),
+                                  optionName:
+                                      _product.options?.keys.toList()[0],
+                                  options:
+                                      _product.options?.values.toList()[0]),
                               QuantityWidget(),
                             ],
                           ),
@@ -271,7 +273,7 @@ class _ProductPageState extends State<ProductPage> {
                           const SizedBox(height: 24),
                           // Product description
                           Text(
-                            product.description,
+                            _product.description,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
