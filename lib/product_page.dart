@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:union_shop/json_parser.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
