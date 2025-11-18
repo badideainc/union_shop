@@ -203,7 +203,6 @@ class _ProductPageState extends State<ProductPage> {
                     Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(24),
-                      width: MediaQuery.sizeOf(context).width - 500,
                       child: Column(
                         children: [
                           Text(
