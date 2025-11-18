@@ -207,7 +207,7 @@ class _ProductPageState extends State<ProductPage> {
                       child: Column(
                         children: [
                           Text(
-                            snapshot.data!.productName,
+                            snapshot.data!.name,
                             style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -219,7 +219,7 @@ class _ProductPageState extends State<ProductPage> {
 
                           // Product price
                           Text(
-                            "£${snapshot.data!.productPrice.toString()}",
+                            "£${snapshot.data!.price.toString()}",
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -241,10 +241,9 @@ class _ProductPageState extends State<ProductPage> {
                             spacing: 20.0,
                             children: [
                               ProductDropdown(
-                                  optionName: snapshot
-                                      .data!.productOptions?.keys
-                                      .toList()[0],
-                                  options: snapshot.data!.productOptions?.values
+                                  optionName:
+                                      snapshot.data!.options?.keys.toList()[0],
+                                  options: snapshot.data!.options?.values
                                       .toList()[0]),
                               QuantityWidget(),
                             ],
@@ -274,7 +273,7 @@ class _ProductPageState extends State<ProductPage> {
                           const SizedBox(height: 24),
                           // Product description
                           Text(
-                            snapshot.data!.productDescription,
+                            snapshot.data!.description,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
