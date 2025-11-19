@@ -28,7 +28,13 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => ProductPage(product: ProductModel()),
+        '/product': (context) {
+          //Pull arguments that were passed through context
+          final args = ModalRoute.of(context)?.settings.arguments;
+          //ProductID is a string and the argument
+          final productID = args is String ? args : '';
+          return ProductPage(productID: productID);
+        },
         '/about': (context) => const AboutPage(),
         '/print_shack/print_about_page': (context) => const PrintAboutPage(),
         '/print_shack/print_personalisation_page': (context) =>
@@ -206,7 +212,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.pushNamed(context, '/product', arguments: product.id);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
