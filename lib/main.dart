@@ -177,11 +177,11 @@ class HomeScreen extends StatelessWidget {
                           MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
-                      children: [
-                        const ProductCard(productID: 'GB1'),
-                        const ProductCard(productID: 'GB1'),
-                        const ProductCard(productID: 'GB1'),
-                        const ProductCard(productID: 'GB1'),
+                      children: const [
+                        ProductCard(productID: 'city_postcard'),
+                        ProductCard(productID: 'city_magnet'),
+                        ProductCard(productID: 'city_bookmark'),
+                        ProductCard(productID: 'city_notebook'),
                       ],
                     ),
                   ],
