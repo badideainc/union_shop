@@ -7,7 +7,7 @@ class ProductModel {
   String _imageUrl = "";
 
   int _quantity = 0;
-  int _price = 0;
+  double _price = 0;
   //Broad array for the different types of the item
   Map<String, List<String>>? _options;
 
@@ -34,7 +34,7 @@ class ProductModel {
   String get name => _name;
   String get description => _description;
   String get imageUrl => _imageUrl;
-  int get price => _price;
+  double get price => _price;
   int get quantity => _quantity;
   Map<String, List<String>>? get options => _options;
 }
