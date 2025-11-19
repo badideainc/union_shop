@@ -3,23 +3,24 @@ import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key, required this.product});
+  const ProductPage({super.key, required this.productID});
 
-  final ProductModel product;
+  final String productID;
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<ProductPage> createState() => _ProductPageState(productID: productID);
 }
 
 class _ProductPageState extends State<ProductPage> {
-  _ProductPageState();
+  _ProductPageState({required this.productID});
 
+  final String productID;
   late final Future<ProductModel> _product;
 
   @override
   void initState() {
     super.initState();
-    _product = ProductModel.productFromJson("GB1");
+    _product = ProductModel.productFromJson(productID);
   }
 
   void navigateToHome(BuildContext context) {
