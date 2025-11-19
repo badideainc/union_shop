@@ -198,7 +198,23 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
+  // final String title;
+  // final String price;
+  // final String imageUrl;
+
+  final String productID;
+
+  const ProductCard({
+    super.key,
+    required this.productID,
+  });
+
+  @override
+  State<ProductCard> createState() => _ProductCardState(productID: productID);
+}
+
+class _ProductCardState extends State<ProductCard> {
   // final String title;
   // final String price;
   // final String imageUrl;
@@ -207,8 +223,7 @@ class ProductCard extends StatelessWidget {
 
   late final Future<ProductModel> _product;
 
-  ProductCard({
-    super.key,
+  _ProductCardState({
     required this.productID,
   });
 
@@ -238,7 +253,7 @@ class ProductCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Image.network(
-                  product.imageUrl,
+                  snapshot.data!.imageUrl,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
@@ -256,13 +271,13 @@ class ProductCard extends StatelessWidget {
                 children: [
                   const SizedBox(height: 4),
                   Text(
-                    product.name,
+                    snapshot.data!.name,
                     style: const TextStyle(fontSize: 14, color: Colors.black),
                     maxLines: 2,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '£${product.price}',
+                    '£${snapshot.data!.price}',
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                 ],
