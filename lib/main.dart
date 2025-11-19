@@ -205,52 +205,72 @@ class ProductCard extends StatelessWidget {
 
   final String productID;
 
-  const ProductCard({
+  late final Future<ProductModel> _product;
+
+  ProductCard({
     super.key,
     required this.productID,
   });
 
   @override
+  void initState() {
+    super.initState();
+    _product = ProductModel.productFromJson(productID);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/product', arguments: productID);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Image.network(
-              product.imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
-                  ),
-                );
-              },
-            ),
-          ),
-          Column(
+    return FutureBuilder(
+      future: _product,
+      builder: (context, AsyncSnapshot<ProductModel> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return const Text("Error loading product, please try again");
+        }
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/product', arguments: productID);
+          },
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 4),
-              Text(
-                product.name,
-                style: const TextStyle(fontSize: 14, color: Colors.black),
-                maxLines: 2,
+              Expanded(
+                child: Image.network(
+                  product.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child:
+                            Icon(Icons.image_not_supported, color: Colors.grey),
+                      ),
+                    );
+                  },
+                ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                '£${product.price}',
-                style: const TextStyle(fontSize: 13, color: Colors.grey),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 4),
+                  Text(
+                    product.name,
+                    style: const TextStyle(fontSize: 14, color: Colors.black),
+                    maxLines: 2,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '£${product.price}',
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
