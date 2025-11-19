@@ -176,10 +176,10 @@ class HomeScreen extends StatelessWidget {
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: [
-                        ProductCard(product: ProductModel()),
-                        ProductCard(product: ProductModel()),
-                        ProductCard(product: ProductModel()),
-                        ProductCard(product: ProductModel()),
+                        const ProductCard(productID: 'GB1'),
+                        const ProductCard(productID: 'GB1'),
+                        const ProductCard(productID: 'GB1'),
+                        const ProductCard(productID: 'GB1'),
                       ],
                     ),
                   ],
@@ -201,18 +201,18 @@ class ProductCard extends StatelessWidget {
   // final String price;
   // final String imageUrl;
 
-  final ProductModel product;
+  final String productID;
 
   const ProductCard({
     super.key,
-    required this.product,
+    required this.productID,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product', arguments: product.id);
+        Navigator.pushNamed(context, '/product', arguments: productID);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
