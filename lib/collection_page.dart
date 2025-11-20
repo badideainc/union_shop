@@ -101,13 +101,17 @@ class _CollectionPageState extends State<CollectionPage> {
                             const Text('No products found'),
                           ] else ...[
                             // Minimal listing: ProductCards for each product
-                            Column(
+                            GridView.count(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              crossAxisCount:
+                                  MediaQuery.of(context).size.width > 600
+                                      ? 2
+                                      : 1,
+                              crossAxisSpacing: 24,
+                              mainAxisSpacing: 48,
                               children: snapshot.data!
-                                  .map((p) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 6.0),
-                                        child: ProductCard(productID: p.id),
-                                      ))
+                                  .map((p) => ProductCard(productID: p.id))
                                   .toList(),
                             ),
                           ],
