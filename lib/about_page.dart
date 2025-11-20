@@ -6,26 +6,16 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: SingleChildScrollView(
             child: Column(
       children: [
-        Container(
-          height: 100,
-          color: Colors.white,
-          child: const Column(children: [
-            // Top banner
-            TopBanner(),
-            // Main header
-
-            NavBar(),
-          ]),
-        ),
-        const Text(
+        Header(),
+        Text(
           "About Us",
           style: TextStyle(fontSize: 36, color: Colors.black),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(20.0),
           child: Text("""Welcome to the Union Shop!
 
