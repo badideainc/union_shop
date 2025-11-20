@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/json_parser.dart';
 import 'package:union_shop/models/product_model.dart';
 import 'package:union_shop/models/category.dart';
+import 'package:union_shop/product_page.dart';
+import 'package:union_shop/main.dart';
 
 class CollectionPage extends StatefulWidget {
-  final Category category;
+  final ProductCategory category;
 
   const CollectionPage({super.key, required this.category});
 
@@ -22,13 +24,13 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   Future<List<ProductModel>> _fetchProductsForCategory(
-      Category category) async {
+      ProductCategory category) async {
     final List<Map<String, dynamic>> products = await loadProductData();
 
     List<Future<ProductModel>> futures = [];
 
     for (final item in products) {
-      final Category? stringCat =
+      final ProductCategory? stringCat =
           categoryFromString(item['category']?.toString());
 
       //Add the id if the category matches
@@ -43,11 +45,37 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Placeholder build; the Future is created and will be consumed in the
-    // next small commit where we add the FutureBuilder UI.
     return Scaffold(
-      appBar: AppBar(title: Text(categoryTitle(widget.category))),
-      body: const Center(child: CircularProgressIndicator()),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Header(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    categoryTitle(widget.category),
+                    style: const TextStyle(
+                        fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ProductDropdown(optionName: 'Filter', options: ["Test"]),
+                      ProductDropdown(optionName: 'Sort', options: ["Test"]),
+                      Text('0 products'),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
