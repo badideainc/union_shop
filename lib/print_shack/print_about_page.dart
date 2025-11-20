@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:union_shop/main.dart ';
+import 'package:union_shop/main.dart';
 
 class PrintAboutPage extends StatelessWidget {
   const PrintAboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: SingleChildScrollView(
             child: Column(children: [
-      Container(
-        height: 100,
-        color: Colors.white,
-        child: const Column(children: [
-          // Top banner
-          TopBanner(),
-          // Main header
-
-          NavBar(),
-        ]),
-      ),
-      const Text(
+      Header(),
+      Text(
         "The Union Print Shack",
         style: TextStyle(fontSize: 36, color: Colors.black),
       ),
-      const SizedBox(
+      SizedBox(
         height: 250,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +31,7 @@ class PrintAboutPage extends StatelessWidget {
           ],
         ),
       ),
-      const Padding(
+      Padding(
           padding: EdgeInsets.all(20.0),
           child: Text(
             """Make It Yours at The Union Print Shack
@@ -60,7 +50,7 @@ Ready to Make It Yours?
 Pop in or get in touch today - let’s create something uniquely you with our personalisation service - The Union Print Shack!""",
             style: FooterText(16),
           )),
-      const Footer(),
+      Footer(),
     ])));
   }
 }
