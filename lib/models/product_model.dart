@@ -1,10 +1,13 @@
 import 'package:union_shop/json_parser.dart';
+import 'package:union_shop/models/category.dart';
 
 class ProductModel {
   String _id = "";
   String _name = "";
   String _description = "";
   String _imageUrl = "";
+
+  Category? _category;
 
   int _quantity = 0;
   double _price = 0;
