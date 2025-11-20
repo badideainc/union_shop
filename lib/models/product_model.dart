@@ -22,6 +22,7 @@ class ProductModel {
       for (final productData in productList) {
         if (productData['id'] == id) {
           final model = ProductModel();
+          model._id = productData['id'] ?? model._id;
           model._name = productData['name'] ?? model._name;
           model._description = productData['description'] ?? model._description;
           model._imageUrl = productData['imageUrl'] ?? model._imageUrl;
