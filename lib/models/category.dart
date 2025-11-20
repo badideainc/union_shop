@@ -26,3 +26,24 @@ String categoryTitle(Category c) {
       return 'Graduation 🎓';
   }
 }
+
+Category? categoryFromString(String? categoryString) {
+  switch (categoryString) {
+    case 'clothing':
+      return Category.clothing;
+    case 'merchandise':
+      return Category.merchandise;
+    case 'halloween':
+      return Category.halloween;
+    case 'signatureAndEssentialsRange':
+      return Category.signatureAndEssentialsRange;
+    case 'portsmouthCityCollection':
+      return Category.portsmouthCityCollection;
+    case 'prideCollection':
+      return Category.prideCollection;
+    case 'graduation':
+      return Category.graduation;
+    default:
+      return null;
+  }
+}
