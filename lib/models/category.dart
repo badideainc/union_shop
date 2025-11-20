@@ -1,4 +1,4 @@
-enum Category {
+enum ProductCategory {
   clothing,
   merchandise,
   halloween,
@@ -8,41 +8,41 @@ enum Category {
   graduation,
 }
 
-String categoryTitle(Category c) {
+String categoryTitle(ProductCategory c) {
   switch (c) {
-    case Category.clothing:
+    case ProductCategory.clothing:
       return 'Clothing';
-    case Category.merchandise:
+    case ProductCategory.merchandise:
       return 'Merchandise';
-    case Category.halloween:
+    case ProductCategory.halloween:
       return 'Halloween 🎃';
-    case Category.signatureAndEssentialsRange:
+    case ProductCategory.signatureAndEssentialsRange:
       return 'Signature & Essentials Range';
-    case Category.portsmouthCityCollection:
+    case ProductCategory.portsmouthCityCollection:
       return 'Portsmouth City Collection';
-    case Category.prideCollection:
+    case ProductCategory.prideCollection:
       return 'Pride Collection 🏳️‍🌈';
-    case Category.graduation:
+    case ProductCategory.graduation:
       return 'Graduation 🎓';
   }
 }
 
-Category? categoryFromString(String? categoryString) {
+ProductCategory? categoryFromString(String? categoryString) {
   switch (categoryString) {
     case 'clothing':
-      return Category.clothing;
+      return ProductCategory.clothing;
     case 'merchandise':
-      return Category.merchandise;
+      return ProductCategory.merchandise;
     case 'halloween':
-      return Category.halloween;
+      return ProductCategory.halloween;
     case 'signatureAndEssentialsRange':
-      return Category.signatureAndEssentialsRange;
+      return ProductCategory.signatureAndEssentialsRange;
     case 'portsmouthCityCollection':
-      return Category.portsmouthCityCollection;
+      return ProductCategory.portsmouthCityCollection;
     case 'prideCollection':
-      return Category.prideCollection;
+      return ProductCategory.prideCollection;
     case 'graduation':
-      return Category.graduation;
+      return ProductCategory.graduation;
     default:
       return null;
   }
