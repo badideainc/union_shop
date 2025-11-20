@@ -61,15 +61,60 @@ class _CollectionPageState extends State<CollectionPage> {
                         fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ProductDropdown(optionName: 'Filter', options: ["Test"]),
-                      ProductDropdown(optionName: 'Sort', options: ["Test"]),
-                      Text('0 products'),
-                    ],
+                  FutureBuilder<List<ProductModel>>(
+                    future: _futureProducts,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SizedBox(
+                          height: 200,
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+
+                      if (snapshot.hasError) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child:
+                              Text('Error loading products: ${snapshot.error}'),
+                        );
+                      }
+                      ;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Controls row: two dropdowns and the live product count
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const ProductDropdown(
+                                  optionName: 'Filter', options: ["Test"]),
+                              const ProductDropdown(
+                                  optionName: 'Sort', options: ["Test"]),
+                              Text('${snapshot.data?.length ?? 0} products'),
+                            ],
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          if (snapshot.data!.isEmpty) ...[
+                            const Text('No products found'),
+                          ] else ...[
+                            // Minimal listing: ProductCards for each product
+                            Column(
+                              children: snapshot.data!
+                                  .map((p) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 6.0),
+                                        child: ProductCard(productID: p.id),
+                                      ))
+                                  .toList(),
+                            ),
+                          ],
+                        ],
+                      );
+                    },
                   ),
-                  const SizedBox(height: 24),
                 ],
               ),
             ),
