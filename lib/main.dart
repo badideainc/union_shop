@@ -7,8 +7,6 @@ import 'package:union_shop/print_shack/print_personal_page.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
-import 'package:union_shop/json_parser.dart';
-
 void main() {
   runApp(const UnionShopApp());
 }
