@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/main.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
-import 'package:union_shop/main.dart ';
 import 'package:union_shop/product_page.dart';
 
 class PrintPersonalisationPage extends StatelessWidget {
@@ -12,17 +12,7 @@ class PrintPersonalisationPage extends StatelessWidget {
         body: SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            height: 100,
-            color: Colors.white,
-            child: const Column(children: [
-              // Top banner
-              TopBanner(),
-              // Main header
-
-              NavBar(),
-            ]),
-          ),
+          const Header(),
           const SizedBox(
               height: 250,
               child: PrintImage(
