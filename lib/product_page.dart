@@ -116,7 +116,7 @@ class _ProductPageState extends State<ProductPage> {
 
                           // Product price
                           Text(
-                            "£${snapshot.data!.price.toString()}",
+                            "£${snapshot.data!.price.toStringAsFixed(2)}",
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
