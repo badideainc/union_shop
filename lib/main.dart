@@ -269,7 +269,7 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '£${snapshot.data!.price}',
+                    '£${snapshot.data!.price.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                 ],
