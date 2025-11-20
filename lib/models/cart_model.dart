@@ -1,7 +1,7 @@
 import 'package:union_shop/models/product_model.dart';
 
 class CartModel {
-  List<ProductModel> _items = [];
+  final List<ProductModel> _items = [];
 
   void addItem(ProductModel product) {
     _items.add(product);
