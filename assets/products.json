@@ -5,6 +5,7 @@
             "name": "Graduation Bear",
             "description": "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
             "imageUrl": "",
+            "category": "graduation",
             "options": {
                 "Color": ["Cinnamon (Benny the Bear)"]
             },
@@ -15,6 +16,7 @@
             "name": "Portsmouth City Postcard",
             "description": "Celebrate the charm of our coastal city with this beautifully illustrated Portsmouth City Postcard, designed by British artist Julia Gash. Featuring her signature hand-drawn style, this postcard captures Portsmouth’s most iconic landmarks - from the Spinnaker Tower to the historic seafront - all brought to life in bold lines and vibrant colours. Perfect for sending home, pinning on your wall, or keeping as a personal keepsake, it’s a fun and affordable way to show off your Portsmouth pride.",
             "imageUrl": "https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561",
+            "category": "portsmouthCityCollection",
             "price": 1
         },
         {
@@ -22,6 +24,7 @@
             "name": "Portsmouth City Magnet",
             "description": "Bring a bit of Portsmouth pride to your fridge, locker, or pinboard with our eye-catching Portsmouth City Magnet, featuring the artwork of renowned illustrator Julia Gash. Part of our Portsmouth City Collection, this magnet showcases Julia’s iconic hand-drawn design, celebrating the city’s most loved landmarks and seaside charm in her signature playful style. Made from durable tin plate, it's both lightweight and long-lasting - a perfect souvenir or small gift with a big personality.",
             "imageUrl": "",
+            "category": "portsmouthCityCollection",
             "price": 4.5
         },
         {
@@ -29,6 +32,7 @@
             "name": "Portsmouth City Bookmark",
             "description": "Add a touch of local charm to your reading with this beautifully illustrated Portsmouth City Bookmark, designed by British artist Julia Gash. Featuring her signature hand-drawn style, this bookmark showcases some of Portsmouth’s most iconic landmarks - from the Spinnaker Tower to historic seafront scenes - all brought to life in bold lines and bright colours. Whether you're marking your place in a textbook or gifting a little piece of Portsmouth to a friend, this bookmark is a fun, practical keepsake that celebrates our coastal city.",
             "imageUrl": "",
+            "category": "portsmouthCityCollection",
             "price": 3
         },
         {
@@ -36,6 +40,7 @@
             "name": "Portsmouth City Notebook",
             "description": "Jot down your thoughts, sketches, or seaside daydreams with our charming Portsmouth City Notebook, featuring the artwork of renowned illustrator Julia Gash. Part of our Portsmouth City Collection, this notebook showcases Julia’s iconic hand-drawn design, capturing the city's much-loved landmarks and coastal charm in her signature playful style. With plain, high-quality pages and a sturdy cover, it's perfect for notes, doodles, or travel memories – a practical yet inspiring gift or souvenir with true Portsmouth personality.",
             "imageUrl": "",
+            "category": "portsmouthCityCollection",
             "price": 7.5
         }
     ]
