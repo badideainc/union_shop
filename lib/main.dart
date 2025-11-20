@@ -42,7 +42,7 @@ class UnionShopApp extends StatelessWidget {
         '/print_shack/print_personalisation_page': (context) =>
             const PrintPersonalisationPage(),
         '/collection': (context) => const CollectionPage(
-              category: ProductCategory.clothing,
+              category: ProductCategory.portsmouthCityCollection,
             ),
       },
     );
