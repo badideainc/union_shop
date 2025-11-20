@@ -66,18 +66,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // Header
-            Container(
-              height: 100,
-              color: Colors.white,
-              child: const Column(
-                children: [
-                  // Top banner
-                  TopBanner(),
-                  // Main header
-                  NavBar(),
-                ],
-              ),
-            ),
+            const Header(),
 
             // Hero Section
             SizedBox(
@@ -564,4 +553,24 @@ class FooterText extends TextStyle {
           fontSize: size,
           fontWeight: FontWeight.w600,
         );
+}
+
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      color: Colors.white,
+      child: const Column(
+        children: [
+          // Top banner
+          TopBanner(),
+          // Main header
+          NavBar(),
+        ],
+      ),
+    );
+  }
 }
