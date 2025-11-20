@@ -4,6 +4,8 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/print_shack/print_personal_page.dart';
+import 'package:union_shop/collection_page.dart';
+import 'package:union_shop/models/category.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
@@ -39,6 +41,9 @@ class UnionShopApp extends StatelessWidget {
         '/print_shack/print_about_page': (context) => const PrintAboutPage(),
         '/print_shack/print_personalisation_page': (context) =>
             const PrintPersonalisationPage(),
+        '/collection': (context) => const CollectionPage(
+              category: ProductCategory.clothing,
+            ),
       },
     );
   }
@@ -371,13 +376,13 @@ class NavBar extends StatelessWidget {
                     const NavDropdown(
                       optionName: "Shop",
                       pages: {
-                        "Clothing": "/",
-                        "Merchandise": "/",
-                        "Halloween 🎃": "/",
-                        "Signature & Essentials Range": "/",
-                        "Portsmouth City Collection": "/",
-                        "Pride Collection 🏳️‍🌈": "/",
-                        "Graduation 🎓": "/",
+                        "Clothing": "/collection",
+                        "Merchandise": "/collection",
+                        "Halloween 🎃": "/collection",
+                        "Signature & Essentials Range": "/collection",
+                        "Portsmouth City Collection": "/collection",
+                        "Pride Collection 🏳️‍🌈": "/collection",
+                        "Graduation 🎓": "/collection",
                       },
                       options: [],
                     ),
