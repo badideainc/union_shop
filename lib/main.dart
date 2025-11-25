@@ -554,10 +554,7 @@ Terms & Conditions of Sale Policy
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: register,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4d2963),
-              foregroundColor: Colors.white,
-            ),
+            style: ImportButtonStyle(),
             child: const Text('Subscribe'),
           ),
         ]));
