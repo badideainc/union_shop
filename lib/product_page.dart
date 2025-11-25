@@ -8,19 +8,18 @@ class ProductPage extends StatefulWidget {
   final String productID;
 
   @override
-  State<ProductPage> createState() => _ProductPageState(productID: productID);
+  State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  _ProductPageState({required this.productID});
+  _ProductPageState();
 
-  final String productID;
   late final Future<ProductModel> _product;
 
   @override
   void initState() {
     super.initState();
-    _product = ProductModel.productFromJson(productID);
+    _product = ProductModel.productFromJson(widget.productID);
   }
 
   void navigateToHome(BuildContext context) {
