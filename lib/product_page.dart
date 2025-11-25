@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/models/product_model.dart';
+import 'package:provider/provider.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.productID});
@@ -152,7 +154,9 @@ class _ProductPageState extends State<ProductPage> {
                           // }),
 
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<CartModel>().add(snapshot.data!);
+                              },
                               child: const Text("ADD TO CART")),
                           const SizedBox(height: 24),
                           ElevatedButton(
