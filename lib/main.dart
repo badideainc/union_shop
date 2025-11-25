@@ -8,6 +8,7 @@ import 'package:union_shop/collection_page.dart';
 import 'package:union_shop/models/category.dart';
 import 'package:union_shop/views/cart_screen.dart';
 import 'package:union_shop/models/cart_model.dart';
+import 'package:provider/provider.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
@@ -20,38 +21,41 @@ class UnionShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Union Shop',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+    return ChangeNotifierProvider(
+      create: (_) => CartModel(),
+      child: MaterialApp(
+        title: 'Union Shop',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+        ),
+        home: HomeScreen(),
+        // By default, the app starts at the '/' route, which is the HomeScreen
+        initialRoute: '/',
+        // When navigating to '/product', build and return the ProductPage
+        // In your browser, try this link: http://localhost:49856/#/product
+        routes: {
+          '/product': (context) {
+            //Pull arguments that were passed through context
+            final args = ModalRoute.of(context)?.settings.arguments;
+            //ProductID is a string and the argument
+            final productID = args is String ? args : '';
+            return ProductPage(productID: productID);
+          },
+          '/about': (context) => const AboutPage(),
+          '/print_shack/print_about_page': (context) => const PrintAboutPage(),
+          '/print_shack/print_personalisation_page': (context) =>
+              const PrintPersonalisationPage(),
+          '/collection': (context) => const CollectionPage(
+                category: ProductCategory.portsmouthCityCollection,
+              ),
+          '/cart': (context) {
+            // Pull the provided CartModel so the screen uses the global cart
+            final cart = Provider.of<CartModel>(context, listen: false);
+            return CartScreen(cart: cart);
+          },
+        },
       ),
-      home: HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
-      routes: {
-        '/product': (context) {
-          //Pull arguments that were passed through context
-          final args = ModalRoute.of(context)?.settings.arguments;
-          //ProductID is a string and the argument
-          final productID = args is String ? args : '';
-          return ProductPage(productID: productID);
-        },
-        '/about': (context) => const AboutPage(),
-        '/print_shack/print_about_page': (context) => const PrintAboutPage(),
-        '/print_shack/print_personalisation_page': (context) =>
-            const PrintPersonalisationPage(),
-        '/collection': (context) => const CollectionPage(
-              category: ProductCategory.portsmouthCityCollection,
-            ),
-        '/cart': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments;
-          final cart = args is CartModel ? args : CartModel();
-          return CartScreen(cart: cart);
-        },
-      },
     );
   }
 }
