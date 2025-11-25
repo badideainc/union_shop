@@ -42,7 +42,12 @@ class _CartScreenState extends State<CartScreen> {
               Text('Product'),
               Text('Price'),
             ],
-          )
+          ),
+          Column(
+            children: [
+              for (final product in cart.items) CartWidget(product: product),
+            ],
+          ),
         ]
       ],
     )));
@@ -56,6 +61,27 @@ class CartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.network(
+            product.imageUrl,
+            width: 100,
+            height: 100,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.name,
+              ),
+            ],
+          ),
+          Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
+        ],
+      ),
+    );
   }
 }
