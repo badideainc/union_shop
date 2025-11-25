@@ -45,4 +45,20 @@ class ProductModel {
   double get price => _price;
   int get quantity => _quantity;
   Map<String, List<String>>? get options => _options;
+
+  // Mutators for quantity so other code can update product quantity when
+  // the product instance is used as a cart item.
+  void setQuantity(int q) {
+    _quantity = q;
+  }
+
+  void incrementQuantity([int delta = 1]) {
+    _quantity += delta;
+  }
+
+  void decrementQuantity([int delta = 1]) {
+    if (_quantity - delta <= 0) return;
+
+    _quantity -= delta;
+  }
 }
