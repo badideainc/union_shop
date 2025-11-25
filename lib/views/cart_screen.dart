@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/models/cart_model.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
-  final CartModel cart;
-
-  const CartScreen({super.key, required this.cart});
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -14,6 +13,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartModel>();
+
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -23,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
           'Your Cart',
           style: Theme.of(context).textTheme.headlineLarge,
         ),
-        if (widget.cart.items.isEmpty) ...[
+        if (cart.items.isEmpty) ...[
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text('Your cart is currently empty.'),

@@ -49,11 +49,7 @@ class UnionShopApp extends StatelessWidget {
           '/collection': (context) => const CollectionPage(
                 category: ProductCategory.portsmouthCityCollection,
               ),
-          '/cart': (context) {
-            // Pull the provided CartModel so the screen uses the global cart
-            final cart = Provider.of<CartModel>(context, listen: false);
-            return CartScreen(cart: cart);
-          },
+          '/cart': (context) => CartScreen(),
         },
       ),
     );
