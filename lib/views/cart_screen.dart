@@ -34,6 +34,13 @@ class _CartScreenState extends State<CartScreen> {
             'Continue shopping',
             style: TextStyle(color: Color(0xFF4d2963)),
           ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text('Product'),
+              Text('Price'),
+            ],
+          )
         ]
       ],
     )));
