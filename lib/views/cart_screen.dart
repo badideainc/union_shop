@@ -60,6 +60,7 @@ class _CartScreenState extends State<CartScreen> {
             style: ImportButtonStyle(),
             child: const Text('CHECK OUT'),
           ),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -80,7 +81,9 @@ class _CartScreenState extends State<CartScreen> {
                   child: const Text("G Pay")),
             ],
           )
-        ]
+        ],
+        const SizedBox(height: 24),
+        const Footer(),
       ],
     )));
   }
