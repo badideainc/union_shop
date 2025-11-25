@@ -592,3 +592,12 @@ class Header extends StatelessWidget {
     );
   }
 }
+
+class ImportButtonStyle extends ButtonStyle {
+  ImportButtonStyle()
+      : super(
+          backgroundColor:
+              WidgetStateProperty.all<Color>(const Color(0xFF4d2963)),
+          foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        );
+}
