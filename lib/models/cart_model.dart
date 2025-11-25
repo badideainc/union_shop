@@ -15,5 +15,5 @@ class CartModel {
     _items.clear();
   }
 
-  List<ProductModel> get items => _items;
+  List<ProductModel> get items => List.unmodifiable(_items);
 }
