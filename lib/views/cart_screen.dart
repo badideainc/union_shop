@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/models/cart_model.dart';
+import 'package:union_shop/models/product_model.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -45,5 +46,16 @@ class _CartScreenState extends State<CartScreen> {
         ]
       ],
     )));
+  }
+}
+
+class CartWidget extends StatelessWidget {
+  final ProductModel product;
+
+  const CartWidget({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
