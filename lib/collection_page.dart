@@ -78,7 +78,6 @@ class _CollectionPageState extends State<CollectionPage> {
                               Text('Error loading products: ${snapshot.error}'),
                         );
                       }
-                      ;
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
