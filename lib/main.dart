@@ -6,6 +6,7 @@ import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/print_shack/print_personal_page.dart';
 import 'package:union_shop/collection_page.dart';
 import 'package:union_shop/models/category.dart';
+import 'package:union_shop/views/cart_screen.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
@@ -44,6 +45,7 @@ class UnionShopApp extends StatelessWidget {
         '/collection': (context) => const CollectionPage(
               category: ProductCategory.portsmouthCityCollection,
             ),
+        '/cart': (context) => const CartScreen(),
       },
     );
   }
@@ -337,6 +339,10 @@ class NavBar extends StatelessWidget {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
+  void navigateTo(BuildContext context, String url) {
+    Navigator.pushNamed(context, url);
+  }
+
   void placeholderCallbackForButtons() {
     // This is the event handler for buttons that don't work yet
   }
@@ -442,7 +448,7 @@ class NavBar extends StatelessWidget {
                       minWidth: 32,
                       minHeight: 32,
                     ),
-                    onPressed: placeholderCallbackForButtons,
+                    onPressed: () => navigateTo(context, '/cart'),
                   ),
                   IconButton(
                     icon: const Icon(
