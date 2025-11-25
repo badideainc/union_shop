@@ -48,6 +48,13 @@ class _CartScreenState extends State<CartScreen> {
               for (final product in cart.items) CartWidget(product: product),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Total: £${cart.totalPrice.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
         ]
       ],
     )));
@@ -70,13 +77,28 @@ class CartWidget extends StatelessWidget {
             product.imageUrl,
             width: 100,
             height: 100,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Colors.grey[300],
+                child: const Center(
+                  child: Icon(Icons.image_not_supported, color: Colors.grey),
+                ),
+              );
+            },
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.name,
+                '${product.name} (x${product.quantity})',
               ),
+              if (product.options != null && product.options!.isNotEmpty)
+                Text(
+                  product.options!.entries
+                      .map((e) => '${e.key}: ${e.value}')
+                      .join(', '),
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
             ],
           ),
           Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
