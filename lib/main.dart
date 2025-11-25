@@ -26,7 +26,7 @@ class UnionShopApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
-      home: const HomeScreen(),
+      home: HomeScreen(),
       // By default, the app starts at the '/' route, which is the HomeScreen
       initialRoute: '/',
       // When navigating to '/product', build and return the ProductPage
@@ -46,14 +46,20 @@ class UnionShopApp extends StatelessWidget {
         '/collection': (context) => const CollectionPage(
               category: ProductCategory.portsmouthCityCollection,
             ),
-        '/cart': (context) => CartScreen(cart: CartModel()),
+        '/cart': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          final cart = args is CartModel ? args : CartModel();
+          return CartScreen(cart: cart);
+        },
       },
     );
   }
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final CartModel cart = CartModel();
+
+  HomeScreen({super.key});
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
