@@ -7,6 +7,7 @@ import 'package:union_shop/print_shack/print_personal_page.dart';
 import 'package:union_shop/collection_page.dart';
 import 'package:union_shop/models/category.dart';
 import 'package:union_shop/views/cart_screen.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 import 'package:union_shop/models/product_model.dart';
 
@@ -45,7 +46,7 @@ class UnionShopApp extends StatelessWidget {
         '/collection': (context) => const CollectionPage(
               category: ProductCategory.portsmouthCityCollection,
             ),
-        '/cart': (context) => const CartScreen(),
+        '/cart': (context) => CartScreen(cart: CartModel()),
       },
     );
   }
