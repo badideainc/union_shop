@@ -55,6 +55,31 @@ class _CartScreenState extends State<CartScreen> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ImportButtonStyle(),
+            child: const Text('CHECK OUT'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                    backgroundColor:
+                        WidgetStateProperty.all(Colors.deepPurpleAccent),
+                    foregroundColor: WidgetStateProperty.all(Colors.white)),
+                child: const Text("shop"),
+              ),
+              ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.black),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                  ),
+                  child: const Text("G Pay")),
+            ],
+          )
         ]
       ],
     )));
