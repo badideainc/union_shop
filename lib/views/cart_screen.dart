@@ -156,6 +156,26 @@ class _CartWidgetState extends State<CartWidget> {
                 },
                 child: const Text('remove'),
               ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Quantity'),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 72,
+                    child: TextField(
+                      controller: _qtyController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: product.quantity > 0
+                            ? product.quantity.toString()
+                            : '1',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
