@@ -39,6 +39,12 @@ class CartModel extends ChangeNotifier {
     }
   }
 
+  /// Remove an item from the cart immediately (regardless of quantity).
+  void remove(String productId) {
+    _items.removeWhere((p) => p.id == productId);
+    notifyListeners();
+  }
+
   void clear() {
     _items.clear();
     notifyListeners();
