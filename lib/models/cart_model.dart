@@ -39,6 +39,21 @@ class CartModel extends ChangeNotifier {
     }
   }
 
+  void updateQuantity(String productId, int quantity) {
+    for (var i = 0; i < _items.length; i++) {
+      final p = _items[i];
+      if (p.id == productId) {
+        if (quantity <= 0) {
+          _items.removeAt(i);
+        } else {
+          p.setQuantity(quantity);
+        }
+        notifyListeners();
+        return;
+      }
+    }
+  }
+
   /// Remove an item from the cart immediately (regardless of quantity).
   void remove(String productId) {
     _items.removeWhere((p) => p.id == productId);
