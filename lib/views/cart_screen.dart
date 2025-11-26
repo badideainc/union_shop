@@ -174,6 +174,12 @@ class _CartWidgetState extends State<CartWidget> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ImportButtonStyle(),
+                    child: const Text('Update'),
+                  ),
                 ],
               ),
             ],
