@@ -148,18 +148,17 @@ class _CartWidgetState extends State<CartWidget> {
                       .join(', '),
                   style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
-              // Remove button: remove the product from the cart immediately
-              TextButton(
-                onPressed: () {
-                  final cart = context.read<CartModel>();
-                  cart.remove(product.id);
-                },
-                child: const Text('remove'),
-              ),
               const SizedBox(height: 8),
               Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Remove button: remove the product from the cart immediately
+                  TextButton(
+                    onPressed: () {
+                      final cart = context.read<CartModel>();
+                      cart.remove(product.id);
+                    },
+                    child: const Text('remove'),
+                  ),
                   const Text('Quantity'),
                   const SizedBox(width: 8),
                   SizedBox(
@@ -176,7 +175,20 @@ class _CartWidgetState extends State<CartWidget> {
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final cart = context.read<CartModel>();
+                      final text = _qtyController.text.trim();
+                      final parsed = int.tryParse(text);
+                      if (parsed == null) {
+                        return;
+                      }
+                      if (parsed <= 0) {
+                        cart.remove(product.id);
+                      } else {
+                        cart.updateQuantity(product.id, parsed);
+                      }
+                      _qtyController.clear();
+                    },
                     style: ImportButtonStyle(),
                     child: const Text('Update'),
                   ),
