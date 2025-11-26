@@ -89,13 +89,20 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-class CartWidget extends StatelessWidget {
+class CartWidget extends StatefulWidget {
   final ProductModel product;
 
   const CartWidget({super.key, required this.product});
 
   @override
+  State<CartWidget> createState() => _CartWidgetState();
+}
+
+class _CartWidgetState extends State<CartWidget> {
+  @override
   Widget build(BuildContext context) {
+    final product = widget.product;
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Row(
