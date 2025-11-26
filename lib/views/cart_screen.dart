@@ -148,9 +148,12 @@ class _CartWidgetState extends State<CartWidget> {
                       .join(', '),
                   style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
-              // Minimal remove button UI (placeholder handler)
+              // Remove button: remove the product from the cart immediately
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  final cart = context.read<CartModel>();
+                  cart.remove(product.id);
+                },
                 child: const Text('remove'),
               ),
             ],
