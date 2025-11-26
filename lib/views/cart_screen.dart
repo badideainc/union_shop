@@ -148,6 +148,11 @@ class _CartWidgetState extends State<CartWidget> {
                       .join(', '),
                   style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
+              // Minimal remove button UI (placeholder handler)
+              TextButton(
+                onPressed: () {},
+                child: const Text('remove'),
+              ),
             ],
           ),
           Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
