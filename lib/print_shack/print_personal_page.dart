@@ -17,6 +17,7 @@ class PrintPersonalisationPage extends StatefulWidget {
 class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   late final TextEditingController _dropdownController;
   final List<TextEditingController> _lineControllers = [];
+  late PersonaliseProductModel _productModel;
 
   final Map<String, int> linesOptions = {
     "One Line Per Text": 1,
