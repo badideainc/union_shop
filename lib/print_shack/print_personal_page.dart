@@ -4,7 +4,16 @@ import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/product_page.dart';
 
 class PrintPersonalisationPage extends StatelessWidget {
-  const PrintPersonalisationPage({super.key});
+  PrintPersonalisationPage({super.key});
+
+  final Map<String, int> linesOptions = {
+    "One Line Per Text": 1,
+    "Two Lines Per Text": 2,
+    "Three Lines Per Text": 3,
+    "Four Lines Per Text": 4,
+    "Small Logo (Chest)": 1,
+    "Large Logo (Back)": 1
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +51,9 @@ class PrintPersonalisationPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const ProductDropdown(
+          ProductDropdown(
               optionName: "Per Line: One Line of Text",
-              options: [
-                "One Line of Text",
-                "Two Lines of Text",
-                "Three Lines of Text",
-                "Four Lines of Text",
-                "Small Logo (Chest)",
-                "Large Logo (Back)"
-              ]),
+              options: linesOptions.keys.toList()),
           const SizedBox(height: 24),
           //Will need to iterate to add more lines if user selects more than one line
           const Text(
@@ -85,15 +87,17 @@ Please ensure all spellings are correct before submitting your purchase as we wi
   }
 }
 
-class PrintDropdown extends ProductDropdown {
-  final Map<String, int> linesOptions = {
-    "One Line of Text": 1,
-    "Two Lines of Text": 2,
-    "Three Lines of Text": 3,
-    "Four Lines of Text": 4,
-    "Small Logo (Chest)": 0,
-    "Large Logo (Back)": 0
-  };
+// class PrintDropdown extends ProductDropdown {
+//   final Map<String, int> linesOptions;
 
-  PrintDropdown({super.optionName, super.options, super.key});
-}
+//   PrintDropdown({
+//     super.optionName,
+//     super.options,
+//     List<int>? linePerTextOptions,
+//     Map<String, int>? linesOptions,
+//     super.key,
+//   }) : linesOptions = linesOptions ??
+//             ((options != null && linePerTextOptions != null)
+//                 ? Map<String, int>.fromIterables(options, linePerTextOptions)
+//                 : const <String, int>{});
+// }
