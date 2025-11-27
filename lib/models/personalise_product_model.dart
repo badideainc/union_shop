@@ -6,4 +6,17 @@ class PersonaliseProductModel extends ProductModel {
 
   /// True when the personalisation is a logo selection rather than text.
   late final bool isLogo;
+
+  PersonaliseProductModel() : super();
+
+  void setText(String? text, int lineNumber) {
+    if (lineNumber < 0 || lineNumber >= personalisedText.length) {
+      return;
+    }
+    personalisedText[lineNumber] = text ?? "";
+  }
+
+  void setIsLogo(bool logo) {
+    isLogo = logo;
+  }
 }
