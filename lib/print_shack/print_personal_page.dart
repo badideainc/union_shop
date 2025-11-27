@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/main.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/product_page.dart';
+import 'package:provider/provider.dart';
+import 'package:union_shop/models/cart_model.dart';
+import 'package:union_shop/models/personalise_product_model.dart';
 
 class PrintPersonalisationPage extends StatefulWidget {
   const PrintPersonalisationPage({super.key});
@@ -13,6 +16,7 @@ class PrintPersonalisationPage extends StatefulWidget {
 
 class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   late final TextEditingController _dropdownController;
+  final List<TextEditingController> _lineControllers = [];
 
   final Map<String, int> linesOptions = {
     "One Line Per Text": 1,
@@ -32,11 +36,29 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
       _dropdownController.text = linesOptions.keys.first;
     }
     _dropdownController.addListener(_onDropdownChange);
+    // initialize controllers for the initial selection
+    final initialCount = linesOptions[_dropdownController.text] ?? 1;
+    for (var i = 0; i < initialCount; i++) {
+      _lineControllers.add(TextEditingController());
+    }
   }
 
   void _onDropdownChange() {
     // Rebuild when the controller value changes so the UI reflects the
     // currently-selected dropdown option (used by ProductDropdown).
+    // adjust controllers to match new count
+    final selected = _dropdownController.text;
+    final newCount = linesOptions[selected] ?? 1;
+    final current = _lineControllers.length;
+    if (newCount > current) {
+      for (var i = 0; i < newCount - current; i++) {
+        _lineControllers.add(TextEditingController());
+      }
+    } else if (newCount < current) {
+      for (var i = 0; i < current - newCount; i++) {
+        _lineControllers.removeLast().dispose();
+      }
+    }
     setState(() {});
   }
 
@@ -44,6 +66,9 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   void dispose() {
     _dropdownController.removeListener(_onDropdownChange);
     _dropdownController.dispose();
+    for (final c in _lineControllers) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -99,7 +124,9 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
               "Personalisation Line ${i + 1}:",
               style: const FooterText(16),
             ),
-            const TextField(),
+            TextField(
+                controller:
+                    _lineControllers.length > i ? _lineControllers[i] : null),
           ],
           const SizedBox(height: 24),
           QuantityWidget(),
