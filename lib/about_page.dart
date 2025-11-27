@@ -30,7 +30,7 @@ Happy shopping!
 The Union Shop & Reception Team​​​​​""",
               style: TextStyle(fontSize: 16, color: Colors.grey)),
         ),
-        const Footer(),
+        Footer(),
       ],
     )));
   }
