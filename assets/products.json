@@ -42,6 +42,14 @@
             "imageUrl": "",
             "category": "portsmouthCityCollection",
             "price": 7.5
+        },
+        {
+            "id": "print_item",
+            "name": "Print Item",
+            "description": "",
+            "imageUrl": "",
+            "category": "personalised",
+            "price": 3
         }
     ]
 }
