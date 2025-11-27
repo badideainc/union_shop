@@ -200,8 +200,13 @@ class ProductDropdown extends StatelessWidget {
   final String? optionName;
   final List<String>? options;
 
+  final TextEditingController dropdownController;
+
   const ProductDropdown(
-      {super.key, required this.optionName, required this.options});
+      {super.key,
+      required this.optionName,
+      required this.options,
+      required this.dropdownController});
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +221,12 @@ class ProductDropdown extends StatelessWidget {
           DropdownButton(
               hint: Text(textAlign: TextAlign.left, options![0]),
               items: getDropdownOptions(options!),
-              onChanged: (String? newValue) {})
+              value: dropdownController.text.isEmpty
+                  ? null
+                  : dropdownController.text,
+              onChanged: (String? newValue) {
+                dropdownController.text = newValue!;
+              })
         ],
       );
     }
