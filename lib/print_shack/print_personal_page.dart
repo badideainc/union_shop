@@ -27,6 +27,10 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   void initState() {
     super.initState();
     _dropdownController = TextEditingController();
+    // Initialize with the first option so the UI shows a sensible default.
+    if (linesOptions.isNotEmpty) {
+      _dropdownController.text = linesOptions.keys.first;
+    }
     _dropdownController.addListener(_onDropdownChange);
   }
 
