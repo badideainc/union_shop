@@ -207,20 +207,19 @@ class ProductDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     if (options == null) {
       return const SizedBox(
-        width: double.infinity,
         height: 25,
       );
+    } else {
+      return Column(
+        children: [
+          Text(optionName!),
+          DropdownButton(
+              hint: Text(textAlign: TextAlign.left, options![0]),
+              items: getDropdownOptions(options!),
+              onChanged: (String? newValue) {})
+        ],
+      );
     }
-
-    return Column(
-      children: [
-        Text(optionName!),
-        DropdownButton(
-            hint: Text(textAlign: TextAlign.left, options![0]),
-            items: getDropdownOptions(options!),
-            onChanged: (String? newValue) {})
-      ],
-    );
   }
 
   List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
