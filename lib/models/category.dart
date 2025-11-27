@@ -6,6 +6,8 @@ enum ProductCategory {
   portsmouthCityCollection,
   prideCollection,
   graduation,
+  personalised,
+  sale
 }
 
 String categoryTitle(ProductCategory c) {
@@ -24,6 +26,10 @@ String categoryTitle(ProductCategory c) {
       return 'Pride Collection 🏳️‍🌈';
     case ProductCategory.graduation:
       return 'Graduation 🎓';
+    case ProductCategory.personalised:
+      return 'Personalised Items';
+    case ProductCategory.sale:
+      return 'SALE!';
   }
 }
 
@@ -43,6 +49,10 @@ ProductCategory? categoryFromString(String? categoryString) {
       return ProductCategory.prideCollection;
     case 'graduation':
       return ProductCategory.graduation;
+    case 'personalised':
+      return ProductCategory.personalised;
+    case 'sale':
+      return ProductCategory.sale;
     default:
       return null;
   }
