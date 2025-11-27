@@ -200,16 +200,13 @@ class _ProductPageState extends State<ProductPage> {
   }
 }
 
-class ProductDropdown extends StatelessWidget {
-  final String? optionName;
-  final List<String>? options;
-
+class ProductDropdown extends DetailedDropdown {
   final TextEditingController dropdownController;
 
   const ProductDropdown(
       {super.key,
-      required this.optionName,
-      required this.options,
+      required super.optionName,
+      required super.options,
       required this.dropdownController});
 
   @override
@@ -234,13 +231,6 @@ class ProductDropdown extends StatelessWidget {
         ],
       );
     }
-  }
-
-  List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
-    return options
-        .map((String page) =>
-            DropdownMenuItem<String>(value: page, child: Text(page)))
-        .toList();
   }
 
   void changeCategory(String newValue) {}
