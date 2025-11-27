@@ -226,14 +226,16 @@ class ProductDropdown extends DetailedDropdown {
                   ? null
                   : dropdownController.text,
               onChanged: (String? newValue) {
-                dropdownController.text = newValue!;
+                changeCategory(newValue!);
               })
         ],
       );
     }
   }
 
-  void changeCategory(String newValue) {}
+  void changeCategory(String newValue) {
+    dropdownController.text = newValue;
+  }
 }
 
 class QuantityWidget extends StatelessWidget {
