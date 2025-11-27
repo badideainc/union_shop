@@ -19,4 +19,15 @@ class PersonaliseProductModel extends ProductModel {
   void setIsLogo(bool logo) {
     isLogo = logo;
   }
+
+  double overallPrice(String text) {
+    double basePrice = super.price;
+    if (isLogo) {
+      basePrice =
+          text == "Small Logo (Chest)" ? basePrice = 3.5 : basePrice = 5.0;
+    } else {
+      basePrice += 2.0 * personalisedText.length;
+    }
+    return basePrice;
+  }
 }
