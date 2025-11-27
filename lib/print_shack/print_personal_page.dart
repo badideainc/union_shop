@@ -27,10 +27,18 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   void initState() {
     super.initState();
     _dropdownController = TextEditingController();
+    _dropdownController.addListener(_onDropdownChange);
+  }
+
+  void _onDropdownChange() {
+    // Rebuild when the controller value changes so the UI reflects the
+    // currently-selected dropdown option (used by ProductDropdown).
+    setState(() {});
   }
 
   @override
   void dispose() {
+    _dropdownController.removeListener(_onDropdownChange);
     _dropdownController.dispose();
     super.dispose();
   }
