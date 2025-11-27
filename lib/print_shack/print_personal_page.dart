@@ -153,13 +153,17 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
           const SizedBox(height: 24),
           QuantityWidget(),
           const SizedBox(height: 24),
-          ElevatedButton(
+            ElevatedButton(
               onPressed: () {
-                // set a sensible default quantity then add the same model instance
-                _productModel.setQuantity(1);
-                context.read<CartModel>().add(_productModel);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Added personalised item to cart')));
+              // Create a snapshot clone so cart entries don't change
+              // when the user keeps editing the page.
+              final clone = PersonaliseProductModel();
+              clone.personalisedText = List.from(_productModel.personalisedText);
+              clone.setIsLogo(_dropdownController.text.toLowerCase().contains('logo'));
+              clone.setQuantity(_productModel.quantity > 0 ? _productModel.quantity : 1);
+              context.read<CartModel>().add(clone);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('Added personalised item to cart')));
               },
               child: const Text("ADD TO CART")),
           const SizedBox(height: 12),
