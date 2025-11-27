@@ -46,10 +46,10 @@
         {
             "id": "print_item",
             "name": "Print Item",
-            "description": "",
+            "description": "Peronalised print item.",
             "imageUrl": "",
             "category": "personalised",
-            "price": 3
+            "price": 3.0
         }
     ]
 }
