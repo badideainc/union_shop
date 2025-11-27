@@ -54,15 +54,22 @@ class PrintPersonalisationPage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ProductDropdown(
-              optionName: "Per Line: One Line of Text",
+              optionName: "Per Line: ${_dropdownController.text}",
               options: linesOptions.keys.toList(),
               dropdownController: _dropdownController),
           const SizedBox(height: 24),
           //Will need to iterate to add more lines if user selects more than one line
-          const Text(
-            "Personalisation Line 1:",
-            style: FooterText(16),
-          ),
+          for (int i = 0;
+              i <
+                  (linesOptions[_dropdownController.text] != null
+                      ? linesOptions[_dropdownController.text]!
+                      : 1);
+              i++) ...[
+            Text(
+              "Personalisation Line ${i + 1}:",
+              style: const FooterText(16),
+            ),
+          ],
           const TextField(),
           const SizedBox(height: 24),
           QuantityWidget(),
