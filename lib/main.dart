@@ -49,7 +49,7 @@ class UnionShopApp extends StatelessWidget {
           '/collection': (context) => const CollectionPage(
                 category: ProductCategory.portsmouthCityCollection,
               ),
-          '/cart': (context) => CartScreen(),
+          '/cart': (context) => const CartScreen(),
         },
       ),
     );
@@ -212,7 +212,7 @@ class ProductCard extends StatefulWidget {
   });
 
   @override
-  State<ProductCard> createState() => _ProductCardState(productID: productID);
+  State<ProductCard> createState() => _ProductCardState();
 }
 
 class _ProductCardState extends State<ProductCard> {
@@ -220,18 +220,14 @@ class _ProductCardState extends State<ProductCard> {
   // final String price;
   // final String imageUrl;
 
-  final String productID;
-
   late final Future<ProductModel> _product;
 
-  _ProductCardState({
-    required this.productID,
-  });
+  _ProductCardState();
 
   @override
   void initState() {
     super.initState();
-    _product = ProductModel.productFromJson(productID);
+    _product = ProductModel.productFromJson(widget.productID);
   }
 
   @override
@@ -247,7 +243,8 @@ class _ProductCardState extends State<ProductCard> {
         }
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/product', arguments: productID);
+            Navigator.pushNamed(context, '/product',
+                arguments: widget.productID);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
