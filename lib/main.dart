@@ -315,7 +315,7 @@ class NavButton extends StatelessWidget {
   }
 }
 
-class NavDropdown extends ProductDropdown {
+class NavDropdown extends DetailedDropdown {
   final Map<String, String> pages;
 
   const NavDropdown(
@@ -336,6 +336,29 @@ class NavDropdown extends ProductDropdown {
         onChanged: (String? targetPage) {
           barNavigateTo(context, pages[targetPage]!);
         });
+  }
+}
+
+class DetailedDropdown extends StatelessWidget {
+  final String? optionName;
+  final List<String>? options;
+
+  const DetailedDropdown(
+      {super.key, required this.optionName, required this.options});
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+        hint: Text(optionName!),
+        items: getDropdownOptions(options!),
+        onChanged: (String? newValue) {});
+  }
+
+  List<DropdownMenuItem<String>> getDropdownOptions(Iterable<String> options) {
+    return options
+        .map((String page) =>
+            DropdownMenuItem<String>(value: page, child: Text(page)))
+        .toList();
   }
 }
 
