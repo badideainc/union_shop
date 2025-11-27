@@ -84,3 +84,16 @@ Please ensure all spellings are correct before submitting your purchase as we wi
     ));
   }
 }
+
+class PrintDropdown extends ProductDropdown {
+  final Map<String, int> linesOptions = {
+    "One Line of Text": 1,
+    "Two Lines of Text": 2,
+    "Three Lines of Text": 3,
+    "Four Lines of Text": 4,
+    "Small Logo (Chest)": 0,
+    "Large Logo (Back)": 0
+  };
+
+  PrintDropdown({super.optionName, super.options, super.key});
+}
