@@ -3,10 +3,16 @@ import 'package:union_shop/main.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/product_page.dart';
 
-class PrintPersonalisationPage extends StatelessWidget {
-  PrintPersonalisationPage({super.key});
+class PrintPersonalisationPage extends StatefulWidget {
+  const PrintPersonalisationPage({super.key});
 
-  final TextEditingController _dropdownController = TextEditingController();
+  @override
+  State<PrintPersonalisationPage> createState() =>
+      _PrintPersonalisationPageState();
+}
+
+class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
+  late final TextEditingController _dropdownController;
 
   final Map<String, int> linesOptions = {
     "One Line Per Text": 1,
@@ -16,6 +22,18 @@ class PrintPersonalisationPage extends StatelessWidget {
     "Small Logo (Chest)": 1,
     "Large Logo (Back)": 1
   };
+
+  @override
+  void initState() {
+    super.initState();
+    _dropdownController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _dropdownController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +99,7 @@ class PrintPersonalisationPage extends StatelessWidget {
             child: Text(
               """
 
+
 £3 for one line of text! £5 for two!
 
 One line of text is 10 characters.
@@ -96,18 +115,3 @@ Please ensure all spellings are correct before submitting your purchase as we wi
     ));
   }
 }
-
-// class PrintDropdown extends ProductDropdown {
-//   final Map<String, int> linesOptions;
-
-//   PrintDropdown({
-//     super.optionName,
-//     super.options,
-//     List<int>? linePerTextOptions,
-//     Map<String, int>? linesOptions,
-//     super.key,
-//   }) : linesOptions = linesOptions ??
-//             ((options != null && linePerTextOptions != null)
-//                 ? Map<String, int>.fromIterables(options, linePerTextOptions)
-//                 : const <String, int>{});
-// }
