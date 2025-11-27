@@ -17,6 +17,8 @@ class CollectionPage extends StatefulWidget {
 class _CollectionPageState extends State<CollectionPage> {
   late final Future<List<ProductModel>> _futureProducts;
 
+  final TextEditingController _dropdownController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -86,10 +88,14 @@ class _CollectionPageState extends State<CollectionPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const ProductDropdown(
-                                  optionName: 'Filter', options: ["Test"]),
-                              const ProductDropdown(
-                                  optionName: 'Sort', options: ["Test"]),
+                              ProductDropdown(
+                                  optionName: 'Filter',
+                                  options: const ["Test"],
+                                  dropdownController: _dropdownController),
+                              ProductDropdown(
+                                  optionName: 'Sort',
+                                  options: const ["Test"],
+                                  dropdownController: _dropdownController),
                               Text('${snapshot.data?.length ?? 0} products'),
                             ],
                           ),
