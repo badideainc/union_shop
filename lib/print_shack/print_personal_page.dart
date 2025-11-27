@@ -42,6 +42,18 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
     for (var i = 0; i < initialCount; i++) {
       _lineControllers.add(TextEditingController());
     }
+    // initialize the product model for this page and keep it in sync
+    _productModel = PersonaliseProductModel();
+    _productModel.personalisedText = List.filled(initialCount, '');
+    _productModel
+        .setIsLogo(_dropdownController.text.toLowerCase().contains('logo'));
+    for (var i = 0; i < _lineControllers.length; i++) {
+      final idx = i;
+      _lineControllers[idx].addListener(() {
+        _productModel.personalisedText[idx] = _lineControllers[idx].text;
+        setState(() {});
+      });
+    }
   }
 
   void _onDropdownChange() {
