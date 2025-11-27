@@ -61,4 +61,16 @@ class ProductModel {
 
     _quantity -= delta;
   }
+
+  /// Copy core (public) fields into another ProductModel instance.
+  /// This allows creating product-based variants (e.g. personalised items)
+  /// without exposing the private fields outside this file.
+  void copyTo(ProductModel target) {
+    target._id = _id;
+    target._name = _name;
+    target._description = _description;
+    target._imageUrl = _imageUrl;
+    target._category = _category;
+    target._price = _price;
+  }
 }
