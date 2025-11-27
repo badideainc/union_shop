@@ -111,10 +111,10 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
               style: TextStyle(fontSize: 36, color: Colors.black)),
           const SizedBox(height: 12),
 
-          // Product price
-          const Text(
-            "£3.00",
-            style: TextStyle(
+          // Product price (computed from PersonaliseProductModel)
+          Text(
+            '£${_productModel.overallPrice(_dropdownController.text).toStringAsFixed(2)}',
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Color(0xFF4d2963),
@@ -153,7 +153,15 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
           const SizedBox(height: 24),
           QuantityWidget(),
           const SizedBox(height: 24),
-          ElevatedButton(onPressed: () {}, child: const Text("ADD TO CART")),
+          ElevatedButton(
+              onPressed: () {
+                // set a sensible default quantity then add the same model instance
+                _productModel.setQuantity(1);
+                context.read<CartModel>().add(_productModel);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Added personalised item to cart')));
+              },
+              child: const Text("ADD TO CART")),
           const SizedBox(height: 12),
           const Padding(
             padding: EdgeInsets.all(20.0),
