@@ -18,6 +18,8 @@ class _ProductPageState extends State<ProductPage> {
 
   late final Future<ProductModel> _product;
 
+  final TextEditingController _dropdownController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -139,10 +141,12 @@ class _ProductPageState extends State<ProductPage> {
                             spacing: 20.0,
                             children: [
                               ProductDropdown(
-                                  optionName:
-                                      snapshot.data!.options?.keys.toList()[0],
-                                  options: snapshot.data!.options?.values
-                                      .toList()[0]),
+                                optionName:
+                                    snapshot.data!.options?.keys.toList()[0],
+                                options:
+                                    snapshot.data!.options?.values.toList()[0],
+                                dropdownController: _dropdownController,
+                              ),
                               QuantityWidget(),
                             ],
                           ),
