@@ -6,6 +6,8 @@ import 'package:union_shop/product_page.dart';
 class PrintPersonalisationPage extends StatelessWidget {
   PrintPersonalisationPage({super.key});
 
+  final TextEditingController _dropdownController = TextEditingController();
+
   final Map<String, int> linesOptions = {
     "One Line Per Text": 1,
     "Two Lines Per Text": 2,
@@ -53,7 +55,8 @@ class PrintPersonalisationPage extends StatelessWidget {
           const SizedBox(height: 24),
           ProductDropdown(
               optionName: "Per Line: One Line of Text",
-              options: linesOptions.keys.toList()),
+              options: linesOptions.keys.toList(),
+              dropdownController: _dropdownController),
           const SizedBox(height: 24),
           //Will need to iterate to add more lines if user selects more than one line
           const Text(
