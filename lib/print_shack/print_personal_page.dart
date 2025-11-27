@@ -57,21 +57,30 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   }
 
   void _onDropdownChange() {
-    // Rebuild when the controller value changes so the UI reflects the
-    // currently-selected dropdown option (used by ProductDropdown).
-    // adjust controllers to match new count
     final selected = _dropdownController.text;
     final newCount = linesOptions[selected] ?? 1;
     final current = _lineControllers.length;
     if (newCount > current) {
       for (var i = 0; i < newCount - current; i++) {
-        _lineControllers.add(TextEditingController());
+        final idx = _lineControllers.length;
+        final c = TextEditingController();
+        _lineControllers.add(c);
+        c.addListener(() {
+          _productModel.personalisedText[idx] = c.text;
+          setState(() {});
+        });
       }
     } else if (newCount < current) {
       for (var i = 0; i < current - newCount; i++) {
         _lineControllers.removeLast().dispose();
       }
     }
+    // update the model to match the controllers and selected option
+    _productModel.personalisedText = List.generate(
+      newCount,
+      (i) => _lineControllers.length > i ? _lineControllers[i].text : '',
+    );
+    _productModel.setIsLogo(selected.toLowerCase().contains('logo'));
     setState(() {});
   }
 
