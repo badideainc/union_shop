@@ -299,8 +299,8 @@ class NavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //return ElevatedButton(onPressed: onPressed, child: Text(optionName));
-    return GestureDetector(
-      onTap: () {
+    return ElevatedButton(
+      onPressed: () {
         barNavigateTo(context);
       },
       child: Text(
