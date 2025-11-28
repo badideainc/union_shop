@@ -184,7 +184,7 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
                           : null),
                 ],
                 const SizedBox(height: 24),
-                QuantityWidget(),
+                QuantityWidget(product: _productModel),
                 const SizedBox(height: 24),
                 ElevatedButton(
                     onPressed: () {
