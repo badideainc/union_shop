@@ -11,6 +11,7 @@ class ProductModel {
 
   int _quantity = 0;
   double _price = 0;
+  double _salePrice = 0;
   //Broad array for the different types of the item
   Map<String, List<String>>? _options;
 
@@ -38,6 +39,7 @@ class ProductModel {
             if (parsed != null) model._category = [parsed];
           }
           model._price = productData['price'] ?? model._price;
+          model._salePrice = productData['salePrice'] ?? model._salePrice;
           return model;
         }
       }
@@ -53,6 +55,8 @@ class ProductModel {
   List<ProductCategory>? get category => _category;
 
   double get price => _price;
+  double get salePrice => _salePrice;
+
   int get quantity => _quantity;
   Map<String, List<String>>? get options => _options;
 
