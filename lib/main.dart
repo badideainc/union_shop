@@ -11,6 +11,8 @@ import 'package:union_shop/models/cart_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:union_shop/models/product_model.dart';
+import 'package:union_shop/widgets/nav_menu.dart';
+import 'package:union_shop/models/menu_item.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -488,7 +490,53 @@ class NavBar extends StatelessWidget {
                       minWidth: 32,
                       minHeight: 32,
                     ),
-                    onPressed: placeholderCallbackForButtons,
+                    onPressed: () {
+                      final items = <MenuItem>[
+                        const MenuItem(label: 'Home', route: '/'),
+                        MenuItem(
+                          label: 'Shop',
+                          children: const [
+                            MenuItem(label: 'Clothing', route: '/collection'),
+                            MenuItem(
+                                label: 'Merchandise', route: '/collection'),
+                            MenuItem(
+                                label: 'Halloween 🎃', route: '/collection'),
+                            MenuItem(
+                                label: 'Signature & Essentials Range',
+                                route: '/collection'),
+                            MenuItem(
+                                label: 'Portsmouth City Collection',
+                                route: '/collection'),
+                            MenuItem(
+                                label: 'Pride Collection 🏳️‍🌈',
+                                route: '/collection'),
+                            MenuItem(
+                                label: 'Graduation 🎓', route: '/collection'),
+                          ],
+                        ),
+                        MenuItem(
+                          label: 'The Print Shack',
+                          children: const [
+                            MenuItem(
+                                label: 'About',
+                                route: '/print_shack/print_about_page'),
+                            MenuItem(
+                                label: 'Personalisation',
+                                route:
+                                    '/print_shack/print_personalisation_page'),
+                          ],
+                        ),
+                        const MenuItem(label: 'SALE!', route: '/'),
+                        const MenuItem(label: 'About', route: '/about'),
+                      ];
+
+                      NavMenu.show(
+                        context,
+                        items,
+                        onNavigate: (route) => navigateTo(context, route),
+                        title: 'Menu',
+                      );
+                    },
                   ),
                 ],
               ),
