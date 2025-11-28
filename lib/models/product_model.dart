@@ -26,7 +26,17 @@ class ProductModel {
           model._name = productData['name'] ?? model._name;
           model._description = productData['description'] ?? model._description;
           model._imageUrl = productData['imageUrl'] ?? model._imageUrl;
-          model._category = productData['category'] ?? model._category;
+          final dynamic catField = productData['category'];
+          if (catField is List) {
+            model._category = catField
+                .map((e) => categoryFromString(e?.toString()))
+                .whereType<ProductCategory>()
+                .toList();
+          } else {
+            final ProductCategory? parsed =
+                categoryFromString(catField?.toString());
+            if (parsed != null) model._category = [parsed];
+          }
           model._price = productData['price'] ?? model._price;
           return model;
         }
