@@ -423,7 +423,7 @@ class NavBar extends StatelessWidget {
                     ),
                     if (size.width > size.height) ...[
                       const NavButton(optionName: "Home", url: "/"),
-                      NavDropdown(
+                      const NavDropdown(
                         optionName: "Shop",
                         pages: {
                           "Clothing": "/collection",
