@@ -1,72 +1,48 @@
 Goal
-Add two small interactive controls to each cart item row in CartWidget on the Cart screen:
-1) a "remove" TextButton that removes the product from the cart and the UI row, and
-2) a quantity editor: a "Quantity" label, a TextField (hint = current quantity) and an "Update" button using ImportButtonStyle() that updates the ProductModel.quantity.
+----
+Improve the app navigation by replacing the current static menu behavior with a compact, accessible dropdown anchored to the `Icons.menu` button and enabling nested, navigable dropdowns.
 
-Constraints / non‑goals
-- Change only the CartWidget code in lib/views/cart_screen.dart (or the widget file that renders each cart item) and any direct calls required to update ProductModel or CartModel already in the project.
-- Do NOT change unrelated files or add helper files/functions.
-- Respect existing state management (use the existing CartModel / ProductModel API). If the project uses Provider, use context.read / context.watch only; do not introduce a new state system.
-- Keep commits small: one focused change implementing these controls (UI + handlers) in this file.
+Background
+----------
+Currently the app shows top-level navigation via `NavButton()` and `NavDropdown()` in `NavBar()` (in `lib/main.dart`). The request is to make the menu more compact (hamburger-triggered) while keeping all existing navigation items and enabling nested dropdown navigation where a dropdown entry can open a new set of options and provide an explicit "back" item.
 
-Files to modify
-- lib/views/cart_screen.dart (the CartWidget / cart item row rendering)
+Requirements
+------------
+1. Hamburger menu
+	- Replace the existing `Icons.menu` behaviour so that tapping the hamburger opens a dropdown menu (or popover) containing the same items that currently appear as `NavButton()` and top-level `NavDropdown()` entries.
 
-UI requirements (exact)
-- For each cart item row, below the existing product info, add a single horizontal Row with three elements:
-  - TextButton("remove")
-    - onPressed: remove the product from the cart (call CartModel API or update ProductModel.quantity to zero and notify listeners) and remove the row from the UI.
-    - Use descriptive semantics for accessibility (tooltip/semantics label optional).
-  - SizedBox(width: 12)
-  - Row (inline) containing:
-    - Text("Quantity")
-    - SizedBox(width: 8)
-    - TextField
-      - keyboardType: TextInputType.number
-      - controller: a short-lived TextEditingController prefilled with empty but with hintText set to current quantity (e.g. hintText: product.quantity.toString()).
-      - input formatting: allow only digits (you may use a simple onChanged parsing). Do not add complex validators.
-    - SizedBox(width: 8)
-    - ElevatedButton (or Widget that uses ImportButtonStyle())
-      - child: Text("Update")
-      - style: use ImportButtonStyle() exactly as available (do not invent a new style).
-      - onPressed: parse the value entered (int), if valid call the ProductModel quantity setter or CartModel API to update quantity and then call notifyListeners() (or the existing update method).
-- Keep layout responsive: the controls row can wrap on small screens. Use Flexible/Expanded for the TextField as needed.
+2. Reusable `ProductDropdown` / `NavDropdown` behaviour (nested navigation)
+	- Modify `NavDropdown()` (or the shared dropdown widget) so that selecting a dropdown item can either:
+	  a) navigate directly to a route (existing behaviour), or
+	  b) replace the current dropdown content with a new set of options (nested submenu).
+	- When a nested submenu is opened, the dropdown should show a first item that navigates back to the previous menu. The back item should display the previous menu heading text prefixed with a left angle bracket, e.g. "< Category" or "< Back to Products".
 
-Behaviour requirements (exact)
-- Remove action:
-  - When remove is tapped, remove that product from the CartModel (or set its quantity to zero and call CartModel.notifyListeners()).
-  - The UI should update so the removed item row no longer displays.
-- Update action:
-  - Parse the number from the TextField; if parse fails, do nothing or optionally show a minimal inline error (not required).
-  - On successful parse, set product.quantity = parsedValue (or call CartModel.updateQuantity(productId, parsedValue) if such API exists), then notify listeners so UI updates.
-  - If the parsed quantity is less than or equal to 0, remove the product from the cart (i.e., call the same removal behavior as the "remove" button) and ensure the UI row disappears.
-  - Do not create new helper functions; call existing model methods or mutate existing ProductModel as your project already does.
-- Do not implement persistence or backend calls—this is in-memory cart only.
+3. API & Component contract
+	- `NavBar()` / `NavDropdown()` should accept an expressive data model that supports both leaf items and nested groups. Example idea:
+	  - class MenuItem { final String label; final String? route; final List<MenuItem>? children; }
+	- If `children` is present, selecting that item opens a nested menu instead of navigating.
+	- Provide an optional callback `onNavigate(String route)` and `onOpenMenu()` / `onCloseMenu()` hooks.
 
-Edge cases & robustness
-- If product.quantity is null or unavailable, default hint to "1".
-- Do not clamp values unless a clamp exists in the current ProductModel; if clamp is not present, accept any integer (follow your project’s existing rules).
-- Protect against null controllers: create/destroy local TextEditingController in the item widget lifecycle (dispose when appropriate).
-- Keep operations synchronous and quick; call notifyListeners() after updates.
+4. Visual & UX details
+	- The hamburger dropdown should be visually aligned with the app header and match existing styling (colors, padding, font-size) used by `NavButton()`.
+	- When opening a nested submenu, animate the change (slide right) so the transition is obvious.
+	- Provide a clear back item as the first row in a nested view with the exact text `"< {heading}"` where `{heading}` is the parent menu title.
 
-Acceptance criteria (tests/manual)
-- For a sample cart item, the cart row now shows the new controls under the existing info.
-- Pressing "remove" immediately removes the item from CartModel and the row disappears.
-- Entering a numeric value in the TextField and pressing "Update" changes the product quantity in ProductModel / CartModel and UI updates to reflect the new quantity and recalculated totals.
-- Entering a value <= 0 and pressing "Update" removes the item from the cart and the row disappears.
-- No unrelated files were modified.
-- The Update button uses ImportButtonStyle() exactly as present in the project.
+5. Accessibility
+	- Ensure all dropdown/menu elements are focusable and announce their role to screen readers.
+	- The back item must be properly labeled for screen readers.
 
-Deliverable requested from LLM
-- A single small commit patch (one file: lib/views/cart_screen.dart) that:
-  1. Adds the controls to each cart item row as described.
-  2. Hooks "remove" to the existing CartModel/ProductModel remove/decrease behavior.
-  3. Hooks "Update" to set the ProductModel quantity and call notifyListeners() (or call CartModel API), and removes the item when the entered quantity is <= 0.
-- Include a one-sentence explanation of the change and the exact diff/patch to apply.
+Acceptance criteria
+-------------------
+- Tapping `Icons.menu` opens a dropdown with the same set of items currently available via `NavButton()` and `NavDropdown()`.
+- Selecting an item with `children` replaces the dropdown content with the child list and shows a first-row "< {heading}" back item.
+- Pressing the back item returns to the previous dropdown content.
+- Choosing a leaf item (no children) navigates to the intended route and closes the dropdown.
+- The implementation exposes a simple data model for menu definition and hooks for navigation events.
 
-Notes for implementer
-- If the cart item is rendered by a separate subwidget (e.g., CartItemWidget), modify that widget. If rows are built inline, add the controls inside the map/list builder.
-- Use context.read<CartModel>() or direct ProductModel mutation depending on existing code pattern; keep consistent with the codebase.
-- Follow project style: padding, spacing and font style should reuse existing widgets where possible.
-
-End.
+Implementation notes / suggestions
+-------------------------------
+- Implement a small `MenuModel` (list of `MenuItem`) and build the dropdown UI from this data structure.
+- For nested views, maintain a stack of `MenuItem` lists in state (push child list on open, pop on back).
+- Reuse the existing `NavButton()` styles for menu rows to keep consistent visuals.
+- Keep the dropdown widget generic so it can be used in other screens (collection page, product page) if needed.
