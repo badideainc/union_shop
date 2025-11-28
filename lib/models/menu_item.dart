@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:union_shop/models/category.dart';
 
 class MenuItem {
   final String label;
@@ -6,6 +7,7 @@ class MenuItem {
   final List<MenuItem>? children;
   final IconData? icon;
   final String? id;
+  final ProductCategory? category;
 
   const MenuItem({
     required this.label,
@@ -13,5 +15,6 @@ class MenuItem {
     this.children,
     this.icon,
     this.id,
+    this.category,
   });
 }
