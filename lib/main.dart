@@ -378,6 +378,7 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -407,31 +408,33 @@ class NavBar extends StatelessWidget {
                         );
                       },
                     ),
-                    const NavButton(optionName: "Home", url: "/"),
-                    const NavDropdown(
-                      optionName: "Shop",
-                      pages: {
-                        "Clothing": "/collection",
-                        "Merchandise": "/collection",
-                        "Halloween 🎃": "/collection",
-                        "Signature & Essentials Range": "/collection",
-                        "Portsmouth City Collection": "/collection",
-                        "Pride Collection 🏳️‍🌈": "/collection",
-                        "Graduation 🎓": "/collection",
-                      },
-                      options: [],
-                    ),
-                    const NavDropdown(
-                      optionName: "The Print Shack",
-                      pages: {
-                        "About": "/print_shack/print_about_page",
-                        "Personalisation":
-                            "/print_shack/print_personalisation_page",
-                      },
-                      options: [],
-                    ),
-                    const NavButton(optionName: "SALE!", url: "/"),
-                    const NavButton(optionName: "About", url: "/about")
+                    if (size.width > size.height) ...[
+                      const NavButton(optionName: "Home", url: "/"),
+                      const NavDropdown(
+                        optionName: "Shop",
+                        pages: {
+                          "Clothing": "/collection",
+                          "Merchandise": "/collection",
+                          "Halloween 🎃": "/collection",
+                          "Signature & Essentials Range": "/collection",
+                          "Portsmouth City Collection": "/collection",
+                          "Pride Collection 🏳️‍🌈": "/collection",
+                          "Graduation 🎓": "/collection",
+                        },
+                        options: [],
+                      ),
+                      const NavDropdown(
+                        optionName: "The Print Shack",
+                        pages: {
+                          "About": "/print_shack/print_about_page",
+                          "Personalisation":
+                              "/print_shack/print_personalisation_page",
+                        },
+                        options: [],
+                      ),
+                      const NavButton(optionName: "SALE!", url: "/"),
+                      const NavButton(optionName: "About", url: "/about")
+                    ]
                   ],
                 )),
             const Spacer(),
