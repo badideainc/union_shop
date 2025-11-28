@@ -554,13 +554,13 @@ Purchase online 24/7
             "Help and Information",
             style: FooterText(20),
           ),
-          const Text(
-            """
-Search
-Terms & Conditions of Sale Policy
-""",
-            style: FooterText(16),
-          ),
+          TextButton(
+              onPressed: () {},
+              child: const Text("Search", style: FooterText(16))),
+          TextButton(
+              onPressed: () {},
+              child: const Text("Terms & Conditions of Sale Policy",
+                  style: FooterText(16))),
           const SizedBox(height: 16),
           const Text(
             "Latest Offers",
