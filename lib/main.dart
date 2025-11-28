@@ -319,10 +319,11 @@ class NavButton extends StatelessWidget {
 
 class NavDropdown extends DetailedDropdown {
   final Map<String, String> pages;
-
+  final Map<String, ProductCategory>? pageCategories;
   const NavDropdown(
       {super.key,
       required this.pages,
+      this.pageCategories,
       required super.options,
       required super.optionName});
 
@@ -333,11 +334,20 @@ class NavDropdown extends DetailedDropdown {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-        hint: Text(optionName!),
-        items: getDropdownOptions(pages.keys),
-        onChanged: (String? targetPage) {
-          barNavigateTo(context, pages[targetPage]!);
-        });
+      hint: Text(optionName!),
+      items: getDropdownOptions(pages.keys),
+      onChanged: (String? targetPage) {
+        final route = pages[targetPage];
+        if (route == '/collection' &&
+            pageCategories != null &&
+            pageCategories![targetPage] != null) {
+          Navigator.pushNamed(context, '/collection',
+              arguments: pageCategories![targetPage]);
+        } else if (route != null) {
+          barNavigateTo(context, route);
+        }
+      },
+    );
   }
 }
 
@@ -413,7 +423,7 @@ class NavBar extends StatelessWidget {
                     ),
                     if (size.width > size.height) ...[
                       const NavButton(optionName: "Home", url: "/"),
-                      const NavDropdown(
+                      NavDropdown(
                         optionName: "Shop",
                         pages: {
                           "Clothing": "/collection",
@@ -423,6 +433,18 @@ class NavBar extends StatelessWidget {
                           "Portsmouth City Collection": "/collection",
                           "Pride Collection 🏳️‍🌈": "/collection",
                           "Graduation 🎓": "/collection",
+                        },
+                        pageCategories: {
+                          "Clothing": ProductCategory.clothing,
+                          "Merchandise": ProductCategory.merchandise,
+                          "Halloween 🎃": ProductCategory.halloween,
+                          "Signature & Essentials Range":
+                              ProductCategory.signatureAndEssentialsRange,
+                          "Portsmouth City Collection":
+                              ProductCategory.portsmouthCityCollection,
+                          "Pride Collection 🏳️‍🌈":
+                              ProductCategory.prideCollection,
+                          "Graduation 🎓": ProductCategory.graduation,
                         },
                         options: [],
                       ),
