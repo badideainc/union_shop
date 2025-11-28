@@ -65,10 +65,10 @@ class _NavMenuState extends State<NavMenu> {
                 itemBuilder: (context, index) {
                   if (_stack.length > 1 && index == 0) {
                     // Back row: show parent heading if available
-                    final parentTitle = 'Back';
+                    const parentTitle = 'Back';
                     return ListTile(
                       leading: const Icon(Icons.arrow_back),
-                      title: Text('< $parentTitle'),
+                      title: const Text(parentTitle),
                       onTap: _back,
                     );
                   }
