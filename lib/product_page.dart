@@ -204,27 +204,44 @@ class ProductDropdown extends StatefulWidget {
   final String? optionName;
   final List<String>? options;
   final TextEditingController dropdownController;
+  final ValueChanged<String>? onChanged;
 
   const ProductDropdown(
       {super.key,
       required this.optionName,
       required this.options,
-      required this.dropdownController});
+      required this.dropdownController,
+      this.onChanged});
 
   @override
   State<ProductDropdown> createState() => _ProductDropdownState();
 }
 
 class _ProductDropdownState extends State<ProductDropdown> {
+  String? _selected;
   @override
   void initState() {
     super.initState();
+    // Initialize internal selected value from the controller if present.
+    _selected = widget.dropdownController.text.isEmpty
+        ? null
+        : widget.dropdownController.text;
     // Rebuild when the controller changes so the Dropdown shows the current value.
     widget.dropdownController.addListener(_onControllerChanged);
   }
 
   void _onControllerChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    final controllerValue = widget.dropdownController.text.isEmpty
+        ? null
+        : widget.dropdownController.text;
+    if (controllerValue != _selected) {
+      setState(() {
+        _selected = controllerValue;
+      });
+    } else {
+      setState(() {});
+    }
   }
 
   @override
@@ -249,12 +266,19 @@ class _ProductDropdownState extends State<ProductDropdown> {
                 .map((opt) =>
                     DropdownMenuItem<String>(value: opt, child: Text(opt)))
                 .toList(),
-            value: widget.dropdownController.text.isEmpty
-                ? null
-                : widget.dropdownController.text,
+            value: _selected,
             onChanged: (String? newValue) {
               if (newValue == null) return;
+              // Debug: selection fired
+              // ignore: avoid_print
+              print('[ProductDropdown] onChanged -> $newValue');
+              setState(() {
+                _selected = newValue;
+              });
+              // Update the passed controller so external listeners see the change.
               widget.dropdownController.text = newValue;
+              // Notify parent if it wants to react directly to selection changes.
+              widget.onChanged?.call(newValue);
             },
           )
         ],
