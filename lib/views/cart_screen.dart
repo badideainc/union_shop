@@ -152,7 +152,8 @@ class _CartWidgetState extends State<CartWidget> {
               else if (product.options != null && product.options!.isNotEmpty)
                 Text(
                   product.options!.entries
-                      .map((e) => '${e.key}: ${e.value.join(", ")}')
+                      .map((e) =>
+                          '${e.key}: ${e.value.isNotEmpty ? e.value[0] : ''}')
                       .join(', '),
                   style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
