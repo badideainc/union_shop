@@ -8,19 +8,28 @@ class CartModel extends ChangeNotifier {
   List<ProductModel> get items => List.unmodifiable(_items);
 
   // Add a product to the cart. If already present, increment its quantity
-  // stored on the ProductModel itself.
+  // stored on a snapshot of the ProductModel so personalised selections
+  // are captured at the time of adding.
   void add(ProductModel product) {
+    // Create a snapshot (deep clone) of the product as it currently is.
+    final snapshot = product.clone();
+    snapshot.setQuantity(snapshot.quantity > 0 ? snapshot.quantity : 1);
+
+    // If an identical product (same id and same selected options) exists,
+    // increase its quantity instead of adding a separate line.
     for (final p in _items) {
-      if (p.id == product.id) {
-        p.incrementQuantity(1);
-        notifyListeners();
-        return;
+      if (p.id == snapshot.id) {
+        final bool sameSelections =
+            mapEquals(p.selectedOptions, snapshot.selectedOptions);
+        if (sameSelections) {
+          p.incrementQuantity(snapshot.quantity > 0 ? snapshot.quantity : 1);
+          notifyListeners();
+          return;
+        }
       }
     }
 
-    // If not present, ensure the product has at least quantity 1 and add
-    product.setQuantity(product.quantity > 0 ? product.quantity : 1);
-    _items.add(product);
+    _items.add(snapshot);
     notifyListeners();
   }
 
