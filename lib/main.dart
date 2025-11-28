@@ -48,9 +48,12 @@ class UnionShopApp extends StatelessWidget {
           '/print_shack/print_about_page': (context) => const PrintAboutPage(),
           '/print_shack/print_personalisation_page': (context) =>
               const PrintPersonalisationPage(),
-          '/collection': (context) => const CollectionPage(
-                category: ProductCategory.portsmouthCityCollection,
-              ),
+          '/collection': (context) {
+            final args = ModalRoute.of(context)?.settings.arguments;
+            final ProductCategory category =
+                args is ProductCategory ? args : ProductCategory.clothing;
+            return CollectionPage(category: category);
+          },
           '/cart': (context) => const CartScreen(),
         },
       ),
