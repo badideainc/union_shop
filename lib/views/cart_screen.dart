@@ -141,10 +141,18 @@ class _CartWidgetState extends State<CartWidget> {
               Text(
                 '${product.name} (x${product.quantity})',
               ),
-              if (product.options != null && product.options!.isNotEmpty)
+              if (product.selectedOptions != null &&
+                  product.selectedOptions!.isNotEmpty)
+                Text(
+                  product.selectedOptions!.entries
+                      .map((e) => '${e.key}: ${e.value}')
+                      .join(', '),
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                )
+              else if (product.options != null && product.options!.isNotEmpty)
                 Text(
                   product.options!.entries
-                      .map((e) => '${e.key}: ${e.value}')
+                      .map((e) => '${e.key}: ${e.value.join(", ")}')
                       .join(', '),
                   style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
