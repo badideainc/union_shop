@@ -7,7 +7,7 @@ class ProductModel {
   String _description = "";
   String _imageUrl = "";
 
-  ProductCategory? _category;
+  List<ProductCategory>? _category;
 
   int _quantity = 0;
   double _price = 0;
@@ -26,7 +26,7 @@ class ProductModel {
           model._name = productData['name'] ?? model._name;
           model._description = productData['description'] ?? model._description;
           model._imageUrl = productData['imageUrl'] ?? model._imageUrl;
-          model._category = categoryFromString(productData['category']);
+          model._category = productData['category'] ?? model._category;
           model._price = productData['price'] ?? model._price;
           return model;
         }
@@ -40,7 +40,7 @@ class ProductModel {
   String get description => _description;
   String get imageUrl => _imageUrl;
 
-  ProductCategory? get category => _category;
+  List<ProductCategory>? get category => _category;
 
   double get price => _price;
   int get quantity => _quantity;
