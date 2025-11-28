@@ -196,7 +196,11 @@ class _CartWidgetState extends State<CartWidget> {
               ),
             ],
           ),
-          Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
+          if (product.salePrice >= 0)
+            Text(
+                '£${(product.salePrice * product.quantity).toStringAsFixed(2)}')
+          else
+            Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
         ],
       ),
     );
