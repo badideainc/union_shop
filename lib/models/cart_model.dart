@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:union_shop/models/product_model.dart';
+import 'package:union_shop/repositories/pricing_repository.dart';
 
 class CartModel extends ChangeNotifier {
   final List<ProductModel> _items = [];
@@ -66,10 +67,6 @@ class CartModel extends ChangeNotifier {
   }
 
   double get totalPrice {
-    double sum = 0.0;
-    for (final p in _items) {
-      sum += p.price * p.quantity;
-    }
-    return sum;
+    return PricingRepository().calculateTotalPrice(_items);
   }
 }
