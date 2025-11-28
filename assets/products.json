@@ -5,7 +5,7 @@
             "name": "Graduation Bear",
             "description": "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
             "imageUrl": "",
-            "category": ["graduation"],
+            "category": ["graduation", "merchandise"],
             "options": {
                 "Color": ["Cinnamon (Benny the Bear)"]
             },
