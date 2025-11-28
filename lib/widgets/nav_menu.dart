@@ -3,13 +3,13 @@ import 'package:union_shop/models/menu_item.dart';
 
 class NavMenu extends StatefulWidget {
   final List<MenuItem> items;
-  final void Function(String route)? onNavigate;
+  final void Function(MenuItem item)? onNavigate;
   final String? title;
 
   const NavMenu({super.key, required this.items, this.onNavigate, this.title});
 
   static Future<void> show(BuildContext context, List<MenuItem> items,
-      {void Function(String route)? onNavigate, String? title}) {
+      {void Function(MenuItem item)? onNavigate, String? title}) {
     return showDialog<void>(
       context: context,
       builder: (context) =>
@@ -86,7 +86,7 @@ class _NavMenuState extends State<NavMenu> {
                         _openChildren(item.children!);
                       } else if (item.route != null) {
                         Navigator.of(context).pop();
-                        widget.onNavigate?.call(item.route!);
+                        widget.onNavigate?.call(item);
                       }
                     },
                   );
