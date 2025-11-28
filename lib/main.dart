@@ -47,7 +47,7 @@ class UnionShopApp extends StatelessWidget {
           '/about': (context) => const AboutPage(),
           '/print_shack/print_about_page': (context) => const PrintAboutPage(),
           '/print_shack/print_personalisation_page': (context) =>
-              PrintPersonalisationPage(),
+              const PrintPersonalisationPage(),
           '/collection': (context) => const CollectionPage(
                 category: ProductCategory.portsmouthCityCollection,
               ),
@@ -496,9 +496,9 @@ class NavBar extends StatelessWidget {
                     onPressed: () {
                       final items = <MenuItem>[
                         const MenuItem(label: 'Home', route: '/'),
-                        MenuItem(
+                        const MenuItem(
                           label: 'Shop',
-                          children: const [
+                          children: [
                             MenuItem(label: 'Clothing', route: '/collection'),
                             MenuItem(
                                 label: 'Merchandise', route: '/collection'),
@@ -517,9 +517,9 @@ class NavBar extends StatelessWidget {
                                 label: 'Graduation 🎓', route: '/collection'),
                           ],
                         ),
-                        MenuItem(
+                        const MenuItem(
                           label: 'The Print Shack',
-                          children: const [
+                          children: [
                             MenuItem(
                                 label: 'About',
                                 route: '/print_shack/print_about_page'),
