@@ -279,10 +279,32 @@ class _ProductCardState extends State<ProductCard> {
                     maxLines: 2,
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    '£${snapshot.data!.price.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 13, color: Colors.grey),
-                  ),
+                  if (snapshot.data!.salePrice >= 0)
+                    Row(
+                      children: [
+                        Text(
+                          '£${snapshot.data!.salePrice.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '£${snapshot.data!.price.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      '£${snapshot.data!.price.toStringAsFixed(2)}',
+                      style: const TextStyle(fontSize: 13, color: Colors.grey),
+                    ),
                 ],
               ),
             ],
