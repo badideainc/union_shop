@@ -32,12 +32,26 @@ class _CollectionPageState extends State<CollectionPage> {
     List<Future<ProductModel>> futures = [];
 
     for (final item in products) {
-      final ProductCategory? stringCat =
-          categoryFromString(item['category']?.toString());
+      final dynamic catField = item['category'];
 
-      //Add the id if the category matches
-      if (stringCat == category) {
-        //Add product to display list
+      bool matches = false;
+
+      if (catField is List) {
+        for (final c in catField) {
+          final ProductCategory? parsed = categoryFromString(c?.toString());
+          if (parsed == category) {
+            matches = true;
+            break;
+          }
+        }
+      } else {
+        final ProductCategory? stringCat =
+            categoryFromString(catField?.toString());
+        if (stringCat == category) matches = true;
+      }
+
+      // Add the id if the category matches
+      if (matches) {
         futures.add(ProductModel.productFromJson(item['id'].toString()));
       }
     }
