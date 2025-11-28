@@ -156,18 +156,20 @@ class _ProductPageState extends State<ProductPage> {
                             const SizedBox(height: 24),
                           ],
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             spacing: 20.0,
                             children: [
-                              ProductDropdown(
-                                optionName:
-                                    snapshot.data!.options?.keys.toList()[0],
-                                options:
-                                    snapshot.data!.options?.values.toList()[0],
-                                dropdownController: _dropdownController,
-                              ),
-                              QuantityWidget(product: snapshot.data!),
+                              if (snapshot.data!.options != null) ...[
+                                for (final key in snapshot.data!.options!.keys)
+                                  ProductDropdown(
+                                    optionName: key,
+                                    options: snapshot.data!.options![key],
+                                    dropdownController: _dropdownController,
+                                  ),
+                              ],
                             ],
                           ),
+                          QuantityWidget(product: snapshot.data!),
 
                           // product.options.forEach((key, value) {
                           //   ProductDropdown(
