@@ -457,7 +457,7 @@ class NavBar extends StatelessWidget {
                         },
                         options: [],
                       ),
-                      const NavButton(optionName: "SALE!", url: "/"),
+                      const NavButton(optionName: "SALE!", url: "/collection"),
                       const NavButton(optionName: "About", url: "/about")
                     ]
                   ],
