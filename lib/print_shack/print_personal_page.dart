@@ -17,9 +17,11 @@ class PrintPersonalisationPage extends StatefulWidget {
 
 class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   late final TextEditingController _dropdownController;
+  late String _selectedOption;
   final List<TextEditingController> _lineControllers = [];
   late PersonaliseProductModel _productModel;
   late final Future<ProductModel> _baseProductFuture;
+  bool _baseCopied = false;
 
   final Map<String, int> linesOptions = {
     "One Line Per Text": 1,
@@ -36,19 +38,18 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
     _dropdownController = TextEditingController();
     // Initialize with the first option so the UI shows a sensible default.
     if (linesOptions.isNotEmpty) {
-      _dropdownController.text = linesOptions.keys.first;
+      _selectedOption = linesOptions.keys.first;
+      _dropdownController.text = _selectedOption;
     }
-    _dropdownController.addListener(_onDropdownChange);
     // initialize controllers for the initial selection
-    final initialCount = linesOptions[_dropdownController.text] ?? 1;
+    final initialCount = linesOptions[_selectedOption] ?? 1;
     for (var i = 0; i < initialCount; i++) {
       _lineControllers.add(TextEditingController());
     }
     // initialize the product model for this page and keep it in sync
     _productModel = PersonaliseProductModel();
     _productModel.personalisedText = List.filled(initialCount, '');
-    _productModel
-        .setIsLogo(_dropdownController.text.toLowerCase().contains('logo'));
+    _productModel.setIsLogo(_selectedOption.toLowerCase().contains('logo'));
     // Start loading the base product data from JSON for this page.
     _baseProductFuture = ProductModel.productFromJson('print_item');
     for (var i = 0; i < _lineControllers.length; i++) {
@@ -61,7 +62,7 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
   }
 
   void _onDropdownChange() {
-    final selected = _dropdownController.text;
+    final selected = _selectedOption;
     final newCount = linesOptions[selected] ?? 1;
     final current = _lineControllers.length;
     if (newCount > current) {
@@ -90,7 +91,6 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
 
   @override
   void dispose() {
-    _dropdownController.removeListener(_onDropdownChange);
     _dropdownController.dispose();
     for (final c in _lineControllers) {
       c.dispose();
@@ -111,9 +111,13 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
             return const Center(child: Text('Error loading product'));
           }
           // Ensure the personalise model inherits identifying fields from the
-          // base product loaded from JSON.
+          // base product loaded from JSON. Copy only once to avoid overwriting
+          // user changes on rebuilds.
           final base = snapshot.data!;
-          base.copyTo(_productModel);
+          if (!_baseCopied) {
+            base.copyTo(_productModel);
+            _baseCopied = true;
+          }
 
           return SingleChildScrollView(
             child: Column(
@@ -131,7 +135,7 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
 
                 // Product price (computed from PersonaliseProductModel)
                 Text(
-                  '£${_productModel.overallPrice(_dropdownController.text).toStringAsFixed(2)}',
+                  '£${_productModel.overallPrice(_selectedOption).toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -148,16 +152,26 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
+                // Use the shared ProductDropdown component and wire onChanged
                 ProductDropdown(
-                    optionName: "Per Line: ${_dropdownController.text}",
-                    options: linesOptions.keys.toList(),
-                    dropdownController: _dropdownController),
+                  optionName: "Per Line: $_selectedOption",
+                  options: linesOptions.keys.toList(),
+                  dropdownController: _dropdownController,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      _selectedOption = newValue;
+                      _dropdownController.text = newValue;
+                    });
+                    _onDropdownChange();
+                  },
+                ),
+                const SizedBox(height: 8),
                 const SizedBox(height: 24),
                 //Will need to iterate to add more lines if user selects more than one line
                 for (int i = 0;
                     i <
-                        (linesOptions[_dropdownController.text] != null
-                            ? linesOptions[_dropdownController.text]!
+                        (linesOptions[_selectedOption] != null
+                            ? linesOptions[_selectedOption]!
                             : 1);
                     i++) ...[
                   Text(
@@ -182,9 +196,8 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
                       // then copy the personalised-specific data
                       clone.personalisedText =
                           List.from(_productModel.personalisedText);
-                      clone.setIsLogo(_dropdownController.text
-                          .toLowerCase()
-                          .contains('logo'));
+                      clone.setIsLogo(
+                          _selectedOption.toLowerCase().contains('logo'));
                       clone.setQuantity(_productModel.quantity > 0
                           ? _productModel.quantity
                           : 1);
