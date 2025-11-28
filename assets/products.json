@@ -46,10 +46,23 @@
         {
             "id": "print_item",
             "name": "Print Item",
-            "description": "Peronalised print item.",
+            "description": "Personalised print item.",
             "imageUrl": "",
             "category": ["personalised"],
             "price": 3.0
+        },
+        {
+            "id": "classic_sweatshirt_neutral",
+            "name": "Classic Sweatshirts - Neutral",
+            "description": "Last chance to buy our best selling neutral Classic Sweatshirt. Limited time offer with limited stock. Be quick! Soft, comfortable, 50% cotton and 50% polyester.",
+            "imageUrl": "",
+            "options": {
+                "Color": ["Vanilla", "Caramel", "Biscuit", "Latte"],
+                "Size": ["S", "M", "L", "XL", "XS", "XXL"]
+            },
+            "category": ["clothing", "sale"],
+            "price": 17,
+            "salePrice": 10.99
         }
     ]
 }
