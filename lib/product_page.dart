@@ -18,12 +18,29 @@ class _ProductPageState extends State<ProductPage> {
 
   late final Future<ProductModel> _product;
 
-  final TextEditingController _dropdownController = TextEditingController();
+  final Map<String, TextEditingController> _dropdownControllers = {};
+
+  void _ensureControllers(ProductModel model) {
+    final keys = model.options?.keys ?? <String>[];
+    for (final key in keys) {
+      _dropdownControllers.putIfAbsent(key, () => TextEditingController());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _product = ProductModel.productFromJson(widget.productID);
+  }
+
+  @override
+  void dispose() {
+    // Dispose any dynamically created dropdown controllers.
+    for (final c in _dropdownControllers.values) {
+      c.dispose();
+    }
+    _dropdownControllers.clear();
+    super.dispose();
   }
 
   void navigateToHome(BuildContext context) {
@@ -160,11 +177,17 @@ class _ProductPageState extends State<ProductPage> {
                             spacing: 20.0,
                             children: [
                               if (snapshot.data!.options != null) ...[
+                                // Ensure we have controllers for each option key
+                                () {
+                                  _ensureControllers(snapshot.data!);
+                                  return const SizedBox.shrink();
+                                }(),
                                 for (final key in snapshot.data!.options!.keys)
                                   ProductDropdown(
                                     optionName: key,
                                     options: snapshot.data!.options![key],
-                                    dropdownController: _dropdownController,
+                                    dropdownController:
+                                        _dropdownControllers[key]!,
                                   ),
                               ],
                             ],
