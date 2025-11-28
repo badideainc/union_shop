@@ -320,24 +320,16 @@ class _QuantityWidgetState extends State<QuantityWidget> {
   @override
   void initState() {
     super.initState();
-    final initial = widget.product.quantity > 0 ? widget.product.quantity : 1;
-    if (widget.product.quantity <= 0) widget.product.setQuantity(initial);
-    _quantityController = TextEditingController(text: initial.toString());
+    _quantityController = TextEditingController(
+        text: widget.product.quantity > 0
+            ? widget.product.quantity.toString()
+            : '1');
     _quantityController.addListener(_onQuantityChanged);
   }
 
   void _onQuantityChanged() {
     final text = _quantityController.text;
-    final int? parsed = int.tryParse(text);
-    final int value = (parsed == null || parsed < 1) ? 1 : parsed;
-
-    if (value.toString() != text) {
-      _quantityController.value = TextEditingValue(
-        text: value.toString(),
-        selection: TextSelection.collapsed(offset: value.toString().length),
-      );
-    }
-
+    final int value = int.tryParse(text) ?? 1;
     widget.product.setQuantity(value);
     // no need to call setState unless widget displays the value
   }
