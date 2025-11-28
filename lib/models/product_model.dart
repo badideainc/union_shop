@@ -109,8 +109,24 @@ class ProductModel {
     target._imageUrl = _imageUrl;
     target._category = _category;
     target._price = _price;
+    // Copy pricing fields
+    target._salePrice = _salePrice;
+    // Copy options (deep copy lists) so target can be mutated independently
+    target._options = _options == null
+        ? null
+        : Map.fromEntries(
+            _options!.entries.map((e) => MapEntry(e.key, List.from(e.value))));
     // Copy selected options if present so personalised selections persist
     target._selectedOptions =
         _selectedOptions == null ? null : Map.from(_selectedOptions!);
+    // Copy quantity state
+    target._quantity = _quantity;
+  }
+
+  /// Return a deep-cloned snapshot of this product suitable for storing in the cart.
+  ProductModel clone() {
+    final ProductModel t = ProductModel();
+    copyTo(t);
+    return t;
   }
 }
