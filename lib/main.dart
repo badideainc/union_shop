@@ -499,22 +499,36 @@ class NavBar extends StatelessWidget {
                         const MenuItem(
                           label: 'Shop',
                           children: [
-                            MenuItem(label: 'Clothing', route: '/collection'),
                             MenuItem(
-                                label: 'Merchandise', route: '/collection'),
+                                label: 'Clothing',
+                                route: '/collection',
+                                category: ProductCategory.clothing),
                             MenuItem(
-                                label: 'Halloween 🎃', route: '/collection'),
+                                label: 'Merchandise',
+                                route: '/collection',
+                                category: ProductCategory.merchandise),
+                            MenuItem(
+                                label: 'Halloween 🎃',
+                                route: '/collection',
+                                category: ProductCategory.halloween),
                             MenuItem(
                                 label: 'Signature & Essentials Range',
-                                route: '/collection'),
+                                route: '/collection',
+                                category: ProductCategory
+                                    .signatureAndEssentialsRange),
                             MenuItem(
                                 label: 'Portsmouth City Collection',
-                                route: '/collection'),
+                                route: '/collection',
+                                category:
+                                    ProductCategory.portsmouthCityCollection),
                             MenuItem(
                                 label: 'Pride Collection 🏳️‍🌈',
-                                route: '/collection'),
+                                route: '/collection',
+                                category: ProductCategory.prideCollection),
                             MenuItem(
-                                label: 'Graduation 🎓', route: '/collection'),
+                                label: 'Graduation 🎓',
+                                route: '/collection',
+                                category: ProductCategory.graduation),
                           ],
                         ),
                         const MenuItem(
@@ -529,14 +543,24 @@ class NavBar extends StatelessWidget {
                                     '/print_shack/print_personalisation_page'),
                           ],
                         ),
-                        const MenuItem(label: 'SALE!', route: '/'),
+                        const MenuItem(
+                            label: 'SALE!',
+                            route: '/collection',
+                            category: ProductCategory.sale),
                         const MenuItem(label: 'About', route: '/about'),
                       ];
 
                       NavMenu.show(
                         context,
                         items,
-                        onNavigate: (route) => navigateTo(context, route),
+                        onNavigate: (item) {
+                          if (item.category != null) {
+                            Navigator.pushNamed(context, '/collection',
+                                arguments: item.category);
+                          } else if (item.route != null) {
+                            navigateTo(context, item.route!);
+                          }
+                        },
                         title: 'Menu',
                       );
                     },
