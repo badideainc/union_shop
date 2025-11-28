@@ -200,41 +200,66 @@ class _ProductPageState extends State<ProductPage> {
   }
 }
 
-class ProductDropdown extends DetailedDropdown {
+class ProductDropdown extends StatefulWidget {
+  final String? optionName;
+  final List<String>? options;
   final TextEditingController dropdownController;
 
   const ProductDropdown(
       {super.key,
-      required super.optionName,
-      required super.options,
+      required this.optionName,
+      required this.options,
       required this.dropdownController});
 
   @override
+  State<ProductDropdown> createState() => _ProductDropdownState();
+}
+
+class _ProductDropdownState extends State<ProductDropdown> {
+  @override
+  void initState() {
+    super.initState();
+    // Rebuild when the controller changes so the Dropdown shows the current value.
+    widget.dropdownController.addListener(_onControllerChanged);
+  }
+
+  void _onControllerChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.dropdownController.removeListener(_onControllerChanged);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (options == null) {
+    if (widget.options == null) {
       return const SizedBox(
         height: 25,
       );
     } else {
       return Column(
         children: [
-          Text(optionName!),
-          DropdownButton(
-              hint: Text(textAlign: TextAlign.left, options![0]),
-              items: getDropdownOptions(options!),
-              value: dropdownController.text.isEmpty
-                  ? null
-                  : dropdownController.text,
-              onChanged: (String? newValue) {
-                changeCategory(newValue!);
-              })
+          Text(widget.optionName ?? ''),
+          DropdownButton<String>(
+            hint: Text(widget.options![0], textAlign: TextAlign.left),
+            items: widget.options!
+                .map((opt) =>
+                    DropdownMenuItem<String>(value: opt, child: Text(opt)))
+                .toList(),
+            value: widget.dropdownController.text.isEmpty
+                ? null
+                : widget.dropdownController.text,
+            onChanged: (String? newValue) {
+              if (newValue == null) return;
+              widget.dropdownController.text = newValue;
+            },
+          )
         ],
       );
     }
-  }
-
-  void changeCategory(String newValue) {
-    dropdownController.text = newValue;
   }
 }
 
