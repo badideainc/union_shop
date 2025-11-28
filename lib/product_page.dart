@@ -117,26 +117,44 @@ class _ProductPageState extends State<ProductPage> {
 
                           const SizedBox(height: 12),
 
-                          // Product price
-                          Text(
-                            "£${snapshot.data!.price.toStringAsFixed(2)}",
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF4d2963),
+                          if (snapshot.data!.salePrice > 0) ...[
+                            Text(
+                              "£${snapshot.data!.salePrice.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
                             ),
-                          ),
-
-                          const Text(
-                            "Tax included.",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                              height: 1.5,
+                            Text(
+                              "£${snapshot.data!.price.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 24),
+                          ] else ...[
+                            // Product price
+                            Text(
+                              "£${snapshot.data!.price.toStringAsFixed(2)}",
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF4d2963),
+                              ),
+                            ),
 
+                            const Text(
+                              "Tax included.",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
                           Row(
                             spacing: 20.0,
                             children: [
