@@ -9,7 +9,12 @@ class PricingRepository {
     double price = 0.0;
 
     for (ProductModel product in products) {
-      price += product.price;
+      if (product.salePrice >= 0) {
+        price += product.salePrice * product.quantity;
+        continue;
+      }
+
+      price += product.price * product.quantity;
     }
     return price;
   }
