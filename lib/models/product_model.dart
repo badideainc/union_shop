@@ -11,7 +11,7 @@ class ProductModel {
 
   int _quantity = 0;
   double _price = 0;
-  double _salePrice = 0;
+  double _salePrice = -1;
   //Broad array for the different types of the item
   Map<String, List<String>>? _options;
 
