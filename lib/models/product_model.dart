@@ -39,6 +39,18 @@ class ProductModel {
             if (parsed != null) model._category = [parsed];
           }
           model._price = productData['price'] ?? model._price;
+          // Parse options map (JSON may store a Map<String, List<String>> as dynamic)
+          final dynamic opts = productData['options'];
+          if (opts is Map) {
+            model._options = opts.map<String, List<String>>((key, value) {
+              if (value is List) {
+                return MapEntry(key.toString(),
+                    value.map((e) => e?.toString() ?? '').toList());
+              } else {
+                return MapEntry(key.toString(), [value?.toString() ?? '']);
+              }
+            });
+          }
           model._salePrice = productData['salePrice'] ?? model._salePrice;
           return model;
         }
