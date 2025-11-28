@@ -147,7 +147,7 @@ class _ProductPageState extends State<ProductPage> {
                                     snapshot.data!.options?.values.toList()[0],
                                 dropdownController: _dropdownController,
                               ),
-                              QuantityWidget(),
+                              QuantityWidget(product: snapshot.data!),
                             ],
                           ),
 
@@ -287,10 +287,41 @@ class _ProductDropdownState extends State<ProductDropdown> {
   }
 }
 
-class QuantityWidget extends StatelessWidget {
-  final TextEditingController _quantityController = TextEditingController();
+class QuantityWidget extends StatefulWidget {
+  final ProductModel product;
 
-  QuantityWidget({super.key});
+  const QuantityWidget({super.key, required this.product});
+
+  @override
+  State<QuantityWidget> createState() => _QuantityWidgetState();
+}
+
+class _QuantityWidgetState extends State<QuantityWidget> {
+  late final TextEditingController _quantityController;
+
+  @override
+  void initState() {
+    super.initState();
+    _quantityController = TextEditingController(
+        text: widget.product.quantity > 0
+            ? widget.product.quantity.toString()
+            : '0');
+    _quantityController.addListener(_onQuantityChanged);
+  }
+
+  void _onQuantityChanged() {
+    final text = _quantityController.text;
+    final int value = int.tryParse(text) ?? 0;
+    widget.product.setQuantity(value);
+    // no need to call setState unless widget displays the value
+  }
+
+  @override
+  void dispose() {
+    _quantityController.removeListener(_onQuantityChanged);
+    _quantityController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
