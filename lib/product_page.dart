@@ -23,7 +23,13 @@ class _ProductPageState extends State<ProductPage> {
   void _ensureControllers(ProductModel model) {
     final keys = model.options?.keys ?? <String>[];
     for (final key in keys) {
-      _dropdownControllers.putIfAbsent(key, () => TextEditingController());
+      _dropdownControllers.putIfAbsent(key, () {
+        final c = TextEditingController();
+        // If the model already has a stored selection for this option, apply it
+        final existing = model.selectedOptions?[key];
+        if (existing != null && existing.isNotEmpty) c.text = existing;
+        return c;
+      });
     }
   }
 
@@ -188,6 +194,11 @@ class _ProductPageState extends State<ProductPage> {
                                     options: snapshot.data!.options![key],
                                     dropdownController:
                                         _dropdownControllers[key]!,
+                                    onChanged: (val) {
+                                      // Persist the selection into the product model
+                                      snapshot.data!
+                                          .setSelectedOption(key, val);
+                                    },
                                   ),
                               ],
                             ],
