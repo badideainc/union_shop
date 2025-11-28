@@ -323,9 +323,6 @@ class _ProductDropdownState extends State<ProductDropdown> {
             value: _selected,
             onChanged: (String? newValue) {
               if (newValue == null) return;
-              // Debug: selection fired
-              // ignore: avoid_print
-              print('[ProductDropdown] onChanged -> $newValue');
               setState(() {
                 _selected = newValue;
               });
