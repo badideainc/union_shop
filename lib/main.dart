@@ -9,6 +9,7 @@ import 'package:union_shop/models/category.dart';
 import 'package:union_shop/views/cart_screen.dart';
 import 'package:union_shop/models/cart_model.dart';
 import 'package:provider/provider.dart';
+import 'package:union_shop/account_page.dart';
 
 import 'package:union_shop/models/product_model.dart';
 import 'package:union_shop/widgets/nav_menu.dart';
@@ -55,6 +56,7 @@ class UnionShopApp extends StatelessWidget {
             return CollectionPage(category: category);
           },
           '/cart': (context) => const CartScreen(),
+          '/account': (context) => const AccountPage(),
         },
       ),
     );
@@ -514,7 +516,7 @@ class NavBar extends StatelessWidget {
                       minWidth: 32,
                       minHeight: 32,
                     ),
-                    onPressed: placeholderCallbackForButtons,
+                    onPressed: () => navigateTo(context, '/account'),
                   ),
                   IconButton(
                     icon: const Icon(
