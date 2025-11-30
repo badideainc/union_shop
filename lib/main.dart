@@ -257,7 +257,7 @@ class _ProductCardState extends State<ProductCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Image.network(
+                child: Image.asset(
                   snapshot.data!.imageUrl,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
