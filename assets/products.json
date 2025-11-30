@@ -1,6 +1,14 @@
 {
     "products": [
         {
+            "id": "lanyard",
+            "name": "Lanyards",
+            "description": " Keep everything within reach with this Lanyard!",
+            "imageUrl": "assets/images/lanyard.jpg",
+            "category": ["merchandise"],
+            "price": 2.75
+        },
+        {
             "id": "grad_bear",
             "name": "Graduation Bear",
             "description": "RETURNING for Graduation 2025 Benny the Bear, named by your very own Academic Representation officer Marija, is now available for a limited time only! So be sure to get yours! ❤️️",
@@ -10,6 +18,17 @@
                 "Color": ["Cinnamon (Benny the Bear)"]
             },
             "price": 15
+        },
+        {
+            "id": "grad_hoodie",
+            "name": "Graduation Hoodie",
+            "description": "Treat yourself to one of our UoP Graduation hoodies. Embroidered with the University of Portsmouth crest, our top of the range graduation hoodie is available in two colours and is ideal as a graduation gift or keep sake! Make it that extra special by adding your name, course or year to the back! From only £3 per line of text. ",
+            "imageUrl": "assets/images/grad_hoodie.jpg",
+            "category": ["graduation", "clothing"],
+            "options": {
+                "Size": ["S", "M", "L", "XL", "XXL"]
+            },
+            "price": 35
         },
         {
             "id": "city_postcard",
@@ -63,6 +82,50 @@
             "category": ["clothing", "sale"],
             "price": 17,
             "salePrice": 10.99
+        },
+        {
+            "id": "Halloween Tote Bags",
+            "name": "Halloween Tote Bags",
+            "description": "Trick or treat yourself to one of these limited edition Halloween tote bags! Available to purchase in store & online for just £2.50!!! Be quick ... before they do a disappearing act ... Due to the hand crafted nature of this item, final product may differ slightly from original design. Designs will be printed after purchase and be available up to two working days later.",
+            "imageUrl": "assets/images/halloween_tote_bag.jpg",
+            "options": {
+                "Halloween Tote Bag": ["Hello Pumpkin", "Boo!", "Ghosts"]
+            },
+            "category": ["halloween"],
+            "price": 2.5
+        },
+        {
+            "id": "signature_tshirt",
+            "name": "Signature T-Shirt",
+            "description": "Clean. Classic. Elevated. Our Signature T-shirts combine everyday comfort with premium detail. Featuring high-quality embroidery and a relaxed fit, they offer a fresh take on a staple piece. Lightweight and versatile, this tee is perfect for layering or wearing solo - an essential addition to any wardrobe",
+            "imageUrl": "assets/images/signature_tshirt.jpg",
+            "category": ["clothing", "signatureAndEssentialsRange"],
+            "options": {
+                "Color": ["Sand", "Indigo Blue"],
+                "Size": ["XS", "S", "M", "L", "XL", "XXL"]
+            },
+            "price": 14.99 
+        },
+        {
+            "id": "signature_hoodie",
+            "name": "Signature Hoodie",
+            "description": "Crafted for comfort, elevated with detail — our Signature hoodies feature premium embroidery that sets them apart from our classic range. With a clean design and an oversized fit, they bring a refined edge to a classic silhouette. Whether you're layering up or keeping it simple, this is your new go-to for effortless style.",
+            "imageUrl": "assets/images/signature_hoodie.jpg",
+            "category": ["clothing", "signatureAndEssentialsRange"],
+            "options": {
+                "Color": ["Sage", "Ivory"],
+                "Size": ["XS", "S", "M", "L", "XL", "XXL"]
+            },
+            "price": 32.99
+        },
+        {
+            "id": "pride_pin",
+            "name": "Pride Flag Pin",
+            "description": "A bold and meaningful way to show your pride and support! This vibrant Pride Flag Pin features the iconic rainbow colours—a symbol of love, identity, and unity. Pin it to your jacket, bag, or hat to celebrate who you are and stand in solidarity with the LGBTQ+ community! 🌈✨",
+            "imageUrl": "assets/images/pride_pin.jpg",
+            "category": ["prideCollection"],
+            "price": 1,
+            "salePrice": 0.5
         }
     ]
 }
