@@ -19,15 +19,9 @@ class PrintAboutPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PrintImage(
-                imageUrl:
-                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282"),
-            PrintImage(
-                imageUrl:
-                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282"),
-            PrintImage(
-                imageUrl:
-                    "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282")
+            PrintImage(imageUrl: "assets/images/print_item.jpg"),
+            PrintImage(imageUrl: "assets/images/print_item.jpg"),
+            PrintImage(imageUrl: "assets/images/print_item.jpg")
           ],
         ),
       ),
@@ -62,7 +56,7 @@ class PrintImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
+    return Image.asset(
       imageUrl,
       fit: BoxFit.contain,
       errorBuilder: (context, error, stackTrace) {
