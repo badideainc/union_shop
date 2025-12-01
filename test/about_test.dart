@@ -27,4 +27,12 @@ void main() {
 
     expect(find.textContaining('hello@upsu.net'), findsOneWidget);
   });
+
+  testWidgets('AboutPage content is scrollable (SingleChildScrollView)',
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: AboutPage()));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+  });
 }
