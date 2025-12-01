@@ -126,15 +126,14 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                          ),
+                          image:
+                              AssetImage("assets/images/signature_tshirt.jpg"),
                           fit: BoxFit.cover,
                         ),
                       ),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.7),
+                          color: Colors.black.withAlpha(179),
                         ),
                       ),
                     ),
@@ -148,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'Placeholder Hero Title',
+                          'Essential Range - 20% off',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -158,7 +157,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          "This is placeholder text for the hero section.",
+                          "Come get them while stocks last!",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -168,7 +167,11 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: placeholderCallbackForButtons,
+                          onPressed: () {
+                            // Navigate to the default collection (clothing)
+                            context.push(
+                                '/${categoryToPath(ProductCategory.signatureAndEssentialsRange)}');
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,
@@ -769,7 +772,7 @@ class ImportButtonStyle extends ButtonStyle {
   ImportButtonStyle()
       : super(
           backgroundColor:
-              WidgetStateProperty.all<Color>(const Color(0xFF4d2963)),
-          foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+              MaterialStateProperty.all<Color>(const Color(0xFF4d2963)),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         );
 }
