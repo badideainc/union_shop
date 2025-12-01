@@ -449,9 +449,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Expanded(
-        child: Container(
-      height: 60,
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -652,7 +650,7 @@ class NavBar extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -752,7 +750,6 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       color: Colors.white,
       child: const Column(
         children: [
@@ -770,7 +767,7 @@ class ImportButtonStyle extends ButtonStyle {
   ImportButtonStyle()
       : super(
           backgroundColor:
-              WidgetStateProperty.all<Color>(const Color(0xFF4d2963)),
-          foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+              MaterialStateProperty.all<Color>(const Color(0xFF4d2963)),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         );
 }
