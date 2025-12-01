@@ -88,4 +88,26 @@ void main() {
       expect(cart.items.isEmpty, true);
     });
   });
+
+  group('CartModel - clear & items immutability', () {
+    testWidgets('clear removes all items', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      final cart = CartModel();
+      final p = await ProductModel.productFromJson('city_notebook');
+      cart.add(p);
+      expect(cart.items.isNotEmpty, true);
+
+      cart.clear();
+      expect(cart.items.isEmpty, true);
+    });
+
+    testWidgets('items returns an unmodifiable list', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      final cart = CartModel();
+      final p = await ProductModel.productFromJson('city_magnet');
+      cart.add(p);
+      final items = cart.items;
+      expect(() => items.add(p), throwsA(isA<UnsupportedError>()));
+    });
+  });
 }
