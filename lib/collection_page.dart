@@ -232,7 +232,39 @@ class _FilterDropdownState extends State<FilterDropdown> {
           value: SortOption.priceHighLow, child: Text('Price High-Low')),
     ];
 
-    // (UI will be added in a following small step.)
-    return const SizedBox.shrink();
+    // Basic UI: two labeled dropdowns using pre-built option lists.
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Filter'),
+              DropdownButton<ProductCategory?>(
+                isExpanded: true,
+                value: _selectedCategory,
+                items: categoryOptions,
+                onChanged: (v) => setState(() => _selectedCategory = v),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Sort By'),
+              DropdownButton<SortOption?>(
+                isExpanded: true,
+                value: _selectedSort,
+                items: sortOptions,
+                onChanged: (v) => setState(() => _selectedSort = v),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
