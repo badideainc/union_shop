@@ -26,7 +26,6 @@ class CollectionPage extends StatefulWidget {
 class _CollectionPageState extends State<CollectionPage> {
   late final Future<List<ProductModel>> _futureProducts;
 
-  final TextEditingController _dropdownController = TextEditingController();
   List<ProductModel>? _filteredProducts;
 
   @override
