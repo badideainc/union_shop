@@ -94,11 +94,12 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    // Use go_router to navigate and replace the stack.
+    context.go('/');
   }
 
   void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
+    context.push('/product');
   }
 
   void placeholderCallbackForButtons() {
@@ -275,8 +276,8 @@ class _ProductCardState extends State<ProductCard> {
         }
         return GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/product',
-                arguments: widget.productID);
+            // Push product route with the product id in the path.
+            context.push('/product/${widget.productID}');
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -362,7 +363,7 @@ class NavButton extends StatelessWidget {
   }
 
   void barNavigateTo(BuildContext context) {
-    Navigator.pushNamed(context, url);
+    context.push(url);
   }
 }
 
@@ -377,7 +378,7 @@ class NavDropdown extends DetailedDropdown {
       required super.optionName});
 
   void barNavigateTo(BuildContext context, String url) {
-    Navigator.pushNamed(context, url);
+    context.push(url);
   }
 
   @override
@@ -390,8 +391,8 @@ class NavDropdown extends DetailedDropdown {
         if (route == '/collection' &&
             pageCategories != null &&
             pageCategories![targetPage] != null) {
-          Navigator.pushNamed(context, '/collection',
-              arguments: pageCategories![targetPage]);
+          final cat = pageCategories![targetPage]!;
+          context.push('/${categoryToPath(cat)}');
         } else if (route != null) {
           barNavigateTo(context, route);
         }
@@ -427,11 +428,11 @@ class NavBar extends StatelessWidget {
   const NavBar({super.key});
 
   void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    context.go('/');
   }
 
   void navigateTo(BuildContext context, String url) {
-    Navigator.pushNamed(context, url);
+    context.push(url);
   }
 
   void placeholderCallbackForButtons() {
@@ -629,8 +630,7 @@ class NavBar extends StatelessWidget {
                         items,
                         onNavigate: (item) {
                           if (item.category != null) {
-                            Navigator.pushNamed(context, '/collection',
-                                arguments: item.category);
+                            context.push('/${categoryToPath(item.category!)}');
                           } else if (item.route != null) {
                             navigateTo(context, item.route!);
                           }
