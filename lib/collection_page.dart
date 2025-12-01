@@ -203,7 +203,6 @@ class FilterDropdown extends StatefulWidget {
 class _FilterDropdownState extends State<FilterDropdown> {
   ProductCategory? _selectedCategory;
   SortOption? _selectedSort;
-  List<ProductModel> _filtered = [];
 
   @override
   void initState() {
@@ -336,7 +335,6 @@ class _FilterDropdownState extends State<FilterDropdown> {
   void _emit() {
     final results = _applySort(_applyFilter());
     if (!mounted) return;
-    setState(() => _filtered = results);
     try {
       widget.onChanged(results);
     } catch (_) {
