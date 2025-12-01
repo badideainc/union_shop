@@ -68,4 +68,22 @@ void main() {
       expect(labels, ['Root', 'N2', 'L']);
     });
   });
+
+  group('MenuItem - const and immutability', () {
+    test('const constructor produces canonicalized instances', () {
+      const a = MenuItem(label: 'ConstItem', route: '/c');
+      const b = MenuItem(label: 'ConstItem', route: '/c');
+      // Const instances with identical fields should be canonicalized
+      expect(identical(a, b), isTrue);
+    });
+
+    test('children list is immutable when constructed with const list', () {
+      const child = MenuItem(label: 'Child', route: '/child');
+      const parent = MenuItem(label: 'Parent', children: [child]);
+
+      // Attempting to mutate the const children list should throw
+      expect(() => parent.children!.add(const MenuItem(label: 'X')),
+          throwsA(isA<UnsupportedError>()));
+    });
+  });
 }
