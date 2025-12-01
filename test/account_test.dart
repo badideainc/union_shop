@@ -27,4 +27,23 @@ void main() {
     final ElevatedButton button = tester.widget<ElevatedButton>(finder);
     expect(button.onPressed, isNull);
   });
+
+  testWidgets('Email TextField exists and Continue button is enabled',
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: AccountPage()));
+    await tester.pumpAndSettle();
+
+    final emailFinder = find.byType(TextField);
+    expect(emailFinder, findsOneWidget);
+
+    final TextField emailField = tester.widget<TextField>(emailFinder);
+    expect(emailField.decoration?.labelText, 'Email');
+
+    final continueFinder = find.widgetWithText(ElevatedButton, 'Continue');
+    expect(continueFinder, findsOneWidget);
+
+    final ElevatedButton contButton =
+        tester.widget<ElevatedButton>(continueFinder);
+    expect(contButton.onPressed, isNotNull);
+  });
 }
