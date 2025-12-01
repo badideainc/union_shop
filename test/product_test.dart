@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/product_page.dart';
+import 'package:union_shop/models/product_model.dart';
 
 void main() {
   group('Product Page Tests', () {
@@ -97,6 +98,56 @@ void main() {
 
       expect(controller.text, equals('Large'));
       expect(selected, equals('Large'));
+    });
+  });
+
+  group('Quantity Widget Tests', () {
+    testWidgets('initializes with product quantity and updates model',
+        (tester) async {
+      final product = ProductModel.fromValues(
+          id: 'q1', name: 'Qty Test', price: 5.0, salePrice: -1);
+      product.setQuantity(1);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: QuantityWidget(product: product),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // There is a single TextField in QuantityWidget
+      final tf = find.byType(TextField);
+      expect(tf, findsOneWidget);
+
+      // Change the quantity to 4
+      await tester.enterText(tf, '4');
+      await tester.pumpAndSettle();
+
+      expect(product.quantity, equals(4));
+    });
+
+    testWidgets('handles non-numeric input by falling back to 1',
+        (tester) async {
+      final product = ProductModel.fromValues(
+          id: 'q2', name: 'Qty Test 2', price: 6.0, salePrice: -1);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: QuantityWidget(product: product),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      final tf = find.byType(TextField);
+      expect(tf, findsOneWidget);
+
+      // Enter invalid text; controller listener will parse and fallback to 1
+      await tester.enterText(tf, 'abc');
+      await tester.pumpAndSettle();
+
+      expect(product.quantity, equals(1));
     });
   });
 }
