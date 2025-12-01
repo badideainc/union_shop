@@ -53,4 +53,39 @@ void main() {
       expect(find.text('CHECK OUT'), findsOneWidget);
     });
   });
+
+  group('CartWidget - remove button', () {
+    testWidgets('tapping remove deletes the item and shows empty UI',
+        (tester) async {
+      final cart = CartModel();
+      final p = ProductModel.fromValues(
+          id: 'p-remove', name: 'Removable', price: 2.0);
+      p.setQuantity(1);
+      cart.add(p);
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: ChangeNotifierProvider.value(
+          value: cart,
+          child: const MaterialApp(home: CartScreen()),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Ensure the product row is visible
+      expect(find.text('Removable (x1)'), findsOneWidget);
+
+      final removeButton = find.widgetWithText(TextButton, 'remove');
+      expect(removeButton, findsOneWidget);
+
+      await tester.ensureVisible(removeButton);
+      await tester.tap(removeButton);
+      await tester.pumpAndSettle();
+
+      // Cart model should be empty and UI should show empty message
+      expect(cart.items.isEmpty, isTrue);
+      expect(find.text('Your cart is currently empty.'), findsOneWidget);
+    });
+  });
 }
