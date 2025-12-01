@@ -451,6 +451,7 @@ class NavBar extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Expanded(
         child: Container(
+      height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -618,13 +619,10 @@ class NavBar extends StatelessWidget {
                         const MenuItem(
                           label: 'The Print Shack',
                           children: [
-                            MenuItem(
-                                label: 'About',
-                                route: '/print_shack/print_about_page'),
+                            MenuItem(label: 'About', route: '/personalisation'),
                             MenuItem(
                                 label: 'Personalisation',
-                                route:
-                                    '/print_shack/print_personalisation_page'),
+                                route: '/personalise-text'),
                           ],
                         ),
                         const MenuItem(
