@@ -42,4 +42,14 @@ void main() {
       expect(total, closeTo(28.0, 1e-6));
     });
   });
+
+  group('PricingRepository - zero quantity handling', () {
+    test('products with zero quantity contribute 0', () {
+      final repo = PricingRepository();
+      final p = ProductModel.fromValues(id: 'z', price: 9.0);
+      p.setQuantity(0);
+      final total = repo.calculateTotalPrice([p]);
+      expect(total, 0.0);
+    });
+  });
 }
