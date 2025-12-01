@@ -203,6 +203,10 @@ class _FilterDropdownState extends State<FilterDropdown> {
     super.initState();
     _selectedCategory = widget.initialCategory;
     _selectedSort = widget.initialSort;
+    // Emit initial results once after first frame so parent can receive initial list
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _emit();
+    });
   }
 
   @override
@@ -245,10 +249,12 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 isExpanded: true,
                 value: _selectedCategory,
                 items: categoryOptions,
-                onChanged: (v) => setState(() {
-                  _selectedCategory = v;
-                  _filtered = _applyFilter();
-                }),
+                onChanged: (v) {
+                  setState(() {
+                    _selectedCategory = v;
+                  });
+                  _emit();
+                },
               ),
             ],
           ),
@@ -263,11 +269,12 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 isExpanded: true,
                 value: _selectedSort,
                 items: sortOptions,
-                onChanged: (v) => setState(() {
-                  _selectedSort = v;
-                  // Recompute filtered then sort
-                  _filtered = _applySort(_applyFilter());
-                }),
+                onChanged: (v) {
+                  setState(() {
+                    _selectedSort = v;
+                  });
+                  _emit();
+                },
               ),
             ],
           ),
@@ -317,5 +324,16 @@ class _FilterDropdownState extends State<FilterDropdown> {
       return a.id.compareTo(b.id);
     });
     return list;
+  }
+
+  void _emit() {
+    final results = _applySort(_applyFilter());
+    if (!mounted) return;
+    setState(() => _filtered = results);
+    try {
+      widget.onChanged(results);
+    } catch (_) {
+      // Guard: if parent handler throws, we don't crash the widget.
+    }
   }
 }
