@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/print_shack/print_about_page.dart';
 
+import 'package:union_shop/main.dart';
+
 void main() {
   group('PrintAboutPage - basic render', () {
     testWidgets('renders title and three image placeholders', (tester) async {
@@ -28,6 +30,18 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
+    });
+  });
+
+  group('PrintAboutPage - header and footer presence', () {
+    testWidgets('contains Header and Footer widgets', (tester) async {
+      await tester.pumpWidget(const MaterialApp(home: PrintAboutPage()));
+      await tester.pumpAndSettle();
+
+      // Try locating Header and Footer types. If these are private/internal
+      // widgets they should still appear as runtime types in the widget tree.
+      expect(find.byType(Header), findsOneWidget);
+      expect(find.byType(Footer), findsOneWidget);
     });
   });
 }
