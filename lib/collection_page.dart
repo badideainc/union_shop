@@ -196,6 +196,7 @@ class FilterDropdown extends StatefulWidget {
 class _FilterDropdownState extends State<FilterDropdown> {
   ProductCategory? _selectedCategory;
   SortOption? _selectedSort;
+  List<ProductModel> _filtered = [];
 
   @override
   void initState() {
@@ -244,7 +245,10 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 isExpanded: true,
                 value: _selectedCategory,
                 items: categoryOptions,
-                onChanged: (v) => setState(() => _selectedCategory = v),
+                onChanged: (v) => setState(() {
+                  _selectedCategory = v;
+                  _filtered = _applyFilter();
+                }),
               ),
             ],
           ),
@@ -266,5 +270,16 @@ class _FilterDropdownState extends State<FilterDropdown> {
         ),
       ],
     );
+  }
+
+  List<ProductModel> _applyFilter() {
+    if (_selectedCategory == null) {
+      return List<ProductModel>.from(widget.products);
+    }
+    return widget.products.where((p) {
+      final cats = p.category;
+      if (cats == null || cats.isEmpty) return false;
+      return cats.contains(_selectedCategory);
+    }).toList();
   }
 }
