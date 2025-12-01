@@ -20,4 +20,14 @@ void main() {
       expect(total, closeTo(13.5, 1e-6));
     });
   });
+
+  group('PricingRepository - salePrice preferred', () {
+    test('uses salePrice when salePrice >= 0', () {
+      final repo = PricingRepository();
+      final p = ProductModel.fromValues(id: 'p2', price: 10.0, salePrice: 7.5);
+      p.setQuantity(2);
+      final total = repo.calculateTotalPrice([p]);
+      expect(total, closeTo(15.0, 1e-6));
+    });
+  });
 }
