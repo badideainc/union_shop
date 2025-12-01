@@ -130,4 +130,28 @@ void main() {
       expect(find.textContaining('Total: £6.00'), findsOneWidget);
     });
   });
+
+  group('CartWidget - price display uses salePrice', () {
+    testWidgets('uses salePrice when available for total calculation',
+        (tester) async {
+      final cart = CartModel();
+      final p = ProductModel.fromValues(
+          id: 'p-sale', name: 'OnSale', price: 10.0, salePrice: 6.0);
+      p.setQuantity(2);
+      cart.add(p);
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: ChangeNotifierProvider.value(
+          value: cart,
+          child: const MaterialApp(home: CartScreen()),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Total should reflect salePrice * quantity = 6.0 * 2 = 12.00
+      expect(find.textContaining('Total: £12.00'), findsOneWidget);
+    });
+  });
 }
