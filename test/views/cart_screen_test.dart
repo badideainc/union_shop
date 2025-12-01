@@ -88,4 +88,46 @@ void main() {
       expect(find.text('Your cart is currently empty.'), findsOneWidget);
     });
   });
+
+  group('CartWidget - update quantity', () {
+    testWidgets('entering quantity and tapping Update changes cart quantity',
+        (tester) async {
+      final cart = CartModel();
+      final p = ProductModel.fromValues(
+          id: 'p-update', name: 'Updatable', price: 2.0);
+      p.setQuantity(1);
+      cart.add(p);
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: ChangeNotifierProvider.value(
+          value: cart,
+          child: const MaterialApp(home: CartScreen()),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Find the quantity TextField and enter '3'
+      final qtyField = find.byType(TextField).first;
+      expect(qtyField, findsOneWidget);
+
+      await tester.enterText(qtyField, '3');
+      await tester.pumpAndSettle();
+
+      final updateButton = find.widgetWithText(ElevatedButton, 'Update');
+      expect(updateButton, findsOneWidget);
+
+      // Ensure visible then tap
+      await tester.ensureVisible(updateButton);
+      await tester.tap(updateButton);
+      await tester.pumpAndSettle();
+
+      // Cart model should update quantity
+      expect(cart.items.first.quantity, 3);
+
+      // Total should reflect 3 * 2.0 = 6.00
+      expect(find.textContaining('Total: £6.00'), findsOneWidget);
+    });
+  });
 }
