@@ -16,4 +16,18 @@ void main() {
       expect(find.byIcon(Icons.image_not_supported), findsNWidgets(3));
     });
   });
+
+  group('PrintImage - errorBuilder fallback', () {
+    testWidgets('shows placeholder icon when asset missing', (tester) async {
+      await tester.pumpWidget(const MaterialApp(
+        home: Scaffold(
+          body: PrintImage(imageUrl: 'assets/images/nonexistent.png'),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
+    });
+  });
 }
