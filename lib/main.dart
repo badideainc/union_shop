@@ -238,10 +238,13 @@ class ProductCard extends StatefulWidget {
   // final String imageUrl;
 
   final String productID;
+  // Optional product future for tests to inject a resolved ProductModel.
+  final Future<ProductModel>? productFuture;
 
   const ProductCard({
     super.key,
     required this.productID,
+    this.productFuture,
   });
 
   @override
@@ -260,7 +263,8 @@ class _ProductCardState extends State<ProductCard> {
   @override
   void initState() {
     super.initState();
-    _product = ProductModel.productFromJson(widget.productID);
+    _product =
+        widget.productFuture ?? ProductModel.productFromJson(widget.productID);
   }
 
   @override
