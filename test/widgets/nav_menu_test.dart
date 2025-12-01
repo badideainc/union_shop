@@ -127,4 +127,50 @@ void main() {
     expect(find.text('Child1'), findsOneWidget);
     expect(find.text('Child2'), findsOneWidget);
   });
+
+  testWidgets('Back row returns to parent menu', (tester) async {
+    final items = <MenuItem>[
+      const MenuItem(
+        label: 'Parent',
+        children: [
+          MenuItem(label: 'Child1', route: '/child1'),
+          MenuItem(label: 'Child2', route: '/child2'),
+        ],
+      ),
+    ];
+
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                NavMenu.show(context, items);
+              },
+              child: const Text('Open'),
+            ),
+          ),
+        );
+      }),
+    ));
+
+    // Open the menu and drill into children
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Parent'));
+    await tester.pumpAndSettle();
+
+    // Confirm we're in child view
+    expect(find.text('Child1'), findsOneWidget);
+
+    // Tap Back to return
+    final backFinder = find.text('Back');
+    expect(backFinder, findsOneWidget);
+    await tester.tap(backFinder);
+    await tester.pumpAndSettle();
+
+    // Parent should be visible again and children not visible
+    expect(find.text('Parent'), findsOneWidget);
+    expect(find.text('Child1'), findsNothing);
+  });
 }
