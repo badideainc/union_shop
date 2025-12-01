@@ -37,4 +37,30 @@ void main() {
       expect(model.isLogo, isTrue);
     });
   });
+
+  group('PersonaliseProductModel - overallPrice', () {
+    test('non-logo pricing uses base price plus per-line surcharge', () {
+      final base = ProductModel.fromValues(id: 'pn1', name: 'PN1', price: 10.0);
+      final model = PersonaliseProductModel();
+      base.copyTo(model);
+
+      model.personalisedText = List.filled(2, '');
+      model.setIsLogo(false);
+
+      // base 10 + 2 lines * 2.0 = 14.0
+      expect(model.overallPrice(''), closeTo(14.0, 1e-6));
+    });
+
+    test('logo pricing returns 3.5 for small logo and 5.0 otherwise', () {
+      final base = ProductModel.fromValues(id: 'pl1', name: 'PL1', price: 20.0);
+      final model = PersonaliseProductModel();
+      base.copyTo(model);
+
+      model.personalisedText = List.filled(1, '');
+      model.setIsLogo(true);
+
+      expect(model.overallPrice('Small Logo (Chest)'), closeTo(3.5, 1e-6));
+      expect(model.overallPrice('Large Logo'), closeTo(5.0, 1e-6));
+    });
+  });
 }
