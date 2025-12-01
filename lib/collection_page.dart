@@ -136,7 +136,8 @@ All prices shown are inclusive of the discount 🛒
                                   products: snapshot.data ?? [],
                                   onChanged: (list) {
                                     setState(() {
-                                      _filteredProducts = list;
+                                      _filteredProducts =
+                                          List<ProductModel>.from(list);
                                     });
                                   },
                                 ),
@@ -256,8 +257,8 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 onChanged: (v) {
                   setState(() {
                     _selectedCategory = v;
+                    _emit();
                   });
-                  _emit();
                 },
               ),
             ],
@@ -276,8 +277,8 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 onChanged: (v) {
                   setState(() {
                     _selectedSort = v;
+                    _emit();
                   });
-                  _emit();
                 },
               ),
             ],
@@ -299,9 +300,12 @@ class _FilterDropdownState extends State<FilterDropdown> {
   }
 
   List<ProductModel> _applySort(List<ProductModel> list) {
-    if (_selectedSort == null) return list;
-    final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
-    list.sort((a, b) {
+    if (_selectedSort == null) return List<ProductModel>.from(list);
+    final sorted = List<ProductModel>.from(list);
+    final originalIndex = {
+      for (var i = 0; i < sorted.length; i++) sorted[i].id: i
+    };
+    sorted.sort((a, b) {
       int cmp = 0;
       switch (_selectedSort!) {
         case SortOption.alphabeticalAsc:
@@ -327,7 +331,7 @@ class _FilterDropdownState extends State<FilterDropdown> {
       if (ia != ib) return ia.compareTo(ib);
       return a.id.compareTo(b.id);
     });
-    return list;
+    return sorted;
   }
 
   void _emit() {
