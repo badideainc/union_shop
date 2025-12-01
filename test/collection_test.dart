@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/collection_page.dart';
@@ -238,6 +239,30 @@ void main() {
 
       expect(emitted, isNotNull);
       expect(emitted!.isEmpty, isTrue);
+    });
+  });
+
+  group('CollectionPage - FutureBuilder loading state', () {
+    testWidgets('shows loading indicator while products load', (tester) async {
+      final completer = Completer<List<Map<String, dynamic>>>();
+
+      await tester.pumpWidget(MaterialApp(
+        home: CollectionPage(
+          category: ProductCategory.clothing,
+          productLoader: () => completer.future,
+        ),
+      ));
+
+      // First frame: FutureBuilder should be waiting and show CircularProgressIndicator
+      await tester.pump();
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      // Complete the future and ensure UI updates
+      completer.complete(<Map<String, dynamic>>[]);
+      await tester.pumpAndSettle();
+
+      // After completion, no loading indicator
+      expect(find.byType(CircularProgressIndicator), findsNothing);
     });
   });
 }
