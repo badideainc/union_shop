@@ -59,4 +59,30 @@ void main() {
     expect(navigatedItem, isNotNull);
     expect(navigatedItem!.label, 'Child1');
   });
+
+  testWidgets('NavMenu shows provided title and Close button', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                NavMenu.show(context, const [MenuItem(label: 'A')],
+                    title: 'My Menu');
+              },
+              child: const Text('Open'),
+            ),
+          ),
+        );
+      }),
+    ));
+
+    // Open the menu dialog
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+
+    // The custom title should be visible and Close button present
+    expect(find.text('My Menu'), findsOneWidget);
+    expect(find.widgetWithText(TextButton, 'Close'), findsOneWidget);
+  });
 }
