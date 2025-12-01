@@ -1,48 +1,59 @@
 Goal
-----
-Improve the app navigation by replacing the current static menu behavior with a compact, accessible dropdown anchored to the `Icons.menu` button and enabling nested, navigable dropdowns.
+Replace the two unused ProductDropdown() widgets at the top of c:\Users\blair\Documents\University Programming\flutter\union_shop\lib\collection_page.dart with a single, reusable FilterDropdown component that supports category filtering and product sorting. Both filters must be combinable.
 
-Background
-----------
-Currently the app shows top-level navigation via `NavButton()` and `NavDropdown()` in `NavBar()` (in `lib/main.dart`). The request is to make the menu more compact (hamburger-triggered) while keeping all existing navigation items and enabling nested dropdown navigation where a dropdown entry can open a new set of options and provide an explicit "back" item.
+Files to change / reference
+- collection_page.dart (replace the two ProductDropdown() instances and wire UI/state)
+- category.dart (provide enum values for the category filter)
+- products.json (product entries may contain multiple categories)
+- main.dart (DetailDropdown() is an alternate base class if preferred)
 
 Requirements
-------------
-1. Hamburger menu
-	- Replace the existing `Icons.menu` behaviour so that tapping the hamburger opens a dropdown menu (or popover) containing the same items that currently appear as `NavButton()` and top-level `NavDropdown()` entries.
+1. New component
+   - Create a new class FilterDropdown that inherits from ProductDropdown (or optionally from DetailDropdown in main.dart).
+   - Make FilterDropdown reusable and stateless where possible; expose callbacks to update the collection_page state.
 
-2. Reusable `ProductDropdown` / `NavDropdown` behaviour (nested navigation)
-	- Modify `NavDropdown()` (or the shared dropdown widget) so that selecting a dropdown item can either:
-	  a) navigate directly to a route (existing behaviour), or
-	  b) replace the current dropdown content with a new set of options (nested submenu).
-	- When a nested submenu is opened, the dropdown should show a first item that navigates back to the previous menu. The back item should display the previous menu heading text prefixed with a left angle bracket, e.g. "< Category" or "< Back to Products".
+2. Filter 1 — "Filter"
+   - Label: "Filter" (default: "All Products")
+   - Options: All enum values from category.dart plus an "All Products" option.
+   - Behavior: products.json entries may have multiple categories; when a category is selected, include any product whose categories list contains the selected enum value.
+   - If "All Products" is selected, do not filter by category.
 
-3. API & Component contract
-	- `NavBar()` / `NavDropdown()` should accept an expressive data model that supports both leaf items and nested groups. Example idea:
-	  - class MenuItem { final String label; final String? route; final List<MenuItem>? children; }
-	- If `children` is present, selecting that item opens a nested menu instead of navigating.
-	- Provide an optional callback `onNavigate(String route)` and `onOpenMenu()` / `onCloseMenu()` hooks.
+3. Filter 2 — "Sort By"
+   - Label: "Sort By" (default: leave current order or specify explicit default)
+   - Options:
+     - Alphabetical A-Z (by product.name ascending)
+     - Alphabetical Z-A (by product.name descending)
+     - Price Low-High (by numeric price/salePrice ascending)
+     - Price High-Low (by numeric price/salePrice descending)
+	 - If salePrice is not greater than 0 ignore it
+   - Behavior: sort the (already category-filtered) product list accordingly.
 
-4. Visual & UX details
-	- The hamburger dropdown should be visually aligned with the app header and match existing styling (colors, padding, font-size) used by `NavButton()`.
-	- When opening a nested submenu, animate the change (slide right) so the transition is obvious.
-	- Provide a clear back item as the first row in a nested view with the exact text `"< {heading}"` where `{heading}` is the parent menu title.
+4. Combined behavior
+   - Both filters must be applicable at the same time: first apply the category filter, then apply the sort to the filtered list.
+   - The component should emit the resulting product list (or trigger a callback) so collection_page.dart can update the displayed grid/list.
 
-5. Accessibility
-	- Ensure all dropdown/menu elements are focusable and announce their role to screen readers.
-	- The back item must be properly labeled for screen readers.
+5. API & integration suggestions (example)
+   - FilterDropdown constructor suggestions:
+     - FilterDropdown({
+         required List<Product> products,
+         required ValueChanged<List<Product>> onChanged,
+         Category? initialCategory, // null means All Products
+         SortOption? initialSort
+       })
+   - onChanged should be invoked whenever filter or sort changes with the new list.
+   - Keep UI state minimal in FilterDropdown; let collection_page.dart hold the master list.
+
+6. Edge cases & tests
+   - Empty product list: handle gracefully and return empty list.
+   - Products with multiple categories: include if any category matches.
+   - Stable sort where possible (so sorting after filtering is deterministic).
+   - Correctly parse numeric prices if stored as strings in products.json.
 
 Acceptance criteria
--------------------
-- Tapping `Icons.menu` opens a dropdown with the same set of items currently available via `NavButton()` and `NavDropdown()`.
-- Selecting an item with `children` replaces the dropdown content with the child list and shows a first-row "< {heading}" back item.
-- Pressing the back item returns to the previous dropdown content.
-- Choosing a leaf item (no children) navigates to the intended route and closes the dropdown.
-- The implementation exposes a simple data model for menu definition and hooks for navigation events.
+- collection_page.dart shows one FilterDropdown area with two labeled dropdowns: "Filter" and "Sort By".
+- Selecting a category restricts products to those that have that category in their categories array.
+- Selecting a sort order sorts the currently visible products.
+- Both changes update the visible products immediately and can be combined.
+- No unused ProductDropdown() widgets remain.
 
-Implementation notes / suggestions
--------------------------------
-- Implement a small `MenuModel` (list of `MenuItem`) and build the dropdown UI from this data structure.
-- For nested views, maintain a stack of `MenuItem` lists in state (push child list on open, pop on back).
-- Reuse the existing `NavButton()` styles for menu rows to keep consistent visuals.
-- Keep the dropdown widget generic so it can be used in other screens (collection page, product page) if needed.
+If you prefer, implement FilterDropdown by extending DetailDropdown from main.dart instead of ProductDropdown — explain why you chose one base class over the other in a short comment in the code.
