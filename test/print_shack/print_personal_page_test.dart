@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/print_shack/print_personal_page.dart';
@@ -9,42 +10,43 @@ void main() {
   group('PrintPersonalisationPage - initial loading', () {
     testWidgets('shows loading indicator while base product loads',
         (tester) async {
-      await tester.pumpWidget(const MediaQuery(
-        data: MediaQueryData(size: Size(1200, 900)),
-        child: MaterialApp(home: PrintPersonalisationPage()),
+      final completer = Completer<ProductModel>();
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: MaterialApp(
+            home:
+                PrintPersonalisationPage(baseProductFuture: completer.future)),
       ));
 
-      // Immediately after pump, the FutureBuilder will show a loading indicator
+      // Immediately the FutureBuilder should show a loading indicator
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      // Complete the future and allow widgets to rebuild
+      completer.complete(ProductModel.fromValues(
+          id: 'print_item', name: 'Print Item', price: 3.0));
+      await tester.pumpAndSettle();
+
+      // After completion the Personalisation UI should be visible
+      expect(find.text('Personalisation'), findsOneWidget);
     });
   });
 
   group('PrintPersonalisationPage - after load', () {
-    testWidgets('shows form or error message after base product finishes',
-        (tester) async {
-      await tester.pumpWidget(const MediaQuery(
-        data: MediaQueryData(size: Size(1200, 900)),
-        child: MaterialApp(home: PrintPersonalisationPage()),
+    testWidgets('shows form after base product finishes', (tester) async {
+      final base = ProductModel.fromValues(
+          id: 'print_item', name: 'Print Item', price: 3.0);
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: MaterialApp(
+            home: PrintPersonalisationPage(
+                baseProductFuture: Future.value(base))),
       ));
 
-      // Wait for the FutureBuilder to complete (either success or error).
-      // We'll pump frames for up to a few seconds.
-      var attempts = 0;
-      while (
-          attempts < 20 && tester.any(find.byType(CircularProgressIndicator))) {
-        await tester.pump(const Duration(milliseconds: 200));
-        attempts++;
-      }
+      await tester.pumpAndSettle();
 
-      // If the product failed to load, the page shows an error message.
-      if (find.text('Error loading product').evaluate().isNotEmpty) {
-        expect(find.text('Error loading product'), findsOneWidget);
-        return;
-      }
-
-      // Otherwise we expect to see the Personalisation UI: title, price and at least one TextField
       expect(find.text('Personalisation'), findsOneWidget);
-      // Price text should contain a pound sign '£'
       expect(find.textContaining('£'), findsWidgets);
       expect(find.byType(TextField), findsWidgets);
     });
@@ -54,10 +56,7 @@ void main() {
     testWidgets('pressing ADD TO CART adds item to cart', (tester) async {
       final cart = CartModel();
       final base = ProductModel.fromValues(
-        id: 'print_item',
-        name: 'Print Item',
-        price: 3.0,
-      );
+          id: 'print_item', name: 'Print Item', price: 3.0);
 
       await tester.pumpWidget(MediaQuery(
         data: const MediaQueryData(size: Size(1200, 900)),
@@ -69,13 +68,14 @@ void main() {
         ),
       ));
 
-      // Allow future to resolve and widgets to build
       await tester.pumpAndSettle();
 
-      // Ensure ADD TO CART button is present
       final addFinder = find.text('ADD TO CART');
       expect(addFinder, findsOneWidget);
 
+      // Ensure the button is visible (page may be scrollable) before tapping
+      await tester.ensureVisible(addFinder);
+      await tester.pumpAndSettle();
       await tester.tap(addFinder);
       await tester.pumpAndSettle();
 
