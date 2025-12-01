@@ -30,7 +30,9 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.all(16.0),
             child: Text('Your cart is currently empty.'),
           ),
-          const NavButton(optionName: "Continue shopping", url: "/collection"),
+          // Navigate to a real category path (clothing) instead of the old
+          // '/collection' route that relied on arguments.
+          const NavButton(optionName: "Continue shopping", url: "/clothing"),
         ] else ...[
           const Text(
             'Continue shopping',
