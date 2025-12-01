@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // Header
-            const Header(),
+            const Header(key: Key('home-header')),
 
             // Hero Section
             SizedBox(
@@ -224,7 +224,7 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Footer
-            const Footer(),
+            const Footer(key: Key('home-footer')),
           ],
         ),
       ),
