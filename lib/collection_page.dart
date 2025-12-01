@@ -219,6 +219,19 @@ class _FilterDropdownState extends State<FilterDropdown> {
       ));
     }
 
+    // Generate sort dropdown items (small step).
+    final sortOptions = <DropdownMenuItem<SortOption?>>[
+      const DropdownMenuItem(value: null, child: Text('Default')),
+      const DropdownMenuItem(
+          value: SortOption.alphabeticalAsc, child: Text('Alphabetical A-Z')),
+      const DropdownMenuItem(
+          value: SortOption.alphabeticalDesc, child: Text('Alphabetical Z-A')),
+      const DropdownMenuItem(
+          value: SortOption.priceLowHigh, child: Text('Price Low-High')),
+      const DropdownMenuItem(
+          value: SortOption.priceHighLow, child: Text('Price High-Low')),
+    ];
+
     // (UI will be added in a following small step.)
     return const SizedBox.shrink();
   }
