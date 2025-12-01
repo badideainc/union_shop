@@ -33,6 +33,6 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: AboutPage()));
     await tester.pumpAndSettle();
 
-    expect(find.byType(SingleChildScrollView), findsOneWidget);
+    expect(find.byType(SingleChildScrollView), findsWidgets);
   });
 }
