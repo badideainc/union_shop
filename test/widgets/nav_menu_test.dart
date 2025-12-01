@@ -85,4 +85,46 @@ void main() {
     expect(find.text('My Menu'), findsOneWidget);
     expect(find.widgetWithText(TextButton, 'Close'), findsOneWidget);
   });
+
+  testWidgets('tapping a parent row opens its children', (tester) async {
+    final items = <MenuItem>[
+      const MenuItem(
+        label: 'Parent',
+        children: [
+          MenuItem(label: 'Child1', route: '/child1'),
+          MenuItem(label: 'Child2', route: '/child2'),
+        ],
+      ),
+    ];
+
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                NavMenu.show(context, items);
+              },
+              child: const Text('Open'),
+            ),
+          ),
+        );
+      }),
+    ));
+
+    // Open the menu dialog
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+
+    // Parent should be visible
+    expect(find.text('Parent'), findsOneWidget);
+
+    // Tap Parent to open children
+    await tester.tap(find.text('Parent'));
+    await tester.pumpAndSettle();
+
+    // Child entries should now be visible
+    expect(find.text('Child1'), findsOneWidget);
+    expect(find.text('Child2'), findsOneWidget);
+  });
 }
