@@ -110,4 +110,34 @@ void main() {
       expect(() => items.add(p), throwsA(isA<UnsupportedError>()));
     });
   });
+
+  group('CartModel - totalPrice calculation', () {
+    testWidgets(
+        'totalPrice uses salePrice when available and respects quantity',
+        (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      final cart = CartModel();
+
+      final pSale =
+          await ProductModel.productFromJson('classic_sweatshirt_neutral');
+      final pFull = await ProductModel.productFromJson('city_bookmark');
+
+      // classic_sweatshirt_neutral has salePrice 10.99, price 17
+      // city_bookmark has price 3
+      cart.add(pSale); // quantity 1
+      cart.add(pFull); // quantity 1
+
+      // increase quantity of sale item
+      cart.updateQuantity(pSale.id, 3);
+
+      // expected: salePrice * 3 + price * 1 = 10.99*3 + 3 = 32.97 + 3 = 35.97
+      expect(cart.totalPrice, closeTo(35.97, 0.01));
+    });
+
+    testWidgets('totalPrice returns 0.0 for empty cart', (tester) async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      final cart = CartModel();
+      expect(cart.totalPrice, 0.0);
+    });
+  });
 }
