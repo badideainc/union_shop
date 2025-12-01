@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/json_parser.dart';
 import 'package:union_shop/models/product_model.dart';
 import 'package:union_shop/models/category.dart';
-import 'package:union_shop/product_page.dart';
 import 'package:union_shop/main.dart';
 
 // Sort options used by the FilterDropdown component.
