@@ -174,4 +174,47 @@ void main() {
       expect(product.quantity, equals(1));
     });
   });
+
+  group('Image Fallback Tests', () {
+    testWidgets('image errorBuilder shows placeholder', (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'nonexistent_image.png',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image_not_supported,
+                          size: 64,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Image unavailable',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
+      expect(find.text('Image unavailable'), findsOneWidget);
+    });
+  });
 }
