@@ -46,9 +46,8 @@ class UnionShopApp extends StatelessWidget {
             return ProductPage(productID: productID);
           },
           '/about': (context) => const AboutPage(),
-          '/print_shack/print_about_page': (context) => const PrintAboutPage(),
-          '/print_shack/print_personalisation_page': (context) =>
-              const PrintPersonalisationPage(),
+          '/personalisation': (context) => const PrintAboutPage(),
+          '/personalise-text': (context) => const PrintPersonalisationPage(),
           '/collection': (context) {
             final args = ModalRoute.of(context)?.settings.arguments;
             final ProductCategory category =
