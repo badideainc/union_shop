@@ -15,8 +15,9 @@ enum SortOption {
 
 class CollectionPage extends StatefulWidget {
   final ProductCategory category;
+  final Future<List<Map<String, dynamic>>> Function()? productLoader;
 
-  const CollectionPage({super.key, required this.category});
+  const CollectionPage({super.key, required this.category, this.productLoader});
 
   @override
   State<CollectionPage> createState() => _CollectionPageState();
@@ -35,7 +36,8 @@ class _CollectionPageState extends State<CollectionPage> {
 
   Future<List<ProductModel>> _fetchProductsForCategory(
       ProductCategory category) async {
-    final List<Map<String, dynamic>> products = await loadProductData();
+    final loader = widget.productLoader ?? loadProductData;
+    final List<Map<String, dynamic>> products = await loader();
 
     List<Future<ProductModel>> futures = [];
 
