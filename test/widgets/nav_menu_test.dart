@@ -173,4 +173,47 @@ void main() {
     expect(find.text('Parent'), findsOneWidget);
     expect(find.text('Child1'), findsNothing);
   });
+
+  testWidgets('leaf navigation calls onNavigate and closes dialog',
+      (tester) async {
+    final items = <MenuItem>[
+      const MenuItem(label: 'Leaf', route: '/leaf'),
+    ];
+
+    MenuItem? navigatedItem;
+
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                NavMenu.show(context, items, onNavigate: (item) {
+                  navigatedItem = item;
+                });
+              },
+              child: const Text('Open'),
+            ),
+          ),
+        );
+      }),
+    ));
+
+    // Open the menu dialog
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+
+    // Leaf should be visible
+    expect(find.text('Leaf'), findsOneWidget);
+
+    // Tap Leaf - should call onNavigate and close the dialog
+    await tester.tap(find.text('Leaf'));
+    await tester.pumpAndSettle();
+
+    expect(navigatedItem, isNotNull);
+    expect(navigatedItem!.label, 'Leaf');
+
+    // Dialog should be closed (Close button not present)
+    expect(find.text('Close'), findsNothing);
+  });
 }
