@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/print_shack/print_personal_page.dart';
+import 'package:provider/provider.dart';
+import 'package:union_shop/models/product_model.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 void main() {
   group('PrintPersonalisationPage - initial loading', () {
@@ -44,6 +47,40 @@ void main() {
       // Price text should contain a pound sign '£'
       expect(find.textContaining('£'), findsWidgets);
       expect(find.byType(TextField), findsWidgets);
+    });
+  });
+
+  group('PrintPersonalisationPage - add to cart', () {
+    testWidgets('pressing ADD TO CART adds item to cart', (tester) async {
+      final cart = CartModel();
+      final base = ProductModel.fromValues(
+        id: 'print_item',
+        name: 'Print Item',
+        price: 3.0,
+      );
+
+      await tester.pumpWidget(MediaQuery(
+        data: const MediaQueryData(size: Size(1200, 900)),
+        child: ChangeNotifierProvider.value(
+          value: cart,
+          child: MaterialApp(
+              home: PrintPersonalisationPage(
+                  baseProductFuture: Future.value(base))),
+        ),
+      ));
+
+      // Allow future to resolve and widgets to build
+      await tester.pumpAndSettle();
+
+      // Ensure ADD TO CART button is present
+      final addFinder = find.text('ADD TO CART');
+      expect(addFinder, findsOneWidget);
+
+      await tester.tap(addFinder);
+      await tester.pumpAndSettle();
+
+      expect(cart.items.length, 1);
+      expect(cart.items.first.id, 'print_item');
     });
   });
 }
