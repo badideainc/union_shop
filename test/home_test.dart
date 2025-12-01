@@ -12,27 +12,9 @@ void main() {
       // Check that basic UI elements are present
       // Header should be present (use key to avoid brittle text match)
       expect(find.byKey(const Key('home-header')), findsOneWidget);
-      expect(find.text('Placeholder Hero Title'), findsOneWidget);
-      expect(find.text('PLACEHOLDER PRODUCTS SECTION'), findsOneWidget);
+      expect(find.text('Essential Range - 20% off'), findsOneWidget);
+      expect(find.text('PRODUCTS SECTION'), findsOneWidget);
       expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
-      expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
-    });
-
-    testWidgets('should display product cards', (tester) async {
-      await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
-
-      // Check that product cards are displayed
-      expect(find.text('Placeholder Product 1'), findsOneWidget);
-      expect(find.text('Placeholder Product 2'), findsOneWidget);
-      expect(find.text('Placeholder Product 3'), findsOneWidget);
-      expect(find.text('Placeholder Product 4'), findsOneWidget);
-
-      // Check prices are displayed
-      expect(find.text('£10.00'), findsOneWidget);
-      expect(find.text('£15.00'), findsOneWidget);
-      expect(find.text('£20.00'), findsOneWidget);
-      expect(find.text('£25.00'), findsOneWidget);
     });
 
     testWidgets('should display header icons', (tester) async {
@@ -52,11 +34,10 @@ void main() {
       // Check that footer is present
       // Footer should be present (use key to avoid brittle text match)
       expect(find.byKey(const Key('home-footer')), findsOneWidget);
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      expect(find.text('Opening Hours'), findsOneWidget);
+      expect(find.text('Help and Information'), findsOneWidget);
+      expect(find.text('Latest Offers'), findsOneWidget);
+      expect(find.text('Subscribe'), findsOneWidget);
     });
   });
 
@@ -65,9 +46,8 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pump();
 
-      expect(find.text('Placeholder Hero Title'), findsOneWidget);
-      expect(find.text('This is placeholder text for the hero section.'),
-          findsOneWidget);
+      expect(find.text('Essential Range - 20% off'), findsOneWidget);
+      expect(find.text('Come get them while stocks last!'), findsOneWidget);
 
       final btnFinder = find.widgetWithText(ElevatedButton, 'BROWSE PRODUCTS');
       expect(btnFinder, findsOneWidget);
