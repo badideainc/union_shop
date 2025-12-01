@@ -58,4 +58,21 @@ void main() {
       );
     });
   });
+
+  group('Home Screen - Hero', () {
+    testWidgets('shows hero title, description and CTA', (tester) async {
+      await tester.pumpWidget(const UnionShopApp());
+      await tester.pump();
+
+      expect(find.text('Placeholder Hero Title'), findsOneWidget);
+      expect(find.text('This is placeholder text for the hero section.'),
+          findsOneWidget);
+
+      final btnFinder = find.widgetWithText(ElevatedButton, 'BROWSE PRODUCTS');
+      expect(btnFinder, findsOneWidget);
+
+      final ElevatedButton btn = tester.widget<ElevatedButton>(btnFinder);
+      expect(btn.onPressed, isNotNull);
+    });
+  });
 }
