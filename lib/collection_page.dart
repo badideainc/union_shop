@@ -173,3 +173,40 @@ All prices shown are inclusive of the discount 🛒
     );
   }
 }
+
+// --- FilterDropdown (skeleton, step 2) --------------------------------------
+class FilterDropdown extends StatefulWidget {
+  final List<ProductModel> products;
+  final ValueChanged<List<ProductModel>> onChanged;
+  final ProductCategory? initialCategory;
+  final SortOption? initialSort;
+
+  const FilterDropdown({
+    super.key,
+    required this.products,
+    required this.onChanged,
+    this.initialCategory,
+    this.initialSort,
+  });
+
+  @override
+  State<FilterDropdown> createState() => _FilterDropdownState();
+}
+
+class _FilterDropdownState extends State<FilterDropdown> {
+  ProductCategory? _selectedCategory;
+  SortOption? _selectedSort;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = widget.initialCategory;
+    _selectedSort = widget.initialSort;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Skeleton: UI and logic will be implemented in subsequent small steps.
+    return const SizedBox.shrink();
+  }
+}
