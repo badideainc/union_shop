@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/main.dart';
+import 'package:union_shop/models/product_model.dart';
 
 void main() {
   group('Home Page Tests', () {
@@ -73,6 +74,51 @@ void main() {
 
       final ElevatedButton btn = tester.widget<ElevatedButton>(btnFinder);
       expect(btn.onPressed, isNotNull);
+    });
+  });
+
+  group('Home Screen - Product Cards', () {
+    testWidgets('shows product name and price for regular price',
+        (WidgetTester tester) async {
+      // Create a ProductModel snapshot with no salePrice
+      final product = ProductModel.fromValues(
+          id: 'test1', name: 'Test Product', price: 12.5, salePrice: -1);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ProductCard(
+            productID: 'test1',
+            productFuture: Future.value(product),
+          ),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Test Product'), findsOneWidget);
+      expect(find.text('£12.50'), findsOneWidget);
+    });
+
+    testWidgets('shows sale price when salePrice >= 0',
+        (WidgetTester tester) async {
+      final product = ProductModel.fromValues(
+          id: 'test2', name: 'Sale Product', price: 20.0, salePrice: 15.0);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ProductCard(
+            productID: 'test2',
+            productFuture: Future.value(product),
+          ),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Sale Product'), findsOneWidget);
+      // Sale price displayed first
+      expect(find.text('£15.00'), findsOneWidget);
+      expect(find.text('£20.00'), findsOneWidget);
     });
   });
 }
