@@ -57,3 +57,52 @@ ProductCategory? categoryFromString(String? categoryString) {
       return null;
   }
 }
+
+// URL-friendly path helpers for routing (used by go_router)
+String categoryToPath(ProductCategory c) {
+  switch (c) {
+    case ProductCategory.clothing:
+      return 'clothing';
+    case ProductCategory.merchandise:
+      return 'merchandise';
+    case ProductCategory.halloween:
+      return 'halloween';
+    case ProductCategory.signatureAndEssentialsRange:
+      return 'signature';
+    case ProductCategory.portsmouthCityCollection:
+      return 'portsmouth';
+    case ProductCategory.prideCollection:
+      return 'pride';
+    case ProductCategory.graduation:
+      return 'graduation';
+    case ProductCategory.personalised:
+      return 'personalised';
+    case ProductCategory.sale:
+      return 'sale';
+  }
+}
+
+ProductCategory? pathToCategory(String path) {
+  switch (path) {
+    case 'clothing':
+      return ProductCategory.clothing;
+    case 'merchandise':
+      return ProductCategory.merchandise;
+    case 'halloween':
+      return ProductCategory.halloween;
+    case 'signature':
+      return ProductCategory.signatureAndEssentialsRange;
+    case 'portsmouth':
+      return ProductCategory.portsmouthCityCollection;
+    case 'pride':
+      return ProductCategory.prideCollection;
+    case 'graduation':
+      return ProductCategory.graduation;
+    case 'personalised':
+      return ProductCategory.personalised;
+    case 'sale':
+      return ProductCategory.sale;
+    default:
+      return null;
+  }
+}
