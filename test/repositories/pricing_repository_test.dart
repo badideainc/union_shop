@@ -30,4 +30,16 @@ void main() {
       expect(total, closeTo(15.0, 1e-6));
     });
   });
+
+  group('PricingRepository - multiple products', () {
+    test('calculates combined total for mixed products', () {
+      final repo = PricingRepository();
+      final a = ProductModel.fromValues(id: 'a', price: 5.0);
+      final b = ProductModel.fromValues(id: 'b', price: 8.0, salePrice: 6.0);
+      a.setQuantity(2); // 2 * 5 = 10
+      b.setQuantity(3); // 3 * 6 = 18
+      final total = repo.calculateTotalPrice([a, b]);
+      expect(total, closeTo(28.0, 1e-6));
+    });
+  });
 }
