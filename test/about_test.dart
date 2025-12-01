@@ -20,4 +20,11 @@ void main() {
     // Paragraph contains contact email
     expect(find.textContaining('hello@upsu.net'), findsOneWidget);
   });
+
+  testWidgets('AboutPage contains contact email', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: AboutPage()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('hello@upsu.net'), findsOneWidget);
+  });
 }
