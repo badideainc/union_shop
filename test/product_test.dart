@@ -13,7 +13,7 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that product name and price from assets are present
       expect(find.text('Graduation Bear'), findsOneWidget);
@@ -22,7 +22,7 @@ void main() {
 
     testWidgets('should display product option label', (tester) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Graduation Bear in assets has an options map with a 'Color' key
       expect(find.text('Color'), findsOneWidget);
@@ -30,7 +30,7 @@ void main() {
 
     testWidgets('should display header icons', (tester) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that header icons are present
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -40,7 +40,7 @@ void main() {
 
     testWidgets('should display footer', (tester) async {
       await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that footer contains the expected sections
       expect(find.text('Opening Hours'), findsOneWidget);
