@@ -443,8 +443,10 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
           children: [
             GestureDetector(
@@ -512,7 +514,7 @@ class NavBar extends StatelessWidget {
                     ]
                   ],
                 )),
-            const Spacer(),
+            const SizedBox(width: 16),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 600),
               child: Row(
@@ -645,7 +647,7 @@ class NavBar extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
 
