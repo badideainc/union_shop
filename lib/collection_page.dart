@@ -5,6 +5,15 @@ import 'package:union_shop/models/category.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/main.dart';
 
+// Sort options used by the FilterDropdown component.
+// Kept at top so later in-file FilterDropdown can reference it.
+enum SortOption {
+  alphabeticalAsc,
+  alphabeticalDesc,
+  priceLowHigh,
+  priceHighLow
+}
+
 class CollectionPage extends StatefulWidget {
   final ProductCategory category;
 
