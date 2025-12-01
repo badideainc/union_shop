@@ -8,8 +8,25 @@ import 'package:union_shop/models/cart_model.dart';
 void main() {
   group('Product Page Tests', () {
     Widget createTestWidget() {
-      // Use the example product from assets: 'grad_bear'
-      return const MaterialApp(home: ProductPage(productID: 'grad_bear'));
+      // Use an injected ProductModel so tests do not rely on asset loading.
+      final product = ProductModel.fromValues(
+        id: 'grad_bear',
+        name: 'Graduation Bear',
+        price: 15.0,
+        salePrice: -1,
+        options: {
+          'Color': ['Brown']
+        },
+        description: 'A plush graduation bear',
+        imageUrl: '',
+      );
+
+      return MaterialApp(
+        home: ProductPage(
+          productID: 'grad_bear',
+          productFuture: Future.value(product),
+        ),
+      );
     }
 
     testWidgets('should display product page with basic elements', (
@@ -54,16 +71,38 @@ void main() {
         (tester) async {
       final cart = CartModel();
 
-      await tester.pumpWidget(ChangeNotifierProvider<CartModel>.value(
-        value: cart,
-        child: createTestWidget(),
+      // Inject the same deterministic product used by createTestWidget
+      final product = ProductModel.fromValues(
+        id: 'grad_bear',
+        name: 'Graduation Bear',
+        price: 15.0,
+        salePrice: -1,
+        options: {
+          'Color': ['Brown']
+        },
+        description: 'A plush graduation bear',
+        imageUrl: '',
+      );
+
+      // Put the provider inside MaterialApp so ProductPage can read it from context
+      await tester.pumpWidget(MaterialApp(
+        home: ChangeNotifierProvider<CartModel>.value(
+          value: cart,
+          child: ProductPage(
+            productID: 'grad_bear',
+            productFuture: Future.value(product),
+          ),
+        ),
       ));
 
       await tester.pumpAndSettle();
 
-      // Find the ADD TO CART button and tap it
+      // Find the ADD TO CART button and ensure it's visible before tapping
       final addFinder = find.widgetWithText(ElevatedButton, 'ADD TO CART');
       expect(addFinder, findsOneWidget);
+      await tester.ensureVisible(addFinder);
+      await tester.pumpAndSettle();
+
       await tester.tap(addFinder);
       await tester.pumpAndSettle();
 
