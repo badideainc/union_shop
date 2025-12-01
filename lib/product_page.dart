@@ -6,9 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:union_shop/models/cart_model.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key, required this.productID});
+  const ProductPage({super.key, required this.productID, this.productFuture});
 
   final String productID;
+  // Optional product future for tests to inject a resolved ProductModel.
+  final Future<ProductModel>? productFuture;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -37,7 +39,8 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
-    _product = ProductModel.productFromJson(widget.productID);
+    _product =
+        widget.productFuture ?? ProductModel.productFromJson(widget.productID);
   }
 
   @override
