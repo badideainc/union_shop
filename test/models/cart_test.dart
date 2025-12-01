@@ -10,8 +10,12 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
 
-      // Load a real product from assets
-      final p = await ProductModel.productFromJson('lanyard');
+      // Create a lightweight product instance for tests
+      final p = ProductModel.fromValues(
+        id: 'lanyard',
+        name: 'Lanyard',
+        price: 2.75,
+      );
 
       // initial add
       cart.add(p);
@@ -31,7 +35,14 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
 
-      final p1 = await ProductModel.productFromJson('grad_hoodie');
+      final p1 = ProductModel.fromValues(
+        id: 'grad_hoodie',
+        name: 'Grad Hoodie',
+        price: 35.0,
+        options: {
+          'Size': ['S', 'M', 'L', 'XL']
+        },
+      );
       final p2 = p1.clone();
       p2.setSelectedOption('Size', 'L');
 
@@ -48,7 +59,11 @@ void main() {
         (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
-      final p = await ProductModel.productFromJson('city_postcard');
+      final p = ProductModel.fromValues(
+        id: 'city_postcard',
+        name: 'City Postcard',
+        price: 1.0,
+      );
 
       cart.add(p);
       cart.add(p);
@@ -65,7 +80,11 @@ void main() {
         (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
-      final p = await ProductModel.productFromJson('city_magnet');
+      final p = ProductModel.fromValues(
+        id: 'city_magnet',
+        name: 'City Magnet',
+        price: 4.5,
+      );
 
       cart.add(p);
       expect(cart.items.first.quantity, 1);
@@ -80,7 +99,11 @@ void main() {
     testWidgets('remove removes item regardless of quantity', (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
-      final p = await ProductModel.productFromJson('city_bookmark');
+      final p = ProductModel.fromValues(
+        id: 'city_bookmark',
+        name: 'City Bookmark',
+        price: 3.0,
+      );
       cart.add(p);
       expect(cart.items.length, 1);
 
@@ -93,7 +116,11 @@ void main() {
     testWidgets('clear removes all items', (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
-      final p = await ProductModel.productFromJson('city_notebook');
+      final p = ProductModel.fromValues(
+        id: 'city_notebook',
+        name: 'City Notebook',
+        price: 7.5,
+      );
       cart.add(p);
       expect(cart.items.isNotEmpty, true);
 
@@ -104,7 +131,11 @@ void main() {
     testWidgets('items returns an unmodifiable list', (tester) async {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
-      final p = await ProductModel.productFromJson('city_magnet');
+      final p = ProductModel.fromValues(
+        id: 'city_magnet',
+        name: 'City Magnet',
+        price: 4.5,
+      );
       cart.add(p);
       final items = cart.items;
       expect(() => items.add(p), throwsA(isA<UnsupportedError>()));
@@ -118,9 +149,17 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
       final cart = CartModel();
 
-      final pSale =
-          await ProductModel.productFromJson('classic_sweatshirt_neutral');
-      final pFull = await ProductModel.productFromJson('city_bookmark');
+      final pSale = ProductModel.fromValues(
+        id: 'classic_sweatshirt_neutral',
+        name: 'Classic Sweatshirt - Neutral',
+        price: 17.0,
+        salePrice: 10.99,
+      );
+      final pFull = ProductModel.fromValues(
+        id: 'city_bookmark',
+        name: 'City Bookmark',
+        price: 3.0,
+      );
 
       // classic_sweatshirt_neutral has salePrice 10.99, price 17
       // city_bookmark has price 3
