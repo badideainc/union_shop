@@ -121,4 +121,35 @@ void main() {
       expect(find.text('£20.00'), findsOneWidget);
     });
   });
+
+  group('Home Screen - Header Icons', () {
+    testWidgets('header icons present and enabled', (tester) async {
+      await tester.pumpWidget(const UnionShopApp());
+      await tester.pump();
+
+      final searchFinder = find.byIcon(Icons.search);
+      final accountFinder = find.byIcon(Icons.person_outline);
+      final cartFinder = find.byIcon(Icons.shopping_bag_outlined);
+      final menuFinder = find.byIcon(Icons.menu);
+
+      expect(searchFinder, findsOneWidget);
+      expect(accountFinder, findsOneWidget);
+      expect(cartFinder, findsOneWidget);
+      expect(menuFinder, findsOneWidget);
+
+      final IconButton searchBtn = tester.widget(
+          find.ancestor(of: searchFinder, matching: find.byType(IconButton)));
+      final IconButton accountBtn = tester.widget(
+          find.ancestor(of: accountFinder, matching: find.byType(IconButton)));
+      final IconButton cartBtn = tester.widget(
+          find.ancestor(of: cartFinder, matching: find.byType(IconButton)));
+      final IconButton menuBtn = tester.widget(
+          find.ancestor(of: menuFinder, matching: find.byType(IconButton)));
+
+      expect(searchBtn.onPressed, isNotNull);
+      expect(accountBtn.onPressed, isNotNull);
+      expect(cartBtn.onPressed, isNotNull);
+      expect(menuBtn.onPressed, isNotNull);
+    });
+  });
 }
