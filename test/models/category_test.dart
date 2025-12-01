@@ -41,4 +41,23 @@ void main() {
       expect(categoryFromString(null), isNull);
     });
   });
+
+  group('Category - path helpers', () {
+    test('categoryToPath and pathToCategory map correctly and round-trip', () {
+      for (final c in ProductCategory.values) {
+        final path = categoryToPath(c);
+        final parsed = pathToCategory(path);
+        expect(parsed, c, reason: 'Round-trip for $c failed (path: $path)');
+      }
+
+      // Known specific mappings
+      expect(categoryToPath(ProductCategory.signatureAndEssentialsRange),
+          'signature');
+      expect(categoryToPath(ProductCategory.portsmouthCityCollection),
+          'portsmouth');
+
+      // Unknown path returns null
+      expect(pathToCategory('not-a-path'), isNull);
+    });
+  });
 }
