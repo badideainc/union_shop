@@ -122,6 +122,8 @@ All prices shown are inclusive of the discount 🛒
                         );
                       }
 
+                      final displayList = _filteredProducts ?? snapshot.data!;
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -142,14 +144,13 @@ All prices shown are inclusive of the discount 🛒
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              Text(
-                                  '${_filteredProducts?.length ?? snapshot.data?.length ?? 0} products'),
+                              Text('${displayList.length} products'),
                             ],
                           ),
 
                           const SizedBox(height: 24),
 
-                          if (snapshot.data!.isEmpty) ...[
+                          if (displayList.isEmpty) ...[
                             const Text('No products found'),
                           ] else ...[
                             // Minimal listing: ProductCards for each product
@@ -162,7 +163,7 @@ All prices shown are inclusive of the discount 🛒
                                       : 1,
                               crossAxisSpacing: 24,
                               mainAxisSpacing: 48,
-                              children: (_filteredProducts ?? snapshot.data!)
+                              children: displayList
                                   .map((p) => ProductCard(productID: p.id))
                                   .toList(),
                             ),
