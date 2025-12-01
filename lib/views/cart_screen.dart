@@ -122,96 +122,111 @@ class _CartWidgetState extends State<CartWidget> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            product.imageUrl,
+          SizedBox(
             width: 100,
             height: 100,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: Colors.grey[300],
-                child: const Center(
-                  child: Icon(Icons.image_not_supported, color: Colors.grey),
-                ),
-              );
-            },
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${product.name} (x${product.quantity})',
-              ),
-              if (product.selectedOptions != null &&
-                  product.selectedOptions!.isNotEmpty)
-                Text(
-                  product.selectedOptions!.entries
-                      .map((e) => '${e.key}: ${e.value}')
-                      .join(', '),
-                  style: const TextStyle(fontStyle: FontStyle.italic),
-                )
-              else if (product.options != null && product.options!.isNotEmpty)
-                Text(
-                  product.options!.entries
-                      .map((e) =>
-                          '${e.key}: ${e.value.isNotEmpty ? e.value[0] : ''}')
-                      .join(', '),
-                  style: const TextStyle(fontStyle: FontStyle.italic),
-                ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  // Remove button: remove the product from the cart immediately
-                  TextButton(
-                    onPressed: () {
-                      final cart = context.read<CartModel>();
-                      cart.remove(product.id);
-                    },
-                    child: const Text('remove'),
+            child: Image.network(
+              product.imageUrl,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  child: const Center(
+                    child: Icon(Icons.image_not_supported, color: Colors.grey),
                   ),
-                  const Text('Quantity'),
-                  const SizedBox(width: 8),
-                  SizedBox(
-                    width: 72,
-                    child: TextField(
-                      controller: _qtyController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: product.quantity > 0
-                            ? product.quantity.toString()
-                            : '1',
+                );
+              },
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${product.name} (x${product.quantity})',
+                ),
+                if (product.selectedOptions != null &&
+                    product.selectedOptions!.isNotEmpty)
+                  Text(
+                    product.selectedOptions!.entries
+                        .map((e) => '${e.key}: ${e.value}')
+                        .join(', '),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  )
+                else if (product.options != null && product.options!.isNotEmpty)
+                  Text(
+                    product.options!.entries
+                        .map((e) =>
+                            '${e.key}: ${e.value.isNotEmpty ? e.value[0] : ''}')
+                        .join(', '),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        final cart = context.read<CartModel>();
+                        cart.remove(product.id);
+                      },
+                      child: const Text('remove'),
+                    ),
+                    const Text('Quantity'),
+                    SizedBox(
+                      width: 72,
+                      child: TextField(
+                        controller: _qtyController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: product.quantity > 0
+                              ? product.quantity.toString()
+                              : '1',
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      final cart = context.read<CartModel>();
-                      final text = _qtyController.text.trim();
-                      final parsed = int.tryParse(text);
-                      if (parsed == null) {
-                        return;
-                      }
-                      if (parsed <= 0) {
-                        cart.remove(product.id);
-                      } else {
-                        cart.updateQuantity(product.id, parsed);
-                      }
-                      _qtyController.clear();
-                    },
-                    style: ImportButtonStyle(),
-                    child: const Text('Update'),
-                  ),
-                ],
-              ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final cart = context.read<CartModel>();
+                        final text = _qtyController.text.trim();
+                        final parsed = int.tryParse(text);
+                        if (parsed == null) {
+                          return;
+                        }
+                        if (parsed <= 0) {
+                          cart.remove(product.id);
+                        } else {
+                          cart.updateQuantity(product.id, parsed);
+                        }
+                        _qtyController.clear();
+                      },
+                      style: ImportButtonStyle(),
+                      child: const Text('Update'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (product.salePrice >= 0)
+                Text(
+                    '£${(product.salePrice * product.quantity).toStringAsFixed(2)}')
+              else
+                Text(
+                    '£${(product.price * product.quantity).toStringAsFixed(2)}'),
             ],
           ),
-          if (product.salePrice >= 0)
-            Text(
-                '£${(product.salePrice * product.quantity).toStringAsFixed(2)}')
-          else
-            Text('£${(product.price * product.quantity).toStringAsFixed(2)}'),
         ],
       ),
     );
