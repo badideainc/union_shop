@@ -10,4 +10,14 @@ void main() {
       expect(total, 0.0);
     });
   });
+
+  group('PricingRepository - single product price', () {
+    test('calculates price * quantity when no salePrice', () {
+      final repo = PricingRepository();
+      final p = ProductModel.fromValues(id: 'p1', price: 4.5);
+      p.setQuantity(3);
+      final total = repo.calculateTotalPrice([p]);
+      expect(total, closeTo(13.5, 1e-6));
+    });
+  });
 }
