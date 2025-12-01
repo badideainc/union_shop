@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/models/product_model.dart';
+import 'package:provider/provider.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 void main() {
   group('Product Page Tests', () {
@@ -46,6 +48,28 @@ void main() {
       // Check that footer contains the expected sections
       expect(find.text('Opening Hours'), findsOneWidget);
       expect(find.text('Latest Offers'), findsOneWidget);
+    });
+
+    testWidgets('tapping ADD TO CART adds product to CartModel',
+        (tester) async {
+      final cart = CartModel();
+
+      await tester.pumpWidget(ChangeNotifierProvider<CartModel>.value(
+        value: cart,
+        child: createTestWidget(),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Find the ADD TO CART button and tap it
+      final addFinder = find.widgetWithText(ElevatedButton, 'ADD TO CART');
+      expect(addFinder, findsOneWidget);
+      await tester.tap(addFinder);
+      await tester.pumpAndSettle();
+
+      // CartModel should have one item with the expected id
+      expect(cart.items.length, equals(1));
+      expect(cart.items.first.id, equals('grad_bear'));
     });
   });
 
