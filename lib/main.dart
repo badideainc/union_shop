@@ -6,6 +6,7 @@ import 'package:union_shop/print_shack/print_about_page.dart';
 import 'package:union_shop/print_shack/print_personal_page.dart';
 import 'package:union_shop/collection_page.dart';
 import 'package:union_shop/models/category.dart';
+import 'package:go_router/go_router.dart';
 import 'package:union_shop/views/cart_screen.dart';
 import 'package:union_shop/models/cart_model.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,55 @@ void main() {
   runApp(const UnionShopApp());
 }
 
+final GoRouter _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => HomeScreen(),
+    ),
+    GoRoute(
+      path: '/product/:id',
+      builder: (context, state) {
+        final uri = state.uri;
+        final id = uri.pathSegments.isNotEmpty ? uri.pathSegments.last : '';
+        return ProductPage(productID: id);
+      },
+    ),
+    GoRoute(
+      path: '/about',
+      builder: (context, state) => const AboutPage(),
+    ),
+    GoRoute(
+      path: '/personalisation',
+      builder: (context, state) => const PrintAboutPage(),
+    ),
+    GoRoute(
+      path: '/personalise-text',
+      builder: (context, state) => const PrintPersonalisationPage(),
+    ),
+    GoRoute(
+      path: '/cart',
+      builder: (context, state) => const CartScreen(),
+    ),
+    GoRoute(
+      path: '/account',
+      builder: (context, state) => const AccountPage(),
+    ),
+    // Category route - must come after more specific routes
+    GoRoute(
+      path: '/:category',
+      builder: (context, state) {
+        final uri = state.uri;
+        final catSeg =
+            uri.pathSegments.isNotEmpty ? uri.pathSegments.first : '';
+        final cat = pathToCategory(catSeg) ?? ProductCategory.clothing;
+        return CollectionPage(category: cat);
+      },
+    ),
+  ],
+  errorBuilder: (context, state) => HomeScreen(),
+);
+
 class UnionShopApp extends StatelessWidget {
   const UnionShopApp({super.key});
 
@@ -26,37 +76,13 @@ class UnionShopApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => CartModel(),
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Union Shop',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
         ),
-        home: HomeScreen(),
-        // By default, the app starts at the '/' route, which is the HomeScreen
-        initialRoute: '/',
-        // When navigating to '/product', build and return the ProductPage
-        // In your browser, try this link: http://localhost:49856/#/product
-        routes: {
-          '/product': (context) {
-            //Pull arguments that were passed through context
-            final args = ModalRoute.of(context)?.settings.arguments;
-            //ProductID is a string and the argument
-            final productID = args is String ? args : '';
-            return ProductPage(productID: productID);
-          },
-          '/about': (context) => const AboutPage(),
-          '/personalisation': (context) => const PrintAboutPage(),
-          '/personalise-text': (context) => const PrintPersonalisationPage(),
-          '/collection': (context) {
-            final args = ModalRoute.of(context)?.settings.arguments;
-            final ProductCategory category =
-                args is ProductCategory ? args : ProductCategory.clothing;
-            return CollectionPage(category: category);
-          },
-          '/cart': (context) => const CartScreen(),
-          '/account': (context) => const AccountPage(),
-        },
+        routerConfig: _router,
       ),
     );
   }
