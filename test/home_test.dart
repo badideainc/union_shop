@@ -9,10 +9,8 @@ void main() {
       await tester.pump();
 
       // Check that basic UI elements are present
-      expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
+      // Header should be present (use key to avoid brittle text match)
+      expect(find.byKey(const Key('home-header')), findsOneWidget);
       expect(find.text('Placeholder Hero Title'), findsOneWidget);
       expect(find.text('PLACEHOLDER PRODUCTS SECTION'), findsOneWidget);
       expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
@@ -51,6 +49,8 @@ void main() {
       await tester.pump();
 
       // Check that footer is present
+      // Footer should be present (use key to avoid brittle text match)
+      expect(find.byKey(const Key('home-footer')), findsOneWidget);
       expect(find.text('Placeholder Footer'), findsOneWidget);
       expect(
         find.text('Students should customise this footer section'),
