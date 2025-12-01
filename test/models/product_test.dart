@@ -123,4 +123,83 @@ void main() {
       expect(src.options!['Color']![0], 'Red');
     });
   });
+
+  group('ProductModel - quantity and mutators', () {
+    test('setQuantity sets the quantity', () {
+      final p = ProductModel.fromValues(id: 'q1', name: 'Q');
+      expect(p.quantity, 0);
+      p.setQuantity(5);
+      expect(p.quantity, 5);
+    });
+
+    test('incrementQuantity increases quantity by delta', () {
+      final p = ProductModel.fromValues(id: 'q2', name: 'Q2');
+      p.setQuantity(1);
+      p.incrementQuantity();
+      expect(p.quantity, 2);
+      p.incrementQuantity(3);
+      expect(p.quantity, 5);
+    });
+
+    test(
+        'decrementQuantity decreases quantity but never goes to zero or negative',
+        () {
+      final p = ProductModel.fromValues(id: 'q3', name: 'Q3');
+      p.setQuantity(3);
+      p.decrementQuantity();
+      expect(p.quantity, 2);
+
+      // decrement by 2 -> would make quantity 0, so method should return early and leave quantity unchanged
+      p.decrementQuantity(2);
+      expect(p.quantity, 2);
+
+      // decrement by 1 should succeed
+      p.decrementQuantity(1);
+      expect(p.quantity, 1);
+
+      // attempt to decrement when it would go to zero (should be a no-op)
+      p.decrementQuantity();
+      expect(p.quantity, 1);
+    });
+  });
+
+  group('ProductModel - options deep copy independence', () {
+    test('mutating copied options does not change original', () {
+      final original = ProductModel.fromValues(
+        id: 'opt1',
+        options: {
+          'Material': ['Cotton', 'Poly']
+        },
+      );
+
+      final copied = ProductModel();
+      original.copyTo(copied);
+
+      // mutate copied option list
+      copied.options!['Material']![0] = 'Silk';
+
+      // original should remain unchanged
+      expect(original.options!['Material']![0], 'Cotton');
+      expect(copied.options!['Material']![0], 'Silk');
+    });
+
+    test('mutating original options does not change copied', () {
+      final original = ProductModel.fromValues(
+        id: 'opt2',
+        options: {
+          'Pattern': ['Striped', 'Plain']
+        },
+      );
+
+      final copied = ProductModel();
+      original.copyTo(copied);
+
+      // mutate original
+      original.options!['Pattern']![1] = 'Checked';
+
+      // copied should remain with the previous value
+      expect(copied.options!['Pattern']![1], 'Plain');
+      expect(original.options!['Pattern']![1], 'Checked');
+    });
+  });
 }
