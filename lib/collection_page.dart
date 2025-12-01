@@ -263,7 +263,11 @@ class _FilterDropdownState extends State<FilterDropdown> {
                 isExpanded: true,
                 value: _selectedSort,
                 items: sortOptions,
-                onChanged: (v) => setState(() => _selectedSort = v),
+                onChanged: (v) => setState(() {
+                  _selectedSort = v;
+                  // Recompute filtered then sort
+                  _filtered = _applySort(_applyFilter());
+                }),
               ),
             ],
           ),
@@ -281,5 +285,37 @@ class _FilterDropdownState extends State<FilterDropdown> {
       if (cats == null || cats.isEmpty) return false;
       return cats.contains(_selectedCategory);
     }).toList();
+  }
+
+  List<ProductModel> _applySort(List<ProductModel> list) {
+    if (_selectedSort == null) return list;
+    final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
+    list.sort((a, b) {
+      int cmp = 0;
+      switch (_selectedSort!) {
+        case SortOption.alphabeticalAsc:
+          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          break;
+        case SortOption.alphabeticalDesc:
+          cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          break;
+        case SortOption.priceLowHigh:
+          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
+          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
+          cmp = pa.compareTo(pb);
+          break;
+        case SortOption.priceHighLow:
+          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
+          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
+          cmp = pb.compareTo(pa);
+          break;
+      }
+      if (cmp != 0) return cmp;
+      final ia = originalIndex[a.id] ?? 0;
+      final ib = originalIndex[b.id] ?? 0;
+      if (ia != ib) return ia.compareTo(ib);
+      return a.id.compareTo(b.id);
+    });
+    return list;
   }
 }
