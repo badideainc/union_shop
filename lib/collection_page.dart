@@ -206,7 +206,20 @@ class _FilterDropdownState extends State<FilterDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    // Skeleton: UI and logic will be implemented in subsequent small steps.
+    // Generate category dropdown items (small step).
+    final categoryOptions = <DropdownMenuItem<ProductCategory?>>[];
+    categoryOptions.add(const DropdownMenuItem<ProductCategory?>(
+      value: null,
+      child: Text('All Products'),
+    ));
+    for (final c in ProductCategory.values) {
+      categoryOptions.add(DropdownMenuItem<ProductCategory?>(
+        value: c,
+        child: Text(categoryTitle(c)),
+      ));
+    }
+
+    // (UI will be added in a following small step.)
     return const SizedBox.shrink();
   }
 }
