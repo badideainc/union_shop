@@ -47,4 +47,56 @@ void main() {
       expect(find.text('Latest Offers'), findsOneWidget);
     });
   });
+
+  group('ProductDropdown Tests', () {
+    testWidgets('shows option label and hint', (tester) async {
+      final controller = TextEditingController();
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ProductDropdown(
+            optionName: 'Color',
+            options: const ['Red', 'Blue'],
+            dropdownController: controller,
+            onChanged: (_) {},
+          ),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // The option name label should be present and the first option shown as hint
+      expect(find.text('Color'), findsOneWidget);
+      expect(find.text('Red'), findsOneWidget);
+    });
+
+    testWidgets('selecting an option updates controller and calls onChanged',
+        (tester) async {
+      final controller = TextEditingController();
+      String? selected;
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ProductDropdown(
+            optionName: 'Size',
+            options: const ['Small', 'Large'],
+            dropdownController: controller,
+            onChanged: (val) => selected = val,
+          ),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Open the dropdown menu
+      await tester.tap(find.byType(DropdownButton<String>));
+      await tester.pumpAndSettle();
+
+      // Tap the second option
+      await tester.tap(find.text('Large').last);
+      await tester.pumpAndSettle();
+
+      expect(controller.text, equals('Large'));
+      expect(selected, equals('Large'));
+    });
+  });
 }
