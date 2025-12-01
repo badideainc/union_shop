@@ -19,6 +19,31 @@ class ProductModel {
 
   ProductModel();
 
+  /// Helper constructor for tests or programmatic creation of product instances.
+  /// This allows creating ProductModel instances without reading assets.
+  ProductModel.fromValues({
+    required String id,
+    String name = '',
+    String description = '',
+    String imageUrl = '',
+    List<ProductCategory>? category,
+    double price = 0.0,
+    double salePrice = -1,
+    Map<String, List<String>>? options,
+  }) {
+    _id = id;
+    _name = name;
+    _description = description;
+    _imageUrl = imageUrl;
+    _category = category;
+    _price = price;
+    _salePrice = salePrice;
+    _options = options;
+    if (options != null) {
+      _selectedOptions = {};
+    }
+  }
+
   static Future<ProductModel> productFromJson(String id) async {
     {
       final productList = await loadProductData();
