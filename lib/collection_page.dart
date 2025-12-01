@@ -199,6 +199,45 @@ class FilterDropdown extends StatefulWidget {
 
   @override
   State<FilterDropdown> createState() => _FilterDropdownState();
+
+  /// Public testable sorting helper. Mirrors the internal sorting behaviour
+  /// used by the widget so tests can validate ordering without relying on
+  /// widget overlay interactions.
+  static List<ProductModel> sortProducts(
+      List<ProductModel> list, SortOption? sort) {
+    if (sort == null) return List<ProductModel>.from(list);
+    final sorted = List<ProductModel>.from(list);
+    final originalIndex = {
+      for (var i = 0; i < sorted.length; i++) sorted[i].id: i
+    };
+    sorted.sort((a, b) {
+      int cmp = 0;
+      switch (sort) {
+        case SortOption.alphabeticalAsc:
+          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          break;
+        case SortOption.alphabeticalDesc:
+          cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          break;
+        case SortOption.priceLowHigh:
+          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
+          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
+          cmp = pa.compareTo(pb);
+          break;
+        case SortOption.priceHighLow:
+          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
+          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
+          cmp = pb.compareTo(pa);
+          break;
+      }
+      if (cmp != 0) return cmp;
+      final ia = originalIndex[a.id] ?? 0;
+      final ib = originalIndex[b.id] ?? 0;
+      if (ia != ib) return ia.compareTo(ib);
+      return a.id.compareTo(b.id);
+    });
+    return sorted;
+  }
 }
 
 class _FilterDropdownState extends State<FilterDropdown> {
