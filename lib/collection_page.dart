@@ -76,6 +76,23 @@ class _CollectionPageState extends State<CollectionPage> {
                     style: const TextStyle(
                         fontSize: 32, fontWeight: FontWeight.bold),
                   ),
+                  if (widget.category == ProductCategory.sale) ...[
+                    const SizedBox(height: 8),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        """
+
+Don’t miss out! Get yours before they’re all gone!
+
+ 
+
+All prices shown are inclusive of the discount 🛒
+""",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 12),
                   FutureBuilder<List<ProductModel>>(
                     future: _futureProducts,
