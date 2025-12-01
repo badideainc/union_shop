@@ -27,6 +27,7 @@ class _CollectionPageState extends State<CollectionPage> {
   late final Future<List<ProductModel>> _futureProducts;
 
   final TextEditingController _dropdownController = TextEditingController();
+  List<ProductModel>? _filteredProducts;
 
   @override
   void initState() {
@@ -124,19 +125,25 @@ All prices shown are inclusive of the discount 🛒
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Controls row: two dropdowns and the live product count
+                          // Controls row: replaced two ProductDropdown widgets
+                          // with a single FilterDropdown that emits the
+                          // filtered+sorted list via `onChanged`.
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ProductDropdown(
-                                  optionName: 'Filter',
-                                  options: const ["Test"],
-                                  dropdownController: _dropdownController),
-                              ProductDropdown(
-                                  optionName: 'Sort',
-                                  options: const ["Test"],
-                                  dropdownController: _dropdownController),
-                              Text('${snapshot.data?.length ?? 0} products'),
+                              Expanded(
+                                child: FilterDropdown(
+                                  products: snapshot.data ?? [],
+                                  onChanged: (list) {
+                                    setState(() {
+                                      _filteredProducts = list;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                  '${_filteredProducts?.length ?? snapshot.data?.length ?? 0} products'),
                             ],
                           ),
 
@@ -155,7 +162,7 @@ All prices shown are inclusive of the discount 🛒
                                       : 1,
                               crossAxisSpacing: 24,
                               mainAxisSpacing: 48,
-                              children: snapshot.data!
+                              children: (_filteredProducts ?? snapshot.data!)
                                   .map((p) => ProductCard(productID: p.id))
                                   .toList(),
                             ),
@@ -174,7 +181,6 @@ All prices shown are inclusive of the discount 🛒
   }
 }
 
-// --- FilterDropdown (skeleton, step 2) --------------------------------------
 class FilterDropdown extends StatefulWidget {
   final List<ProductModel> products;
   final ValueChanged<List<ProductModel>> onChanged;
