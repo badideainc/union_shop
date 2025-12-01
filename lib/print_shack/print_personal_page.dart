@@ -8,7 +8,10 @@ import 'package:union_shop/models/personalise_product_model.dart';
 import 'package:union_shop/models/product_model.dart';
 
 class PrintPersonalisationPage extends StatefulWidget {
-  const PrintPersonalisationPage({super.key});
+  /// Optional injectable base product future for testing.
+  final Future<ProductModel>? baseProductFuture;
+
+  const PrintPersonalisationPage({super.key, this.baseProductFuture});
 
   @override
   State<PrintPersonalisationPage> createState() =>
@@ -51,7 +54,8 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
     _productModel.personalisedText = List.filled(initialCount, '');
     _productModel.setIsLogo(_selectedOption.toLowerCase().contains('logo'));
     // Start loading the base product data from JSON for this page.
-    _baseProductFuture = ProductModel.productFromJson('print_item');
+    _baseProductFuture =
+        widget.baseProductFuture ?? ProductModel.productFromJson('print_item');
     for (var i = 0; i < _lineControllers.length; i++) {
       final idx = i;
       _lineControllers[idx].addListener(() {
