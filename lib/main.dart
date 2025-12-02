@@ -767,7 +767,7 @@ class ImportButtonStyle extends ButtonStyle {
   ImportButtonStyle()
       : super(
           backgroundColor:
-              MaterialStateProperty.all<Color>(const Color(0xFF4d2963)),
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              WidgetStateProperty.all<Color>(const Color(0xFF4d2963)),
+          foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
         );
 }
