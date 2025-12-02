@@ -218,6 +218,12 @@ class _ProductPageState extends State<ProductPage> {
                           ElevatedButton(
                               onPressed: () {
                                 context.read<CartModel>().add(snapshot.data!);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        '${snapshot.data!.name} added to cart'),
+                                  ),
+                                );
                               },
                               child: const Text("ADD TO CART")),
                           const SizedBox(height: 24),
