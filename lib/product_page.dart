@@ -221,7 +221,7 @@ class _ProductPageState extends State<ProductPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                        '${snapshot.data!.name} added to cart'),
+                                        '${snapshot.data!.quantity}x ${snapshot.data!.name} added to cart'),
                                   ),
                                 );
                               },
