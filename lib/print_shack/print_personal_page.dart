@@ -129,9 +129,8 @@ class _PrintPersonalisationPageState extends State<PrintPersonalisationPage> {
                 const Header(),
                 const SizedBox(
                     height: 250,
-                    child: PrintImage(
-                        imageUrl:
-                            "https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282")),
+                    child:
+                        PrintImage(imageUrl: "assets/images/print_item.jpg")),
                 const SizedBox(height: 20),
                 const Text("Personalisation",
                     style: TextStyle(fontSize: 36, color: Colors.black)),
