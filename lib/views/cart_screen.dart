@@ -3,6 +3,7 @@ import 'package:union_shop/main.dart';
 import 'package:union_shop/models/cart_model.dart';
 import 'package:union_shop/models/product_model.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -58,7 +59,20 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Clear the cart and notify the user, then return to home.
+              final cart = context.read<CartModel>();
+              cart.clear();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Order Placed')),
+              );
+              // Give the snackbar a moment to appear, then navigate home.
+              Future.delayed(const Duration(milliseconds: 700), () {
+                if (mounted) {
+                  context.go('/');
+                }
+              });
+            },
             style: ImportButtonStyle(),
             child: const Text('CHECK OUT'),
           ),
