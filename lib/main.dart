@@ -509,9 +509,8 @@ class NavBar extends StatelessWidget {
                       const NavDropdown(
                         optionName: "The Print Shack",
                         pages: {
-                          "About": "/print_shack/print_about_page",
-                          "Personalisation":
-                              "/print_shack/print_personalisation_page",
+                          "About": "/personalisation",
+                          "Personalisation": "/personalise-text",
                         },
                         options: [],
                       ),
