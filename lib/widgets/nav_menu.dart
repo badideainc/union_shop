@@ -85,8 +85,17 @@ class _NavMenuState extends State<NavMenu> {
                       if (item.children != null && item.children!.isNotEmpty) {
                         _openChildren(item.children!);
                       } else if (item.route != null) {
+                        // Pop the dialog first, then perform navigation. Calling
+                        // the navigation immediately can try to push a new route
+                        // while the dialog route is still being removed which
+                        // causes navigator key-reservation/assertion errors.
                         Navigator.of(context).pop();
-                        widget.onNavigate?.call(item);
+                        // Schedule navigation for the next event loop tick so the
+                        // pop has a chance to complete and the Navigator is in a
+                        // stable state before pushing a new route.
+                        Future.delayed(Duration.zero, () {
+                          widget.onNavigate?.call(item);
+                        });
                       }
                     },
                   );
