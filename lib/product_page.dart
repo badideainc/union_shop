@@ -217,11 +217,18 @@ class _ProductPageState extends State<ProductPage> {
 
                           ElevatedButton(
                               onPressed: () {
+                                // Ensure at least 1 is added to the cart when quantity is unset (0).
+                                final qtyToAdd = snapshot.data!.quantity > 0
+                                    ? snapshot.data!.quantity
+                                    : 1;
+                                // Normalize the model quantity before adding so the cart
+                                // snapshot reflects the intended quantity.
+                                snapshot.data!.setQuantity(qtyToAdd);
                                 context.read<CartModel>().add(snapshot.data!);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                        '${snapshot.data!.quantity}x ${snapshot.data!.name} added to cart'),
+                                        '${qtyToAdd}x ${snapshot.data!.name} added to cart'),
                                   ),
                                 );
                               },
