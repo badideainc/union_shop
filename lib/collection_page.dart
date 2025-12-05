@@ -165,7 +165,8 @@ All prices shown are inclusive of the discount 🛒
                               crossAxisSpacing: 24,
                               mainAxisSpacing: 48,
                               children: displayList
-                                  .map((p) => ProductCard(productID: p.id))
+                                  .map((p) => ProductCard(
+                                      key: ValueKey(p.id), productID: p.id))
                                   .toList(),
                             ),
                           ],
