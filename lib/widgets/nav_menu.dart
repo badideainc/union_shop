@@ -10,10 +10,39 @@ class NavMenu extends StatefulWidget {
 
   static Future<void> show(BuildContext context, List<MenuItem> items,
       {void Function(MenuItem item)? onNavigate, String? title}) {
-    return showDialog<void>(
+    // Present the menu as a top-sliding panel using a general dialog
+    // with a slide-down transition. This keeps the panel behaviour while
+    // allowing the menu to be shown from any point in the app without
+    // requiring the Scaffold to expose a `drawer` property.
+    return showGeneralDialog<void>(
       context: context,
-      builder: (context) =>
-          NavMenu(items: items, onNavigate: onNavigate, title: title),
+      barrierDismissible: true,
+      barrierLabel: 'Menu',
+      pageBuilder: (ctx, animation, secondaryAnimation) {
+        return NavMenu(items: items, onNavigate: onNavigate, title: title);
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        final slide =
+            Tween<Offset>(begin: const Offset(0.0, -1.0), end: Offset.zero)
+                .chain(CurveTween(curve: Curves.easeOut))
+                .animate(animation);
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: SlideTransition(
+              position: slide,
+              child: Material(
+                elevation: 16,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 320,
+                  child: child,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -42,7 +71,7 @@ class _NavMenuState extends State<NavMenu> {
   Widget build(BuildContext context) {
     final current = _stack.isNotEmpty ? _stack.last : <MenuItem>[];
 
-    return Dialog(
+    return Drawer(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400, maxHeight: 500),
         child: Column(
@@ -85,14 +114,8 @@ class _NavMenuState extends State<NavMenu> {
                       if (item.children != null && item.children!.isNotEmpty) {
                         _openChildren(item.children!);
                       } else if (item.route != null) {
-                        // Pop the dialog first, then perform navigation. Calling
-                        // the navigation immediately can try to push a new route
-                        // while the dialog route is still being removed which
-                        // causes navigator key-reservation/assertion errors.
+                        // Pop the displayed dialog/route first, then perform navigation.
                         Navigator.of(context).pop();
-                        // Schedule navigation for the next event loop tick so the
-                        // pop has a chance to complete and the Navigator is in a
-                        // stable state before pushing a new route.
                         Future.delayed(Duration.zero, () {
                           widget.onNavigate?.call(item);
                         });
