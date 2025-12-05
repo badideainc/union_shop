@@ -82,7 +82,8 @@ class _NavMenuState extends State<NavMenu> {
                 }
 
                 //Account for "<- Back" row. Only applies to child menus.
-                final item = current[index - (_stack.length > 1 ? 1 : 0)];
+                final offset = _stack.length > 1 ? 1 : 0;
+                final item = current[index - offset];
 
                 return ListTile(
                   leading: item.icon != null ? Icon(item.icon) : null,
