@@ -215,10 +215,18 @@ class HomeScreen extends StatelessWidget {
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: const [
-                        ProductCard(productID: 'city_postcard'),
-                        ProductCard(productID: 'city_magnet'),
-                        ProductCard(productID: 'city_bookmark'),
-                        ProductCard(productID: 'city_notebook'),
+                        ProductCard(
+                            key: ValueKey('city_postcard'),
+                            productID: 'city_postcard'),
+                        ProductCard(
+                            key: ValueKey('city_magnet'),
+                            productID: 'city_magnet'),
+                        ProductCard(
+                            key: ValueKey('city_bookmark'),
+                            productID: 'city_bookmark'),
+                        ProductCard(
+                            key: ValueKey('city_notebook'),
+                            productID: 'city_notebook'),
                       ],
                     ),
                   ],
@@ -259,7 +267,7 @@ class _ProductCardState extends State<ProductCard> {
   // final String price;
   // final String imageUrl;
 
-  late final Future<ProductModel> _product;
+  late Future<ProductModel> _product;
 
   _ProductCardState();
 
@@ -268,6 +276,19 @@ class _ProductCardState extends State<ProductCard> {
     super.initState();
     _product =
         widget.productFuture ?? ProductModel.productFromJson(widget.productID);
+  }
+
+  //Sorting to update on sort change
+  @override
+  void didUpdateWidget(covariant ProductCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.productID != widget.productID ||
+        oldWidget.productFuture != widget.productFuture) {
+      setState(() {
+        _product = widget.productFuture ??
+            ProductModel.productFromJson(widget.productID);
+      });
+    }
   }
 
   @override
