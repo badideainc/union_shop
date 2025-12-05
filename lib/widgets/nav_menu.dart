@@ -34,8 +34,8 @@ class NavMenu extends StatefulWidget {
               child: Material(
                 elevation: 16,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 320,
+                  width: 320,
+                  height: MediaQuery.of(context).size.height,
                   child: child,
                 ),
               ),
