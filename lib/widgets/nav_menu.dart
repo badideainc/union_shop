@@ -92,7 +92,7 @@ class _NavMenuState extends State<NavMenu> {
                     if (item.children != null && item.children!.isNotEmpty) {
                       _openChildren(item.children!);
                     } else if (item.route != null) {
-                      // Pop the displayed dialog/route first, then perform navigation.
+                      // Pop the displayed drawer/route first, then perform navigation.
                       Navigator.of(context).pop();
                       Future.delayed(Duration.zero, () {
                         widget.onNavigate?.call(item);
