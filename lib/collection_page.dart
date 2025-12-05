@@ -206,36 +206,45 @@ class FilterDropdown extends StatefulWidget {
   static List<ProductModel> sortProducts(
       List<ProductModel> list, SortOption? sort) {
     if (sort == null) return List<ProductModel>.from(list);
+    // Remember original positions so we can provide a stable tie-breaker.
+    final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
+
     final sorted = List<ProductModel>.from(list);
-    final originalIndex = {
-      for (var i = 0; i < sorted.length; i++) sorted[i].id: i
-    };
-    sorted.sort((a, b) {
-      int cmp = 0;
-      switch (sort) {
-        case SortOption.alphabeticalAsc:
-          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
-          break;
-        case SortOption.alphabeticalDesc:
-          cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
-          break;
-        case SortOption.priceLowHigh:
-          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
-          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
-          cmp = pa.compareTo(pb);
-          break;
-        case SortOption.priceHighLow:
-          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
-          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
-          cmp = pb.compareTo(pa);
-          break;
-      }
-      if (cmp != 0) return cmp;
-      final ia = originalIndex[a.id] ?? 0;
-      final ib = originalIndex[b.id] ?? 0;
-      if (ia != ib) return ia.compareTo(ib);
-      return a.id.compareTo(b.id);
-    });
+    switch (sort) {
+      case SortOption.alphabeticalAsc:
+        sorted.sort((a, b) {
+          final cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.alphabeticalDesc:
+        sorted.sort((a, b) {
+          final cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.priceLowHigh:
+        sorted.sort((a, b) {
+          final pa = a.salePrice > 0 ? a.salePrice : a.price;
+          final pb = b.salePrice > 0 ? b.salePrice : b.price;
+          final cmp = pa.compareTo(pb);
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.priceHighLow:
+        sorted.sort((a, b) {
+          final pa = a.salePrice > 0 ? a.salePrice : a.price;
+          final pb = b.salePrice > 0 ? b.salePrice : b.price;
+          final cmp = pb.compareTo(pa);
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+    }
+
     return sorted;
   }
 }
@@ -342,36 +351,49 @@ class _FilterDropdownState extends State<FilterDropdown> {
 
   List<ProductModel> _applySort(List<ProductModel> list) {
     if (_selectedSort == null) return List<ProductModel>.from(list);
+
+    final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
+
     final sorted = List<ProductModel>.from(list);
-    final originalIndex = {
-      for (var i = 0; i < sorted.length; i++) sorted[i].id: i
-    };
-    sorted.sort((a, b) {
-      int cmp = 0;
-      switch (_selectedSort!) {
-        case SortOption.alphabeticalAsc:
-          cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
-          break;
-        case SortOption.alphabeticalDesc:
-          cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
-          break;
-        case SortOption.priceLowHigh:
-          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
-          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
-          cmp = pa.compareTo(pb);
-          break;
-        case SortOption.priceHighLow:
-          final pa = (a.salePrice > 0) ? a.salePrice : a.price;
-          final pb = (b.salePrice > 0) ? b.salePrice : b.price;
-          cmp = pb.compareTo(pa);
-          break;
-      }
-      if (cmp != 0) return cmp;
-      final ia = originalIndex[a.id] ?? 0;
-      final ib = originalIndex[b.id] ?? 0;
-      if (ia != ib) return ia.compareTo(ib);
-      return a.id.compareTo(b.id);
-    });
+    switch (_selectedSort!) {
+      case SortOption.alphabeticalAsc:
+        //Iterate over the list
+        sorted.sort((a, b) {
+          //Sort based on outcome of this condition
+          //a, b are two elements (ProductModel) being compared
+          final cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          if (cmp != 0) return cmp;
+          //If names are equal, maintain original order
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.alphabeticalDesc:
+        sorted.sort((a, b) {
+          final cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.priceLowHigh:
+        sorted.sort((a, b) {
+          final pa = a.salePrice > 0 ? a.salePrice : a.price;
+          final pb = b.salePrice > 0 ? b.salePrice : b.price;
+          final cmp = pa.compareTo(pb);
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+      case SortOption.priceHighLow:
+        sorted.sort((a, b) {
+          final pa = a.salePrice > 0 ? a.salePrice : a.price;
+          final pb = b.salePrice > 0 ? b.salePrice : b.price;
+          final cmp = pb.compareTo(pa);
+          if (cmp != 0) return cmp;
+          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
+        });
+        break;
+    }
+
     return sorted;
   }
 
