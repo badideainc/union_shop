@@ -22,22 +22,15 @@ class NavMenu extends StatefulWidget {
         return NavMenu(items: items, onNavigate: onNavigate, title: title);
       },
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        final slide =
-            Tween<Offset>(begin: const Offset(0.0, -1.0), end: Offset.zero)
-                .chain(CurveTween(curve: Curves.easeOut))
-                .animate(animation);
         return SafeArea(
           child: Align(
-            alignment: Alignment.centerRight,
-            child: SlideTransition(
-              position: slide,
-              child: Material(
-                elevation: 16,
-                child: SizedBox(
-                  width: 320,
-                  height: MediaQuery.of(context).size.height,
-                  child: child,
-                ),
+            alignment: Alignment.topCenter,
+            child: Material(
+              elevation: 16,
+              child: SizedBox(
+                width: 320,
+                height: MediaQuery.of(context).size.height,
+                child: child,
               ),
             ),
           ),
@@ -77,15 +70,6 @@ class _NavMenuState extends State<NavMenu> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              alignment: Alignment.centerLeft,
-              child: Text(widget.title ?? 'Menu',
-                  style: Theme.of(context).textTheme.titleMedium),
-            ),
-            const Divider(height: 1),
-
             // Menu list
             Expanded(
               child: ListView.builder(
