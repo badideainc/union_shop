@@ -24,7 +24,7 @@ class NavMenu extends StatefulWidget {
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SafeArea(
           child: Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topRight,
             child: Material(
               elevation: 16,
               child: SizedBox(
@@ -107,15 +107,6 @@ class _NavMenuState extends State<NavMenu> {
                     },
                   );
                 },
-              ),
-            ),
-
-            // Footer / Close
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Close'),
               ),
             ),
           ],
