@@ -68,6 +68,7 @@ class _NavMenuState extends State<NavMenu> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
+              //Account for "<- Back" row. Only applies to child menus.
               itemCount: current.length + (_stack.length > 1 ? 1 : 0),
               itemBuilder: (context, index) {
                 if (_stack.length > 1 && index == 0) {
@@ -80,6 +81,7 @@ class _NavMenuState extends State<NavMenu> {
                   );
                 }
 
+                //Account for "<- Back" row. Only applies to child menus.
                 final item = current[index - (_stack.length > 1 ? 1 : 0)];
 
                 return ListTile(
