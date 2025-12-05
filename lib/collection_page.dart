@@ -207,18 +207,27 @@ class FilterDropdown extends StatefulWidget {
       List<ProductModel> list, SortOption? sort) {
     if (sort == null) return List<ProductModel>.from(list);
     // Remember original positions so we can provide a stable tie-breaker.
+    // The comparator below does a primary comparison (name or effective
+    // price) and, when equal, falls back to the original input order using
+    // `originalIndex` so sorting is effectively stable. If indices somehow
+    // match (duplicate ids in input), the comparator will still be
+    // deterministic because it compares indices which are equal only for
+    // identical positions.
     final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
 
     final sorted = List<ProductModel>.from(list);
     switch (sort) {
       case SortOption.alphabeticalAsc:
+        // Compare names case-insensitively; if equal, preserve original order
         sorted.sort((a, b) {
           final cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
           if (cmp != 0) return cmp;
+          // If names are equal, maintain original order
           return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
         });
         break;
       case SortOption.alphabeticalDesc:
+        // Reverse alphabetical; preserve original order on ties
         sorted.sort((a, b) {
           final cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
           if (cmp != 0) return cmp;
@@ -226,6 +235,8 @@ class FilterDropdown extends StatefulWidget {
         });
         break;
       case SortOption.priceLowHigh:
+        // Compare effective price (salePrice if present, otherwise price);
+        // preserve original order when prices are equal.
         sorted.sort((a, b) {
           final pa = a.salePrice > 0 ? a.salePrice : a.price;
           final pb = b.salePrice > 0 ? b.salePrice : b.price;
@@ -235,6 +246,7 @@ class FilterDropdown extends StatefulWidget {
         });
         break;
       case SortOption.priceHighLow:
+        // Reverse effective price; preserve original order on ties.
         sorted.sort((a, b) {
           final pa = a.salePrice > 0 ? a.salePrice : a.price;
           final pb = b.salePrice > 0 ? b.salePrice : b.price;
@@ -350,51 +362,7 @@ class _FilterDropdownState extends State<FilterDropdown> {
   }
 
   List<ProductModel> _applySort(List<ProductModel> list) {
-    if (_selectedSort == null) return List<ProductModel>.from(list);
-
-    final originalIndex = {for (var i = 0; i < list.length; i++) list[i].id: i};
-
-    final sorted = List<ProductModel>.from(list);
-    switch (_selectedSort!) {
-      case SortOption.alphabeticalAsc:
-        //Iterate over the list
-        sorted.sort((a, b) {
-          //Sort based on outcome of this condition
-          //a, b are two elements (ProductModel) being compared
-          final cmp = a.name.toLowerCase().compareTo(b.name.toLowerCase());
-          if (cmp != 0) return cmp;
-          //If names are equal, maintain original order
-          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
-        });
-        break;
-      case SortOption.alphabeticalDesc:
-        sorted.sort((a, b) {
-          final cmp = b.name.toLowerCase().compareTo(a.name.toLowerCase());
-          if (cmp != 0) return cmp;
-          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
-        });
-        break;
-      case SortOption.priceLowHigh:
-        sorted.sort((a, b) {
-          final pa = a.salePrice > 0 ? a.salePrice : a.price;
-          final pb = b.salePrice > 0 ? b.salePrice : b.price;
-          final cmp = pa.compareTo(pb);
-          if (cmp != 0) return cmp;
-          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
-        });
-        break;
-      case SortOption.priceHighLow:
-        sorted.sort((a, b) {
-          final pa = a.salePrice > 0 ? a.salePrice : a.price;
-          final pb = b.salePrice > 0 ? b.salePrice : b.price;
-          final cmp = pb.compareTo(pa);
-          if (cmp != 0) return cmp;
-          return (originalIndex[a.id] ?? 0).compareTo(originalIndex[b.id] ?? 0);
-        });
-        break;
-    }
-
-    return sorted;
+    return FilterDropdown.sortProducts(list, _selectedSort);
   }
 
   void _emit() {
