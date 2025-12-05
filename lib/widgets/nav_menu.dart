@@ -10,10 +10,6 @@ class NavMenu extends StatefulWidget {
 
   static Future<void> show(BuildContext context, List<MenuItem> items,
       {void Function(MenuItem item)? onNavigate, String? title}) {
-    // Present the menu as a top-sliding panel using a general dialog
-    // with a slide-down transition. This keeps the panel behaviour while
-    // allowing the menu to be shown from any point in the app without
-    // requiring the Scaffold to expose a `drawer` property.
     return showGeneralDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -65,52 +61,49 @@ class _NavMenuState extends State<NavMenu> {
     final current = _stack.isNotEmpty ? _stack.last : <MenuItem>[];
 
     return Drawer(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 400, maxHeight: 500),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Menu list
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: current.length + (_stack.length > 1 ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (_stack.length > 1 && index == 0) {
-                    // Back row: show parent heading if available
-                    const parentTitle = 'Back';
-                    return ListTile(
-                      leading: const Icon(Icons.arrow_back),
-                      title: const Text(parentTitle),
-                      onTap: _back,
-                    );
-                  }
-
-                  final item = current[index - (_stack.length > 1 ? 1 : 0)];
-
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Menu list
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: current.length + (_stack.length > 1 ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (_stack.length > 1 && index == 0) {
+                  // Back row: show parent heading if available
+                  const parentTitle = 'Back';
                   return ListTile(
-                    leading: item.icon != null ? Icon(item.icon) : null,
-                    title: Text(item.label),
-                    trailing: item.children != null
-                        ? const Icon(Icons.chevron_right)
-                        : null,
-                    onTap: () {
-                      if (item.children != null && item.children!.isNotEmpty) {
-                        _openChildren(item.children!);
-                      } else if (item.route != null) {
-                        // Pop the displayed dialog/route first, then perform navigation.
-                        Navigator.of(context).pop();
-                        Future.delayed(Duration.zero, () {
-                          widget.onNavigate?.call(item);
-                        });
-                      }
-                    },
+                    leading: const Icon(Icons.arrow_back),
+                    title: const Text(parentTitle),
+                    onTap: _back,
                   );
-                },
-              ),
+                }
+
+                final item = current[index - (_stack.length > 1 ? 1 : 0)];
+
+                return ListTile(
+                  leading: item.icon != null ? Icon(item.icon) : null,
+                  title: Text(item.label),
+                  trailing: item.children != null
+                      ? const Icon(Icons.chevron_right)
+                      : null,
+                  onTap: () {
+                    if (item.children != null && item.children!.isNotEmpty) {
+                      _openChildren(item.children!);
+                    } else if (item.route != null) {
+                      // Pop the displayed dialog/route first, then perform navigation.
+                      Navigator.of(context).pop();
+                      Future.delayed(Duration.zero, () {
+                        widget.onNavigate?.call(item);
+                      });
+                    }
+                  },
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
